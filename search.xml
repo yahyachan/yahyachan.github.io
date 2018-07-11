@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-    
-    <entry>
-      <title>一些测试</title>
-      <link href="/2018/07/11/test/"/>
-      <url>/2018/07/11/test/</url>
-      <content type="html"><![CDATA[<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><p>行内公式：$\int_{-\infty}^{+\infty}e^{x^2}\mathrm{d}x$。</p><p>行间公式：<br>$$<br>\int u\mathrm{d}v = uv - \int v\mathrm{d}u<br>$$</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// C++ code</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> a, b; <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;a, &amp;b);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, a + b); <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>嗯，OC！</p>]]></content>
-      
+<search>
+  <entry>
+    <title><![CDATA[贝尔级数在积性函数毒瘤题中的应用]]></title>
+    <url>%2F2018%2F07%2F11%2Fbell-series%2F</url>
+    <content type="text"><![CDATA[嗯，OC！ 一直以来，数论生成函数在积性函数毒瘤题中的应用都不是很多…… 数论函数的生成函数大概有三种：狄利克雷级数（也叫数论生成函数）、贝尔级数、Lambert级数。Lambert级数不了解，狄利克雷级数太复杂（需要一些复分析的水平，恰好我没有……），能派上用场的也就只有贝尔级数力，，， 下文主要介绍贝尔级数的基本概念，在狄利克雷卷积中的应用，以及在积性函数求和（对我书得就事杜教筛）中的一些微小的应用…… 贝尔级数的概念贝尔级数的定义贝尔级数是一种形式幂级数。对于给定的数论函数$f$和质数$p$，我们定义$f$模$p$的贝尔级数为：$$f_p(x)=\sum_{i = 0}^{+\infty} f(p^i)x^i$$ 贝尔级数的基本性质唯一定理对于两个积性函数$f$和$g$，如果对于任意质数$p$都有$f$和$g$模$p$的贝尔级数相同，那两者相同。 这个定理我局的还事挺好理解的……两个积性函数在任何质数的幂的表现都相同，那么两者也相同。 因为一般的数论函数没有这么优秀的性质……所以下面提到的贝尔级数的应用基本上都针对积性函数…… 狄利克雷卷积对任意两个数论函数$f$和$g$，有$(f\ast g)_p(x) = f_p(x)\cdot g_p(x)$。 这是贝尔级数最有用的性质了……（没这个性质用它干啥？） 完全积性函数的贝尔级数对于一个完全积性函数$f$，有$f_p(x)=\frac{1}{1 - f(p)x}$。 这个也不难理解，用的就是等比数列求和公式。不过好在事形式幂级数，并不需要考虑收敛的问题…… 常用积性函数函数的贝尔级数关于狄利克雷卷积的单位元$\epsilon$（$\epsilon(x) = [x=1]$），不必自说当然是$1$。 首先对于$f(x) = x^k(k\in N^0)$这种东西，根据完全积性函数的贝尔级数公式可知有$f_p(x)=\frac{1}{1 - p^kx}$。 莫比乌斯函数比较有意思。显然$\mu(1) = 1$，$\mu(p) = -1$，但是$\mu(p^k)=0(k\ge 2)$。所以说其贝尔级数就是$1-x$。类似我们可以推导得$\mu^2$的贝尔级数为$1+x$。 欧拉函数直接推有些棘手……但注意到我们知道$\varphi\ast 1 = \mathrm{id}$，反演一下可以得知$\mathrm{id}\ast\mu =\varphi$，由此可得$\varphi_p(x)=\frac{1 - x}{1 - px}$。 接下来介绍一个非常好玩的函数：刘维尔函数。在此之前先定义$\Omega(n)$表示$n$的可重复质因子数（因此$\Omega(4) = 2$），那么刘维尔函数$\lambda(x) = (-1)^{\Omega(x)}$，这个函数很显然是完全积性函数，故$\lambda_p(x)=\frac{1}{1 + x}$。这个函数有些时候是肥肠有用的。 然后考虑约数好兄弟$\sigma_k$。很显然$\sigma_k = \mathrm{id}^k\ast 1$，因此可以推出$(\sigma_k)_p(x)=\frac{1}{1 - p^kx}\cdot\frac{1}{1 - x} = \frac{1}{1 - (1 + p^k)x + p^kx^2}$。 至此常见积性函数已经推完力，，， 贝尔级数在狄利克雷卷积中的应用这个还算是很显然吧…… 举个例子，让你证$(\mathrm{id}\cdot\mu)\ast\mathrm{id} = \epsilon$。 这个东西用传统的计数解方法当然可行，但是多麻烦事有目共睹的（甚至于有些东西被我们的当结论记了）。用贝尔级数的话这个等式不就是$(1 - px)\cdot\frac{1}{1 - px} = 1$嘛，非常简单。 还有一些比较复杂的例子，大家可以自行寻找。 贝尔级数在杜教筛中的应用这个东西算是最大应用了吧…… 应用主要分为两部分：你知道$f$本身是啥，但是不知道找啥去卷比较好；你不知道$f$本身是啥（你只知道它在质数的幂上表现），但你还是要杜教筛。 利用贝尔级数构造合适的狄利克雷卷积给一道题吧：求$\mu^2\ast (\mathrm{id}\cdot\mu)$这个东西的前缀和，$n\le 10^{11}$。 如果你不知道贝尔级数，你可能需要靠背上面提到的那个用传统方法很难证的结论来做这个题…… 但如果说你知道贝尔级数的话，你发现原函数贝尔级数为$(1 + x)(1 - px)$，然后我们想肯定要消掉一部分或者全部式子。我们考虑卷上一个$\mathrm{id}$，弄完了之后的贝尔级数为$1 + x$，也就是$\mu^2$。 $\mathrm{id}$的前缀和自然好说，但是$\mu^2$的前缀和咋整？ 其实$\mu^2$就是判断它是否没有完全平方因子。因此我们直接枚举那个因子的平方根就好了，但是这样会重复，因此考虑用$\mu$容斥一下，得到：$$\sum_{i = 1}^n\mu^2(i)=\sum_{i = 1}^{\lfloor\sqrt{n}\rfloor}\mu(i)\lfloor\frac{n}{i^2}\rfloor$$因此$\mu^2$的前缀和是可以根号复杂度来求的，不会影响杜教筛总的转移复杂度。因此总复杂度为$O(n^{\frac{2}{3}})$。 在不知道函数本身是啥的时候杜教筛还是给一道题： 有一个积性函数$f(x)$，你不知道它本身是啥，但是你知道他满足以下性质： $f(1) = 1$。 对于质数$p$和正整数$a$，有$f(p^a) = p^a + (-1)^a$。 求这玩意的前缀和，$n\le 10^{11}$。 其实你通过OEIS可以知道这个函数本身是啥（逃），但考虑到那样你也很难用常规手段杜教筛所以还事没啥用…… 首先考虑去构造这个玩意的贝尔级数。它看起来很像事$\mathrm{id}$和$\lambda$的贝尔级数加一下，但是考虑到$f(1) = 1$因此还要再减个1。最后得到：$$f_p(x)=\frac{1}{1 - px} + \frac{1}{1 + x} - 1$$我们想要卷上一个$g$，那些分母看起来很不顺眼，干脆把他们都消掉了吧！因此我们规定$g_p(x) = (1 - px)(1 + x)$（因此我们得知$g = (\mathrm{id}\cdot\mu)\ast\mu^2$）。卷出来之后发现：$$(f\ast g)_p(x) = 1 + x + 1 - px - 1 - x + px + px^2 = 1 + px^2$$然后我们弄了一大半顿我们还是不知道$f\ast g$具体是啥……但是我们观察到一点非常重要的性质：若$(f\ast g)(x)\ne 0$，那么$x$起码也得是完全平方数，并且$\mu^2(\sqrt{x}) = 1$，并且对答案的贡献为$\sqrt{x}$！ 这下$f\ast g$虽然还不知道是啥，但是起码它前缀和好求了！我们对于对答案可能有贡献的$x$枚举其算术平方根即可，写出来就是：$$\sum_{i = 1}^n(f\ast g)(i) = \sum_{i = 1}^{\lfloor\sqrt{n}\rfloor}\mu^2(i)i$$这样的话求$f\ast g$的前缀和的复杂度就已经降到$O(\sqrt{n})$了，更进一步我们发现这个式子的答案只和$\lfloor\sqrt{n}\rfloor$有关，所以我们用$O(\sqrt{n})$的时间预处理所有这种和之后$O(1)$查询就好了。 剩下唯一的硬骨头就是$g$的前缀和，这个上一小节已经讲了。 虽说这玩意蛮有用的……但是无法阻止杜教筛过期，MIN_25筛已经要dssq力（悲）]]></content>
       <categories>
-          
-          <category> 测试 </category>
-          
+        <category>教程</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 测试 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-  
-  
+      <tags>
+        <tag>贝尔级数</tag>
+        <tag>杜教筛</tag>
+        <tag>狄利克雷卷积</tag>
+        <tag>莫比乌斯反演</tag>
+        <tag>生成函数</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[一些测试]]></title>
+    <url>%2F2018%2F07%2F11%2Ftest%2F</url>
+    <content type="text"><![CDATA[一级标题二级标题三级标题四级标题五级标题行内公式：$\int_{-\infty}^{+\infty}e^{x^2}\mathrm{d}x$。 行间公式：$$\int u\mathrm{d}v = uv - \int v\mathrm{d}u$$ 123456// C++ code#include &lt;cstdio&gt;int main() &#123; int a, b; scanf("%d%d", &amp;a, &amp;b); printf("%d\n", a + b); return 0;&#125; 嗯，OC！]]></content>
+      <categories>
+        <category>测试</category>
+      </categories>
+      <tags>
+        <tag>测试</tag>
+      </tags>
+  </entry>
 </search>
