@@ -7,7 +7,7 @@
 
 <html class="theme-next pisces use-motion" lang="zh-Hans">
 <head>
-  <meta charset="UTF-8"/>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="贝尔级数,生成函数,杜教筛,狄利克雷卷积,莫比乌斯反演," />
+  <meta name="keywords" content="生成函数,贝尔级数,杜教筛,狄利克雷卷积,莫比乌斯反演," />
 
 
 
@@ -80,7 +80,7 @@
 
 
 <meta name="description" content="嗯，OC！ 一直以来，数论生成函数在积性函数毒瘤题中的应用都不是很多…… 数论函数的生成函数大概有三种：狄利克雷级数（也叫数论生成函数）、贝尔级数、Lambert级数。Lambert级数不了解，狄利克雷级数太复杂（需要一些复分析的水平，恰好我没有……），能派上用场的也就只有贝尔级数力，，， 下文主要介绍贝尔级数的基本概念，在狄利克雷卷积中的应用，以及在积性函数求和（对我书得就事杜教筛）中的一些微小">
-<meta name="keywords" content="贝尔级数,生成函数,杜教筛,狄利克雷卷积,莫比乌斯反演">
+<meta name="keywords" content="生成函数,贝尔级数,杜教筛,狄利克雷卷积,莫比乌斯反演">
 <meta property="og:type" content="article">
 <meta property="og:title" content="贝尔级数在积性函数毒瘤题中的应用">
 <meta property="og:url" content="https://yahyachan.github.io/2018/07/11/bell-series/index.html">
@@ -126,7 +126,7 @@
 
 
 
-  <title>贝尔级数在积性函数毒瘤题中的应用 | danihao123's Blog</title>
+  <title>贝尔级数在积性函数毒瘤题中的应用 | danihao123's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -145,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -402,8 +402,9 @@
 <p>数论函数的生成函数大概有三种：狄利克雷级数（也叫数论生成函数）、贝尔级数、Lambert级数。Lambert级数不了解，狄利克雷级数太复杂（需要一些复分析的水平，恰好我没有……），能派上用场的也就只有贝尔级数力，，，</p>
 <p>下文主要介绍贝尔级数的基本概念，在狄利克雷卷积中的应用，以及在积性函数求和（对我书得就事杜教筛）中的一些微小的应用……</p>
 <a id="more"></a>
-<h2 id="贝尔级数的概念"><a href="#贝尔级数的概念" class="headerlink" title="贝尔级数的概念"></a>贝尔级数的概念</h2><h3 id="贝尔级数的定义"><a href="#贝尔级数的定义" class="headerlink" title="贝尔级数的定义"></a>贝尔级数的定义</h3><p>贝尔级数是一种形式幂级数。对于给定的数论函数$f$和质数$p$，我们定义$f$模$p$的贝尔级数为：<br>$$<br>f_p(x)=\sum_{i = 0}^{+\infty} f(p^i)x^i<br>$$</p>
-<h3 id="贝尔级数的基本性质"><a href="#贝尔级数的基本性质" class="headerlink" title="贝尔级数的基本性质"></a>贝尔级数的基本性质</h3><h4 id="唯一定理"><a href="#唯一定理" class="headerlink" title="唯一定理"></a>唯一定理</h4><p>对于两个积性函数$f$和$g$，如果对于任意质数$p$都有$f$和$g$模$p$的贝尔级数相同，那两者相同。</p>
+<h2 id="贝尔级数的概念"><a href="#贝尔级数的概念" class="headerlink" title="贝尔级数的概念"></a>贝尔级数的概念</h2><h3 id="贝尔级数的定义"><a href="#贝尔级数的定义" class="headerlink" title="贝尔级数的定义"></a>贝尔级数的定义</h3><p>贝尔级数是一种形式幂级数。对于给定的数论函数$f$和质数$p$，我们定义$f$模$p$的贝尔级数为：</p>
+<script type="math/tex; mode=display">
+f_p(x)=\sum_{i = 0}^{+\infty} f(p^i)x^i</script><h3 id="贝尔级数的基本性质"><a href="#贝尔级数的基本性质" class="headerlink" title="贝尔级数的基本性质"></a>贝尔级数的基本性质</h3><h4 id="唯一定理"><a href="#唯一定理" class="headerlink" title="唯一定理"></a>唯一定理</h4><p>对于两个积性函数$f$和$g$，如果对于任意质数$p$都有$f$和$g$模$p$的贝尔级数相同，那两者相同。</p>
 <p>这个定理我局的还事挺好理解的……两个积性函数在任何质数的幂的表现都相同，那么两者也相同。</p>
 <p>因为一般的数论函数没有这么优秀的性质……所以下面提到的贝尔级数的应用基本上都针对积性函数……</p>
 <h4 id="狄利克雷卷积"><a href="#狄利克雷卷积" class="headerlink" title="狄利克雷卷积"></a>狄利克雷卷积</h4><p>对任意两个数论函数$f$和$g$，有$(f\ast g)_p(x) = f_p(x)\cdot g_p(x)$。</p>
@@ -427,7 +428,9 @@
 <p>如果你不知道贝尔级数，你可能需要靠背上面提到的那个用传统方法很难证的结论来做这个题……</p>
 <p>但如果说你知道贝尔级数的话，你发现原函数贝尔级数为$(1 + x)(1 - px)$，然后我们想肯定要消掉一部分或者全部式子。我们考虑卷上一个$\mathrm{id}$，弄完了之后的贝尔级数为$1 + x$，也就是$\mu^2$。</p>
 <p>$\mathrm{id}$的前缀和自然好说，但是$\mu^2$的前缀和咋整？</p>
-<p>其实$\mu^2$就是判断它是否没有完全平方因子。因此我们直接枚举那个因子的平方根就好了，但是这样会重复，因此考虑用$\mu$容斥一下，得到：<br>$$<br>\sum_{i = 1}^n\mu^2(i)=\sum_{i = 1}^{\lfloor\sqrt{n}\rfloor}\mu(i)\lfloor\frac{n}{i^2}\rfloor<br>$$<br>因此$\mu^2$的前缀和是可以根号复杂度来求的，不会影响杜教筛总的转移复杂度。因此总复杂度为$O(n^{\frac{2}{3}})$。</p>
+<p>其实$\mu^2$就是判断它是否没有完全平方因子。因此我们直接枚举那个因子的平方根就好了，但是这样会重复，因此考虑用$\mu$容斥一下，得到：</p>
+<script type="math/tex; mode=display">
+\sum_{i = 1}^n\mu^2(i)=\sum_{i = 1}^{\lfloor\sqrt{n}\rfloor}\mu(i)\lfloor\frac{n}{i^2}\rfloor</script><p>因此$\mu^2$的前缀和是可以根号复杂度来求的，不会影响杜教筛总的转移复杂度。因此总复杂度为$O(n^{\frac{2}{3}})$。</p>
 <h3 id="在不知道函数本身是啥的时候杜教筛"><a href="#在不知道函数本身是啥的时候杜教筛" class="headerlink" title="在不知道函数本身是啥的时候杜教筛"></a>在不知道函数本身是啥的时候杜教筛</h3><p>还是给一道题：</p>
 <p>有一个积性函数$f(x)$，你不知道它本身是啥，但是你知道他满足以下性质：</p>
 <ul>
@@ -436,8 +439,14 @@
 </ul>
 <p>求这玩意的前缀和，$n\le 10^{11}$。</p>
 <p>其实你通过OEIS可以知道这个函数本身是啥（逃），但考虑到那样你也很难用常规手段杜教筛所以还事没啥用……</p>
-<p>首先考虑去构造这个玩意的贝尔级数。它看起来很像事$\mathrm{id}$和$\lambda$的贝尔级数加一下，但是考虑到$f(1) = 1$因此还要再减个1。最后得到：<br>$$<br>f_p(x)=\frac{1}{1 - px} + \frac{1}{1 + x} - 1<br>$$<br>我们想要卷上一个$g$，那些分母看起来很不顺眼，干脆把他们都消掉了吧！因此我们规定$g_p(x) = (1 - px)(1 + x)$（因此我们得知$g = (\mathrm{id}\cdot\mu)\ast\mu^2$）。卷出来之后发现：<br>$$<br>(f\ast g)_p(x) = 1 + x + 1 - px - 1 - x + px + px^2 = 1 + px^2<br>$$<br>然后我们弄了一大半顿我们还是不知道$f\ast g$具体是啥……但是我们观察到一点非常重要的性质：若$(f\ast g)(x)\ne 0$，那么$x$起码也得是完全平方数，并且$\mu^2(\sqrt{x}) = 1$，并且对答案的贡献为$\sqrt{x}$！</p>
-<p>这下$f\ast g$虽然还不知道是啥，但是起码它前缀和好求了！我们对于对答案可能有贡献的$x$枚举其算术平方根即可，写出来就是：<br>$$<br>\sum_{i = 1}^n(f\ast g)(i) = \sum_{i = 1}^{\lfloor\sqrt{n}\rfloor}\mu^2(i)i<br>$$<br>这样的话求$f\ast g$的前缀和的复杂度就已经降到$O(\sqrt{n})$了，更进一步我们发现这个式子的答案只和$\lfloor\sqrt{n}\rfloor$有关，所以我们用$O(\sqrt{n})$的时间预处理所有这种和之后$O(1)$查询就好了。</p>
+<p>首先考虑去构造这个玩意的贝尔级数。它看起来很像事$\mathrm{id}$和$\lambda$的贝尔级数加一下，但是考虑到$f(1) = 1$因此还要再减个1。最后得到：</p>
+<script type="math/tex; mode=display">
+f_p(x)=\frac{1}{1 - px} + \frac{1}{1 + x} - 1</script><p>我们想要卷上一个$g$，那些分母看起来很不顺眼，干脆把他们都消掉了吧！因此我们规定$g_p(x) = (1 - px)(1 + x)$（因此我们得知$g = (\mathrm{id}\cdot\mu)\ast\mu^2$）。卷出来之后发现：</p>
+<script type="math/tex; mode=display">
+(f\ast g)_p(x) = 1 + x + 1 - px - 1 - x + px + px^2 = 1 + px^2</script><p>然后我们弄了一大半顿我们还是不知道$f\ast g$具体是啥……但是我们观察到一点非常重要的性质：若$(f\ast g)(x)\ne 0$，那么$x$起码也得是完全平方数，并且$\mu^2(\sqrt{x}) = 1$，并且对答案的贡献为$\sqrt{x}$！</p>
+<p>这下$f\ast g$虽然还不知道是啥，但是起码它前缀和好求了！我们对于对答案可能有贡献的$x$枚举其算术平方根即可，写出来就是：</p>
+<script type="math/tex; mode=display">
+\sum_{i = 1}^n(f\ast g)(i) = \sum_{i = 1}^{\lfloor\sqrt{n}\rfloor}\mu^2(i)i</script><p>这样的话求$f\ast g$的前缀和的复杂度就已经降到$O(\sqrt{n})$了，更进一步我们发现这个式子的答案只和$\lfloor\sqrt{n}\rfloor$有关，所以我们用$O(\sqrt{n})$的时间预处理所有这种和之后$O(1)$查询就好了。</p>
 <p>剩下唯一的硬骨头就是$g$的前缀和，这个上一小节已经讲了。</p>
 <p><del>虽说这玩意蛮有用的……但是无法阻止杜教筛过气，常熟优秀还好想的MIN_25筛已经要dssq力（悲）</del></p>
 
@@ -475,9 +484,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/贝尔级数/" rel="tag"># 贝尔级数</a>
-          
             <a href="/tags/生成函数/" rel="tag"># 生成函数</a>
+          
+            <a href="/tags/贝尔级数/" rel="tag"># 贝尔级数</a>
           
             <a href="/tags/杜教筛/" rel="tag"># 杜教筛</a>
           
@@ -1249,7 +1258,24 @@
         }
       });
     </script>
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
   
 
 
