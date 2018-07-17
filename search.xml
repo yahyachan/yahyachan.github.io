@@ -3,7 +3,7 @@
   
     
     <entry>
-      <title>「LibreOJ 2105」「TJOI 2015」概率论</title>
+      <title>「TJOI2015」概率论</title>
       <link href="/2018/07/17/loj2105/"/>
       <url>/2018/07/17/loj2105/</url>
       <content type="html"><![CDATA[<p><del>通过OEIS等传统艺能</del>易知答案为$\frac{n(n + 1)}{2(2n - 1)}$。然后下面说一下怎么证明……</p><a id="more"></a><p>令虑$n$个点的二叉树的方案数为$H_n$（其实很显然就是卡塔兰数列），令$n$个点的所有二叉树的叶子数的和为$F_n$。</p><p>考虑推导$H_n$的生成函数。我们知道（下面只考虑$n &gt; 0$，我们钦定$H_0 = 1$）：<br>$$<br>H_n = \sum_{i = 0}^{n - 1} H_i H_{n - i - 1}<br>$$<br>所以说对于$H$的生成函数，我们可以列方程：<br>$$<br>H(x) = xH^2(x) + 1<br>$$<br>解得：<br>$$<br>H(x) = \frac{1 \pm \sqrt{1 - 4x}}{2x}<br>$$<br>通过收敛性可以得知（具体地说……如果取得是加号，那么$H(x)$在0处不收敛，与$H(x)$的零次项系数的取值有限的事实明显背道相驰），应取$H(x) = \frac{1 - \sqrt{1 - 4x}}{2x}$。</p><p>由于$H$就是卡塔兰数列，所以有$H_n = \frac{1}{n + 1}\binom{2n}{n}$。</p><p>然后对于$F$，我们考虑左右儿子分别的贡献，就可以列式得（这里考虑$n &gt; 1$的情况，$F_1=1$）：<br>$$<br>F_n = 2\sum_{i = 1}^{n - 1} F_i H_{n - i - 1}<br>$$<br>所以可以列出方程：<br>$$<br>F(x) = 2xF(x)H(x) + x<br>$$<br>然后解得：<br>$$<br>F(x) = \frac{x}{\sqrt{1 - 4x}}<br>$$<br>下面那个开根，看起来很不好弄。我们尝试用广义二项式定理展开它，就可以得到：<br>$$<br>F(x) = \sum_{i = 1}^{+\infin} \binom{-0.5}{i - 1}(-4)^{i - 1} x^i<br>$$<br>这里牵扯到了任意实数的组合数……定义可以参考维基（具体是二项式定理那篇）。然后我们去考虑$F_n$：<br>$$<br>\begin{aligned}<br>F_n &amp;= \frac{(-0.5)^{\underline{n - 1}}(-4)^{n - 1}}{(n - 1)!}\<br>&amp;=\frac{1}{(n - 1)!}\prod_{i = 0}^{n - 2} (-0.5 - i)\cdot (-4)\<br>&amp;=\frac{2^{n - 1}}{(n - 1)!}\prod_{i = 0}^{n - 2} (1 + 2i)\<br>&amp;=\frac{2^{n - 1}}{(n - 1)!}\cdot\frac{(2n - 2)!}{2^{n - 1}(n - 1)!}\<br>&amp;=\frac{(2n - 2)!}{(n - 1)!(n - 1)!}\<br>&amp;=\binom{2n - 2}{n - 1}<br>\end{aligned}<br>$$<br>最后的答案是一个$\frac{F_n}{H_n}$，不妨推一下：<br>$$<br>\begin{aligned}<br>\frac{F_n}{H_n} &amp;= \frac{(n + 1)\binom{2n - 2}{n - 1}}{\binom{2n}{n}}\<br>&amp;=\frac{(n + 1)(2n - 2)!n!n!}{(n-1)!(n-1)!(2n)!}\<br>&amp;=\frac{(n + 1)n^2}{2n(2n - 1)}\<br>&amp;=\frac{(n + 1)n}{2(2n - 1)}<br>\end{aligned}<br>$$<br>终于搞出来了……</p><p>代码不用贴了吧……（逃</p>]]></content>
@@ -17,11 +17,9 @@
       
         <tags>
             
-            <tag> LibreOJ </tag>
+            <tag> 生成函数 </tag>
             
             <tag> TJOI </tag>
-            
-            <tag> 生成函数 </tag>
             
             <tag> 广义二项式定理 </tag>
             
@@ -92,9 +90,9 @@
       
         <tags>
             
-            <tag> 生成函数 </tag>
-            
             <tag> 贝尔级数 </tag>
+            
+            <tag> 生成函数 </tag>
             
             <tag> 杜教筛 </tag>
             
