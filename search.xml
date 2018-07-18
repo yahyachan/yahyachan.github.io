@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[BZOJ 3551「ONTAK2010」Peaks加强版]]></title>
+    <url>%2F2018%2F07%2F18%2FBZOJ3551%2F</url>
+    <content type="text"><![CDATA[真他X的是个弟弟。 初中会嘴巴的东西，高中不会了。 写了骗分，被多组数据雷普了，从75到5。 我谔谔，还事书这题罢，，， 这题大概可以用可持久化并查集套可持久化平衡树或权值线段树啥的做一下（逃 然后我们考虑用一种简单的做法…… 如果我们最后的并查集树中只有原图中的点的话，那么很多信息会非常难处理，那么是否可以考虑引入边？ 在Kruskal的过程中，边被从小到大加入。那么我们给每个边建一个点，用来维护经过这条边才能联通的点的信息。最后我们会得到一棵满二叉树。 这样的好处事有很多的……首先我们可以把信息维护在边上了。这个题要求$k$大，所以我们就用可持久化权值线段树吧，然后每个非叶子结点合并信息的时候直接可持久化的线段树合并就行了。 然后还有一个小好处，就是这棵树显然从叶子向上的边点的权值事单调不降的，这样我们可以直接倍增找到一个最往上的符合限制的祖先，用这个祖先的信息就行了。 代码： 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169170171#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;const int maxn = 200005;const int maxm = 500005;int n, m;struct Edge &#123; int u, v, d; bool operator &lt;(const Edge &amp;res) const &#123; return d &lt; res.d; &#125;&#125;;Edge E[maxm];const int bufsiz = 1024 * 1024 * 40;char buf[bufsiz]; char *cur = buf;void *alloc(size_t size) &#123; if(cur - buf + size &gt; bufsiz) &#123; return malloc(size); &#125; else &#123; char *ret = cur; cur += size; return ret; &#125;&#125;struct Node &#123; int sumv; Node *lc, *rc;&#125;;Node *nil;void init_tree() &#123; nil = (Node*)alloc(sizeof(Node)); nil -&gt; sumv = 0; nil -&gt; lc = nil -&gt; rc = nil;&#125;Node *alloc_node(int v = 0, Node *lc = nil, Node *rc = nil) &#123; Node *ret = (Node*)alloc(sizeof(Node)); ret -&gt; sumv = v; ret -&gt; lc = lc; ret -&gt; rc = rc; return ret;&#125;Node *gen_chain(int L, int R, int p, int v) &#123; if(L == R) &#123; return alloc_node(v); &#125; else &#123; int M = (L + R) / 2; Node *lc = nil, *rc = nil; if(p &lt;= M) &#123; lc = gen_chain(L, M, p, v); &#125; else &#123; rc = gen_chain(M + 1, R, p, v); &#125; return alloc_node(v, lc, rc); &#125;&#125;Node *merge(Node *A, Node *B) &#123; if(A == nil) return B; if(B == nil) return A; Node *lc = merge(A -&gt; lc, B -&gt; lc); Node *rc = merge(A -&gt; rc, B -&gt; rc); Node *ret = alloc_node(A -&gt; sumv + B -&gt; sumv, lc, rc); return ret;&#125;int kth(Node *o, int L, int R, int k) &#123; if(o -&gt; sumv &lt; k) &#123; return 0; &#125; if(L == R) &#123; return L; &#125; else &#123; int M = (L + R) / 2; if(k &lt;= o -&gt; rc -&gt; sumv) &#123; return kth(o -&gt; rc, M + 1, R, k); &#125; else &#123; return kth(o -&gt; lc, L, M, k - o -&gt; rc -&gt; sumv); &#125; &#125;&#125;int p[maxn];void init_set() &#123; for(int i = 1; i &lt;= 2 * n; i ++) &#123; p[i] = i; &#125;&#125;int get_fa(int x) &#123; if(p[x] == x) &#123; return x; &#125; else &#123; return (p[x] = get_fa(p[x])); &#125;&#125;void merge_set(int x, int y) &#123; x = get_fa(x), y = get_fa(y); p[x] = y;&#125;bool is_same(int x, int y) &#123; return (get_fa(x) == get_fa(y));&#125;int h[maxn], h2[maxn]; int lsiz;void desc() &#123; std::copy(h + 1, h + 1 + n, h2 + 1); std::sort(h2 + 1, h2 + 1 + n); lsiz = std::unique(h2 + 1, h2 + 1 + n) - h2 - 1; for(int i = 1; i &lt;= n; i ++) &#123; h[i] = std::lower_bound(h2 + 1, h2 + 1 + lsiz, h[i]) - h2; &#125;&#125;int lim[maxn];int anc[maxn][19]; int cnt;Node *T[maxn];void build_tree() &#123; memset(anc, -1, sizeof(anc)); init_set(); init_tree(); desc(); for(int i = 1; i &lt;= n; i ++) &#123; T[i] = gen_chain(1, lsiz, h[i], 1); &#125; std::sort(E + 1, E + 1 + m); cnt = n; for(int i = 1; i &lt;= m; i ++) &#123; int u = E[i].u, v = E[i].v, l = E[i].d; if(is_same(u, v)) continue; u = get_fa(u); v = get_fa(v); cnt ++; lim[cnt] = l; T[cnt] = merge(T[u], T[v]); anc[u][0] = anc[v][0] = cnt; merge_set(u, cnt); merge_set(v, cnt); &#125; for(int j = 1; (1 &lt;&lt; j) &lt; cnt; j ++) &#123; for(int i = 1; i &lt;= cnt; i ++) &#123; int a = anc[i][j - 1]; if(a != -1) anc[i][j] = anc[a][j - 1]; &#125; &#125;&#125;int get_up(int x, int l) &#123; for(int j = 18; j &gt;= 0; j --) &#123; int a = anc[x][j]; if(a != -1 &amp;&amp; lim[a] &lt;= l) &#123; x = a; &#125; &#125; return x;&#125;int main() &#123; int q; scanf("%d%d%d", &amp;n, &amp;m, &amp;q); for(int i = 1; i &lt;= n; i ++) scanf("%d", &amp;h[i]); for(int i = 1; i &lt;= m; i ++) &#123; scanf("%d%d%d", &amp;E[i].u, &amp;E[i].v, &amp;E[i].d); &#125; build_tree(); int lastans = 0; h2[0] = -1; while(q --) &#123; int v, x, k; scanf("%d%d%d", &amp;v, &amp;x, &amp;k); if(lastans != -1) &#123; v ^= lastans; x ^= lastans; k ^= lastans; &#125; v = get_up(v, x); printf("%d\n", lastans = h2[kth(T[v], 1, lsiz, k)]);#ifdef LOCAL lastans = 0;#endif &#125; return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>BZOJ</tag>
+        <tag>ONTAK</tag>
+        <tag>Kruskal重构树</tag>
+        <tag>权值线段树</tag>
+        <tag>线段树合并</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[「TJOI2015」概率论]]></title>
     <url>%2F2018%2F07%2F17%2Floj2105%2F</url>
     <content type="text"><![CDATA[通过OEIS等传统艺能易知答案为$\frac{n(n + 1)}{2(2n - 1)}$。然后下面说一下怎么证明…… 令虑$n$个点的二叉树的方案数为$H_n$（其实很显然就是卡塔兰数列），令$n$个点的所有二叉树的叶子数的和为$F_n$。 考虑推导$H_n$的生成函数。我们知道（下面只考虑$n &gt; 0$，我们钦定$H_0 = 1$）： H_n = \sum_{i = 0}^{n - 1} H_i H_{n - i - 1}所以说对于$H$的生成函数，我们可以列方程： H(x) = xH^2(x) + 1解得： H(x) = \frac{1 \pm \sqrt{1 - 4x}}{2x}通过收敛性可以得知（具体地说……如果取得是加号，那么$H(x)$在0处不收敛，与$H(x)$的零次项系数的取值有限的事实明显背道相驰），应取$H(x) = \frac{1 - \sqrt{1 - 4x}}{2x}$。 由于$H$就是卡塔兰数列，所以有$H_n = \frac{1}{n + 1}\binom{2n}{n}$。 然后对于$F$，我们考虑左右儿子分别的贡献，就可以列式得（这里考虑$n &gt; 1$的情况，$F_1=1$）： F_n = 2\sum_{i = 1}^{n - 1} F_i H_{n - i - 1}所以可以列出方程： F(x) = 2xF(x)H(x) + x然后解得： F(x) = \frac{x}{\sqrt{1 - 4x}}下面那个开根，看起来很不好弄。我们尝试用广义二项式定理展开它，就可以得到： F(x) = \sum_{i = 1}^{+\infty} \binom{-0.5}{i - 1}(-4)^{i - 1} x^i这里牵扯到了任意实数的组合数……定义可以参考维基（具体是二项式定理那篇）。然后我们去考虑$F_n$： \begin{aligned} F_n &= \frac{(-0.5)^{\underline{n - 1}}(-4)^{n - 1}}{(n - 1)!}\\ &=\frac{1}{(n - 1)!}\prod_{i = 0}^{n - 2} (-0.5 - i)\cdot (-4)\\ &=\frac{2^{n - 1}}{(n - 1)!}\prod_{i = 0}^{n - 2} (1 + 2i)\\ &=\frac{2^{n - 1}}{(n - 1)!}\cdot\frac{(2n - 2)!}{2^{n - 1}(n - 1)!}\\ &=\frac{(2n - 2)!}{(n - 1)!(n - 1)!}\\ &=\binom{2n - 2}{n - 1} \end{aligned}最后的答案是一个$\frac{F_n}{H_n}$，不妨推一下： \begin{aligned} \frac{F_n}{H_n} &= \frac{(n + 1)\binom{2n - 2}{n - 1}}{\binom{2n}{n}}\\ &=\frac{(n + 1)(2n - 2)!n!n!}{(n-1)!(n-1)!(2n)!}\\ &=\frac{(n + 1)n^2}{2n(2n - 1)}\\ &=\frac{(n + 1)n}{2(2n - 1)} \end{aligned}终于搞出来了…… 代码不用贴了吧……（逃]]></content>
@@ -8,8 +23,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>TJOI</tag>
         <tag>生成函数</tag>
+        <tag>TJOI</tag>
         <tag>广义二项式定理</tag>
       </tags>
   </entry>
@@ -46,8 +61,8 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>生成函数</tag>
         <tag>贝尔级数</tag>
+        <tag>生成函数</tag>
         <tag>杜教筛</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
