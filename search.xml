@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[UOJ 221「NOI2016」循环之美]]></title>
+    <url>%2F2018%2F07%2F21%2FNOI2016D1T3%2F</url>
+    <content type="text"><![CDATA[Description求有多少数值不同的分数$\frac{x}{y}$（$1\leq x\leq n, 1\leq y\leq m$），满足其在$k$进制下化为小数之后事纯循环小数（即小数部分是无限循环的）。 $1\leq n, m\leq 10^9,2\leq k\leq 2000$。 Solution首先如果只统计最简分数就能保证数值相同辣（即钦点$x\perp y$，这里用垂直符号表示互质）。然后通过猜结论等手段可以发现纯循环小数其实限制了$y\perp k$。 然后考虑颓柿子： \begin{aligned} \quad&\sum_{x = 1}^n\sum_{y = 1}^m [x\perp y][y\perp k]\\ =&\sum_{x = 1}^n\sum_{y = 1,y\perp k}^m \sum_{d | x, d | y}\mu(d)\\ =&\sum_{d = 1,d\perp k}^{\min(n, m)}\mu(d)\lfloor\frac{n}{d}\rfloor\sum_{y = 1}^{\lfloor\frac{m}{d}\rfloor}[y\perp k] \end{aligned}然后这样是个反演的形式……很容易想到数论分块罢…… 接下来首先要考虑对于所有$\lfloor\frac{m}{d}\rfloor$处理出范围内和$k$互质的数的数量，这个很容易想到洲阁筛的思路。考虑筛出$k$的所有质因子$p_1,p_2,\ldots,p_c$，定义状态$f(i, j)$表示不大于$j$且和$p_1, p_2,\ldots,p_i$互质的数的数目（边界为$f(0, j) = j$）。然后转移很显然是： f(i, j) = f(i - 1, j) - f(i - 1, \lfloor\frac{j}{p_i}\rfloor)然后我们还有一块硬骨头……就是对于所有$\lfloor\frac{n}{d}\rfloor$要求出范围内和$k$互质的$d$的$\mu(d)$的和。还是采用洲阁筛的思路，定义$g(i, j)$表示对于所有$d$满足$d\leq j$且$d\perp p_1, p_2,\ldots, p_i$的$\mu(d)$的和，这样边界$g(0, j)$也就是直接对$\mu$求一个前缀和，这个杜教筛处理。其他情况的话，我们要排除在一个没有前$i$个质因子的数的基础上乘上$p_i$的情况（如果有$p_i$这个质因子的话再乘一遍就变成0了，所以对答案没有影响），故转移如下： g(i,j)=g(i - 1, j) + g(i, \lfloor\frac{j}{p_i}\rfloor)考虑到这题$k$不大，所以第一维非常的小，甚至不需要用洲阁筛的一般加速方法。总复杂度为$O(n^\frac{2}{3} + \omega(k)\sqrt{n})$。 Code12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;cmath&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;unordered_map&gt;using ll = long long;const int N = 10000000;int mu[N + 5]; int mu_S[N + 5];int prm[N + 5]; bool vis[N + 5];void process() &#123; mu[1] = 1; vis[1] = true; int cnt = 0; for(int i = 2; i &lt;= N; i ++) &#123; if(!vis[i]) &#123; prm[cnt ++] = i; mu[i] = -1; &#125; for(int j = 0; j &lt; cnt &amp;&amp; i * prm[j] &lt;= N; j ++) &#123; int v = i * prm[j]; vis[v] = true; if(i % prm[j] == 0) &#123; mu[v] = 0; break; &#125; else &#123; mu[v] = -mu[i]; &#125; &#125; &#125; for(int i = 1; i &lt;= N; i ++) &#123; mu_S[i] = mu_S[i - 1] + mu[i]; &#125;&#125;int p[12]; int pcnt;void desc(int x) &#123; pcnt = 0; int l = sqrt(x + 0.5); for(int i = 2; i &lt;= l; i ++) &#123; if(x % i == 0) &#123; p[++ pcnt] = i; while(x % i == 0) x /= i; &#125; &#125; if(x &gt; 1) p[++ pcnt] = x;&#125;std::unordered_map&lt;int, ll&gt; h1[12];ll calc_1(int c, int n) &#123; if(c == 0) return n; if(n == 0) return 0; if(h1[c].count(n)) return h1[c][n]; ll ret = calc_1(c - 1, n) - calc_1(c - 1, n / p[c]); h1[c][n] = ret; return ret;&#125;std::unordered_map&lt;int, ll&gt; h2[12];ll calc_2(int c, int n) &#123; if(c == 0) &#123; if(n &lt;= N) return mu_S[n]; if(h2[0].count(n)) return h2[0][n]; ll ret = 1; for(int i = 2; i &lt;= n;) &#123; int next = n / (n / i); ret -= (ll(next - i + 1)) * calc_2(0, n / i); i = next + 1; &#125; h2[0][n] = ret; return ret; &#125; if(n == 0) return 0; if(h2[c].count(n)) return h2[c][n]; ll ret = calc_2(c - 1, n) + calc_2(c, n / p[c]); h2[c][n] = ret; return ret;&#125;ll calc(int n, int m, int k) &#123; desc(k); ll ans = 0; ll las = 0; for(int i = 1; i &lt;= std::min(n, m);) &#123; int next = std::min(n / (n / i), m / (m / i)); ll th = n / i; th *= (ll)calc_1(pcnt, m / i); ll ts = calc_2(pcnt, next); th *= (ts - las); ans += th; i = next + 1; las = ts; &#125; return ans;&#125;int main() &#123; process(); int n, m, k; scanf("%d%d%d", &amp;n, &amp;m, &amp;k); printf("%lld\n", calc(n, m, k)); return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>UOJ</tag>
+        <tag>NOI</tag>
+        <tag>狄利克雷卷积</tag>
+        <tag>莫比乌斯反演</tag>
+        <tag>洲阁筛</tag>
+        <tag>杜教筛</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[BZOJ 3551「ONTAK2010」Peaks加强版]]></title>
     <url>%2F2018%2F07%2F18%2FBZOJ3551%2F</url>
     <content type="text"><![CDATA[真他X的是个弟弟。 初中会嘴巴的东西，高中不会了。 写了骗分，被多组数据雷普了，从75到5。 我谔谔，还事书这题罢，，， 这题大概可以用可持久化并查集套可持久化平衡树或权值线段树啥的做一下（逃 然后我们考虑用一种简单的做法…… 如果我们最后的并查集树中只有原图中的点的话，那么很多信息会非常难处理，那么是否可以考虑引入边？ 在Kruskal的过程中，边被从小到大加入。那么我们给每个边建一个点，用来维护经过这条边才能联通的点的信息。最后我们会得到一棵满二叉树。 这样的好处事有很多的……首先我们可以把信息维护在边上了。这个题要求$k$大，所以我们就用可持久化权值线段树吧，然后每个非叶子结点合并信息的时候直接可持久化的线段树合并就行了。 然后还有一个小好处，就是这棵树显然从叶子向上的边点的权值事单调不降的，这样我们可以直接倍增找到一个最往上的符合限制的祖先，用这个祖先的信息就行了。 代码： 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169170171#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;const int maxn = 200005;const int maxm = 500005;int n, m;struct Edge &#123; int u, v, d; bool operator &lt;(const Edge &amp;res) const &#123; return d &lt; res.d; &#125;&#125;;Edge E[maxm];const int bufsiz = 1024 * 1024 * 40;char buf[bufsiz]; char *cur = buf;void *alloc(size_t size) &#123; if(cur - buf + size &gt; bufsiz) &#123; return malloc(size); &#125; else &#123; char *ret = cur; cur += size; return ret; &#125;&#125;struct Node &#123; int sumv; Node *lc, *rc;&#125;;Node *nil;void init_tree() &#123; nil = (Node*)alloc(sizeof(Node)); nil -&gt; sumv = 0; nil -&gt; lc = nil -&gt; rc = nil;&#125;Node *alloc_node(int v = 0, Node *lc = nil, Node *rc = nil) &#123; Node *ret = (Node*)alloc(sizeof(Node)); ret -&gt; sumv = v; ret -&gt; lc = lc; ret -&gt; rc = rc; return ret;&#125;Node *gen_chain(int L, int R, int p, int v) &#123; if(L == R) &#123; return alloc_node(v); &#125; else &#123; int M = (L + R) / 2; Node *lc = nil, *rc = nil; if(p &lt;= M) &#123; lc = gen_chain(L, M, p, v); &#125; else &#123; rc = gen_chain(M + 1, R, p, v); &#125; return alloc_node(v, lc, rc); &#125;&#125;Node *merge(Node *A, Node *B) &#123; if(A == nil) return B; if(B == nil) return A; Node *lc = merge(A -&gt; lc, B -&gt; lc); Node *rc = merge(A -&gt; rc, B -&gt; rc); Node *ret = alloc_node(A -&gt; sumv + B -&gt; sumv, lc, rc); return ret;&#125;int kth(Node *o, int L, int R, int k) &#123; if(o -&gt; sumv &lt; k) &#123; return 0; &#125; if(L == R) &#123; return L; &#125; else &#123; int M = (L + R) / 2; if(k &lt;= o -&gt; rc -&gt; sumv) &#123; return kth(o -&gt; rc, M + 1, R, k); &#125; else &#123; return kth(o -&gt; lc, L, M, k - o -&gt; rc -&gt; sumv); &#125; &#125;&#125;int p[maxn];void init_set() &#123; for(int i = 1; i &lt;= 2 * n; i ++) &#123; p[i] = i; &#125;&#125;int get_fa(int x) &#123; if(p[x] == x) &#123; return x; &#125; else &#123; return (p[x] = get_fa(p[x])); &#125;&#125;void merge_set(int x, int y) &#123; x = get_fa(x), y = get_fa(y); p[x] = y;&#125;bool is_same(int x, int y) &#123; return (get_fa(x) == get_fa(y));&#125;int h[maxn], h2[maxn]; int lsiz;void desc() &#123; std::copy(h + 1, h + 1 + n, h2 + 1); std::sort(h2 + 1, h2 + 1 + n); lsiz = std::unique(h2 + 1, h2 + 1 + n) - h2 - 1; for(int i = 1; i &lt;= n; i ++) &#123; h[i] = std::lower_bound(h2 + 1, h2 + 1 + lsiz, h[i]) - h2; &#125;&#125;int lim[maxn];int anc[maxn][19]; int cnt;Node *T[maxn];void build_tree() &#123; memset(anc, -1, sizeof(anc)); init_set(); init_tree(); desc(); for(int i = 1; i &lt;= n; i ++) &#123; T[i] = gen_chain(1, lsiz, h[i], 1); &#125; std::sort(E + 1, E + 1 + m); cnt = n; for(int i = 1; i &lt;= m; i ++) &#123; int u = E[i].u, v = E[i].v, l = E[i].d; if(is_same(u, v)) continue; u = get_fa(u); v = get_fa(v); cnt ++; lim[cnt] = l; T[cnt] = merge(T[u], T[v]); anc[u][0] = anc[v][0] = cnt; merge_set(u, cnt); merge_set(v, cnt); &#125; for(int j = 1; (1 &lt;&lt; j) &lt; cnt; j ++) &#123; for(int i = 1; i &lt;= cnt; i ++) &#123; int a = anc[i][j - 1]; if(a != -1) anc[i][j] = anc[a][j - 1]; &#125; &#125;&#125;int get_up(int x, int l) &#123; for(int j = 18; j &gt;= 0; j --) &#123; int a = anc[x][j]; if(a != -1 &amp;&amp; lim[a] &lt;= l) &#123; x = a; &#125; &#125; return x;&#125;int main() &#123; int q; scanf("%d%d%d", &amp;n, &amp;m, &amp;q); for(int i = 1; i &lt;= n; i ++) scanf("%d", &amp;h[i]); for(int i = 1; i &lt;= m; i ++) &#123; scanf("%d%d%d", &amp;E[i].u, &amp;E[i].v, &amp;E[i].d); &#125; build_tree(); int lastans = 0; h2[0] = -1; while(q --) &#123; int v, x, k; scanf("%d%d%d", &amp;v, &amp;x, &amp;k); if(lastans != -1) &#123; v ^= lastans; x ^= lastans; k ^= lastans; &#125; v = get_up(v, x); printf("%d\n", lastans = h2[kth(T[v], 1, lsiz, k)]);#ifdef LOCAL lastans = 0;#endif &#125; return 0;&#125;]]></content>
@@ -23,8 +39,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>生成函数</tag>
         <tag>TJOI</tag>
+        <tag>生成函数</tag>
         <tag>广义二项式定理</tag>
       </tags>
   </entry>
@@ -36,8 +52,8 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>Min_25筛</tag>
         <tag>洲阁筛</tag>
+        <tag>Min_25筛</tag>
         <tag>SPOJ</tag>
       </tags>
   </entry>
@@ -61,11 +77,11 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>贝尔级数</tag>
-        <tag>生成函数</tag>
-        <tag>杜教筛</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
+        <tag>杜教筛</tag>
+        <tag>生成函数</tag>
+        <tag>贝尔级数</tag>
       </tags>
   </entry>
   <entry>
