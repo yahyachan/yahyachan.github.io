@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="danihao123&#39;s Blog">
 <meta property="og:description" content="Description要求你从$Z_n$（模$n$的剩余系）里选出$k$个不重复元素，使得他们的和模$n$为0。求方案数。 $1\leq n\leq 10^9, 1\leq k\leq 10^3$。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-21T12:02:44.311Z">
+<meta property="og:updated_time" content="2018-07-21T12:19:30.738Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BZOJ 4314 倍数？倍数！">
 <meta name="twitter:description" content="Description要求你从$Z_n$（模$n$的剩余系）里选出$k$个不重复元素，使得他们的和模$n$为0。求方案数。 $1\leq n\leq 10^9, 1\leq k\leq 10^3$。">
@@ -408,7 +408,7 @@
 <script type="math/tex; mode=display">
 f(x, y) = \prod_{i = 0}^{n - 1}(1 + x^iy)</script><p>这个多项式的每一项中$x$的次数表示和，$y$表示选数的数量。我们显然要求所有含$y^k$且$x$的次数为$n$的倍数的项的系数之和，那么考虑将$y$视为常数，对$x$进行单位根反演：</p>
 <script type="math/tex; mode=display">
-f(\xi_n^t, y)=\prod_{i = 0}^{n - 1}(1 + (\xi_n^{t})^iy)</script><p>观察到如果$t$和$n$不互质，那么两者可以同时约去一约数（反之，若有$t\perp n$，那么称$\xi<em>n^t$为一个$n$次本原单位根）。假设约完之后的单位根为$\xi</em>{a}^b$，那么我们发现当积式中枚举的$i$大于$a$时，会出现循环。所以我们只需要取循环节（显然长度为$a$，因为我们知道所有$a$阶单位根构成一个循环群，而$a$阶本原单位根一定是该群的生成元。原因事首先显然用$\xi_a^1$可以生成所有$a$阶单位根，所以所有$a$阶单位根构成一个循环群；然后你根据数论里的欧拉定理可以知道$x^{\phi(p)}\equiv 1\pmod{p}(x\perp p)$，那么对于任意本原单位根$\xi_a^b$有$\xi_a^{b^{\phi(a)}} = \xi_a^1$，式子左边的东西是$\xi_a^b$的若干次方，所以用$\xi_a^b$可以生成$\xi_a^1$，自然就可以生成整个循环群）的若干次方就行了，那么有：</p>
+f(\xi_n^t, y)=\prod_{i = 0}^{n - 1}(1 + (\xi_n^{t})^iy)</script><p>观察到如果$t$和$n$不互质，那么两者可以同时约去一约数（反之，若有$t\perp n$，那么称$\xi_n^t$为一个$n$次本原单位根）。假设约完之后的单位根为$\xi_a^b$，那么我们发现当积式中枚举的$i$大于$a$时，会出现循环。所以我们只需要取循环节（显然长度为$a$，因为我们知道所有$a$阶单位根构成一个循环群，而$a$阶本原单位根一定是该群的生成元。原因事首先显然用$\xi_a^1$可以生成所有$a$阶单位根，所以所有$a$阶单位根构成一个循环群；然后你根据数论里的欧拉定理可以知道$x^{\phi(p)}\equiv 1\pmod{p}(x\perp p)$，那么对于任意本原单位根$\xi_a^b$有$\xi_a^{b^{\phi(a)}} = \xi_a^1$，式子左边的东西是$\xi_a^b$的若干次方，所以用$\xi_a^b$可以生成$\xi_a^1$，自然就可以生成整个循环群）的若干次方就行了，那么有：</p>
 <script type="math/tex; mode=display">
 f(\xi_a^b, y) = (\prod_{i = 0}^{a - 1}(1 + (\xi_a^b)^iy))^\frac{n}{a}</script><p>根据上面的说法，考虑里面的积式一定可以枚举到所有$a$阶单位根，所以这个积式也可以写成：</p>
 <script type="math/tex; mode=display">
