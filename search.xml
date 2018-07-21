@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[BZOJ 4314 倍数？倍数！]]></title>
+    <url>%2F2018%2F07%2F21%2FBZOJ4314%2F</url>
+    <content type="text"><![CDATA[Description要求你从$Z_n$（模$n$的剩余系）里选出$k$个不重复元素，使得他们的和模$n$为0。求方案数。 $1\leq n\leq 10^9, 1\leq k\leq 10^3$。 Solution看上去就很像单位根反演的题？ 先放一下众所周知的单位根反演的式子： \frac{1}{n}\sum_{i = 0}^{n - 1}(\xi_{n}^i)^k=[n | k]证明很容易：假如有$n | k$，那么和式中每一项都是1，加起来除$n$后就事1了（这种情况下等比数列公比为1，所以不可以采用等比数列求和公式）；反之，我们采用等比数列求和公式可知原式中的和式为$\frac{1 - \xi_n^{kn}}{1 - \xi_n^k}$，这个东西的分子为0，那么自然和式左边为0。 那么考虑构造二元答案多项式$f(x, y)$： f(x, y) = \prod_{i = 0}^{n - 1}(1 + x^iy)这个多项式的每一项中$x$的次数表示和，$y$表示选数的数量。我们显然要求所有含$y^k$且$x$的次数为$n$的倍数的项的系数之和，那么考虑将$y$视为常数，对$x$进行单位根反演： f(\xi_n^t, y)=\prod_{i = 0}^{n - 1}(1 + (\xi_n^{t})^iy)观察到如果$t$和$n$不互质，那么两者可以同时约去一约数（反之，若有$t\perp n$，那么称$\xin^t$为一个$n$次本原单位根）。假设约完之后的单位根为$\xi{a}^b$，那么我们发现当积式中枚举的$i$大于$a$时，会出现循环。所以我们只需要取循环节（显然长度为$a$，因为我们知道所有$a$阶单位根构成一个循环群，而$a$阶本原单位根一定是该群的生成元。原因事首先显然用$\xi_a^1$可以生成所有$a$阶单位根，所以所有$a$阶单位根构成一个循环群；然后你根据数论里的欧拉定理可以知道$x^{\phi(p)}\equiv 1\pmod{p}(x\perp p)$，那么对于任意本原单位根$\xi_a^b$有$\xi_a^{b^{\phi(a)}} = \xi_a^1$，式子左边的东西是$\xi_a^b$的若干次方，所以用$\xi_a^b$可以生成$\xi_a^1$，自然就可以生成整个循环群）的若干次方就行了，那么有： f(\xi_a^b, y) = (\prod_{i = 0}^{a - 1}(1 + (\xi_a^b)^iy))^\frac{n}{a}根据上面的说法，考虑里面的积式一定可以枚举到所有$a$阶单位根，所以这个积式也可以写成： f(\xi_a^b, y) = (\prod_{i = 0}^{a - 1} (1 + \xi_a^iy))^\frac{n}{a}这么一来，我们发现对于任意$a$阶本原单位根$\xi_a^b$，对答案的贡献都是一样的，而我们知道$a$阶本原单位根有$\phi(a)$个。只要我们对所有$n$的约数求出其所有本原单位根的贡献的和，那么这题就做完了。 那么我们考虑，如果我们知道了$a$，那么怎么快速求一个本原单位根的贡献呢？ 考虑那个多项式（里面的积式），首先很容易发现其0次项为1。然后我们从零点入手…… 然后我们发现这个多项式几乎没法求零点……那么我们做一步小转换吧： \prod_{i = 0}^{a - 1}\xi_a^i(\xi_a^{a - i} + y)然后我们发现$\xi_a^{a - i}$就枚举了所有单位根，所以零点集合就是所有单位根相反数的集合。 如果$a$为偶数，那么把所有单位根取相反数之后得到的集合其实和原集合事一样的……这个大致可以理解为所有单位根构成的图形关于原点中心对称。而我们知道$x^a - 1 = 0$的解就是全体$a$阶单位根，因此答案多项式和$x^a - 1$只有常数项的不同，而取反之后得到了$1 - x^a$，其零点、常数项都符合我们的要求。 如果$a$为奇数，那么考虑$x^a$，往里面带一个单位根的相反数的话，因为$a$为奇数所以会得到$-1$，所以该多项式的零点就是$x^a + 1 = 0$的全体解。而左边多项式的常数项也符合我们的要求，因此此时多项式为$1 + x^a$。 综上可得： \prod_{i = 0}^{a - 1}(1 + \xi_a^iy) = 1 - (-y)^a而最后的答案多项式为： \frac{1}{n}\sum_{d | n}\phi(d)(1 - (-y)^d)^\frac{n}{d}这个东西的$y^k$项的系数就是答案了…… Code12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;typedef long long ll;const ll ha = 1000000007LL;ll pow_mod(ll a, ll b) &#123; ll ans = 1LL, res = a; while(b) &#123; if(1LL &amp; b) ans = (ans * res) % ha; res = (res * res) % ha; b &gt;&gt;= 1; &#125; return ans;&#125;ll inv(ll x) &#123; return pow_mod(x, ha - 2LL);&#125; ll sqrt(ll n) &#123; ll ans = 1; while((ans + 1LL) * (ans + 1LL) &lt;= n) ans ++; return ans;&#125;int phi(int n) &#123; int ans = n, m = sqrt(n); for(int i = 2; i &lt;= m; i ++) &#123; if(n % i == 0) &#123; ans = (ans / i) * (i - 1); while(n % i == 0) n /= i; &#125; &#125; if(n &gt; 1) ans = (ans / n) * (n - 1); return ans;&#125;ll C(int n, int m) &#123; if(n &lt; m) return 0; ll ans = 1; for(int i = 1; i &lt;= m; i ++) &#123; ans = (ans * (ll(n - i + 1))) % ha; ans = (ans * inv(i)) % ha; &#125; return ans;&#125;ll query(int d, int nd, int k) &#123; if(k % d != 0) return 0; ll ret = phi(d); if(d % 2 == 0 &amp;&amp; (k / d) % 2 != 0) &#123; ret = (ha - ret) % ha; &#125; ret = (ret * C(nd, k / d)) % ha; return ret;&#125;ll calc(int n, int k) &#123; int m = sqrt(n); ll ans = 0; for(int i = 1; i &lt;= m; i ++) &#123; if(n % i != 0) continue; ans = (ans + query(i, n / i, k)) % ha; if(i * i != n) ans = (ans + query(n / i, i, k)) % ha; &#125; ans = (ans * inv(n)) % ha; return ans;&#125; int main() &#123; int n, k; scanf("%d%d", &amp;n, &amp;k); printf("%lld\n", calc(n, k)); return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>BZOJ</tag>
+        <tag>单位根</tag>
+        <tag>单位根反演</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[UOJ 221「NOI2016」循环之美]]></title>
     <url>%2F2018%2F07%2F21%2FNOI2016D1T3%2F</url>
     <content type="text"><![CDATA[Description求有多少数值不同的分数$\frac{x}{y}$（$1\leq x\leq n, 1\leq y\leq m$），满足其在$k$进制下化为小数之后事纯循环小数（即小数部分是无限循环的）。 $1\leq n, m\leq 10^9,2\leq k\leq 2000$。 Solution首先如果只统计最简分数就能保证数值相同辣（即钦点$x\perp y$，这里用垂直符号表示互质）。然后通过猜结论等手段可以发现纯循环小数其实限制了$y\perp k$。 然后考虑颓柿子： \begin{aligned} \quad&\sum_{x = 1}^n\sum_{y = 1}^m [x\perp y][y\perp k]\\ =&\sum_{x = 1}^n\sum_{y = 1,y\perp k}^m \sum_{d | x, d | y}\mu(d)\\ =&\sum_{d = 1,d\perp k}^{\min(n, m)}\mu(d)\lfloor\frac{n}{d}\rfloor\sum_{y = 1}^{\lfloor\frac{m}{d}\rfloor}[y\perp k] \end{aligned}然后这样是个反演的形式……很容易想到数论分块罢…… 接下来首先要考虑对于所有$\lfloor\frac{m}{d}\rfloor$处理出范围内和$k$互质的数的数量，这个很容易想到洲阁筛的思路。考虑筛出$k$的所有质因子$p_1,p_2,\ldots,p_c$，定义状态$f(i, j)$表示不大于$j$且和$p_1, p_2,\ldots,p_i$互质的数的数目（边界为$f(0, j) = j$）。然后转移很显然是： f(i, j) = f(i - 1, j) - f(i - 1, \lfloor\frac{j}{p_i}\rfloor)然后我们还有一块硬骨头……就是对于所有$\lfloor\frac{n}{d}\rfloor$要求出范围内和$k$互质的$d$的$\mu(d)$的和。还是采用洲阁筛的思路，定义$g(i, j)$表示对于所有$d$满足$d\leq j$且$d\perp p_1, p_2,\ldots, p_i$的$\mu(d)$的和，这样边界$g(0, j)$也就是直接对$\mu$求一个前缀和，这个杜教筛处理。其他情况的话，我们要排除在一个没有前$i$个质因子的数的基础上乘上$p_i$的情况（如果有$p_i$这个质因子的话再乘一遍就变成0了，所以对答案没有影响），故转移如下： g(i,j)=g(i - 1, j) + g(i, \lfloor\frac{j}{p_i}\rfloor)考虑到这题$k$不大，所以第一维非常的小，甚至不需要用洲阁筛的一般加速方法。总复杂度为$O(n^\frac{2}{3} + \omega(k)\sqrt{n})$。 Code12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;cmath&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;unordered_map&gt;using ll = long long;const int N = 10000000;int mu[N + 5]; int mu_S[N + 5];int prm[N + 5]; bool vis[N + 5];void process() &#123; mu[1] = 1; vis[1] = true; int cnt = 0; for(int i = 2; i &lt;= N; i ++) &#123; if(!vis[i]) &#123; prm[cnt ++] = i; mu[i] = -1; &#125; for(int j = 0; j &lt; cnt &amp;&amp; i * prm[j] &lt;= N; j ++) &#123; int v = i * prm[j]; vis[v] = true; if(i % prm[j] == 0) &#123; mu[v] = 0; break; &#125; else &#123; mu[v] = -mu[i]; &#125; &#125; &#125; for(int i = 1; i &lt;= N; i ++) &#123; mu_S[i] = mu_S[i - 1] + mu[i]; &#125;&#125;int p[12]; int pcnt;void desc(int x) &#123; pcnt = 0; int l = sqrt(x + 0.5); for(int i = 2; i &lt;= l; i ++) &#123; if(x % i == 0) &#123; p[++ pcnt] = i; while(x % i == 0) x /= i; &#125; &#125; if(x &gt; 1) p[++ pcnt] = x;&#125;std::unordered_map&lt;int, ll&gt; h1[12];ll calc_1(int c, int n) &#123; if(c == 0) return n; if(n == 0) return 0; if(h1[c].count(n)) return h1[c][n]; ll ret = calc_1(c - 1, n) - calc_1(c - 1, n / p[c]); h1[c][n] = ret; return ret;&#125;std::unordered_map&lt;int, ll&gt; h2[12];ll calc_2(int c, int n) &#123; if(c == 0) &#123; if(n &lt;= N) return mu_S[n]; if(h2[0].count(n)) return h2[0][n]; ll ret = 1; for(int i = 2; i &lt;= n;) &#123; int next = n / (n / i); ret -= (ll(next - i + 1)) * calc_2(0, n / i); i = next + 1; &#125; h2[0][n] = ret; return ret; &#125; if(n == 0) return 0; if(h2[c].count(n)) return h2[c][n]; ll ret = calc_2(c - 1, n) + calc_2(c, n / p[c]); h2[c][n] = ret; return ret;&#125;ll calc(int n, int m, int k) &#123; desc(k); ll ans = 0; ll las = 0; for(int i = 1; i &lt;= std::min(n, m);) &#123; int next = std::min(n / (n / i), m / (m / i)); ll th = n / i; th *= (ll)calc_1(pcnt, m / i); ll ts = calc_2(pcnt, next); th *= (ts - las); ans += th; i = next + 1; las = ts; &#125; return ans;&#125;int main() &#123; process(); int n, m, k; scanf("%d%d%d", &amp;n, &amp;m, &amp;k); printf("%lld\n", calc(n, m, k)); return 0;&#125;]]></content>
@@ -8,11 +21,11 @@
         <category>题解</category>
       </categories>
       <tags>
+        <tag>洲阁筛</tag>
         <tag>UOJ</tag>
         <tag>NOI</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
-        <tag>洲阁筛</tag>
         <tag>杜教筛</tag>
       </tags>
   </entry>
@@ -39,8 +52,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>TJOI</tag>
         <tag>生成函数</tag>
+        <tag>TJOI</tag>
         <tag>广义二项式定理</tag>
       </tags>
   </entry>
@@ -52,8 +65,8 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>洲阁筛</tag>
         <tag>Min_25筛</tag>
+        <tag>洲阁筛</tag>
         <tag>SPOJ</tag>
       </tags>
   </entry>
@@ -80,8 +93,8 @@
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
         <tag>杜教筛</tag>
-        <tag>生成函数</tag>
         <tag>贝尔级数</tag>
+        <tag>生成函数</tag>
       </tags>
   </entry>
   <entry>
