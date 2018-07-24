@@ -9,6 +9,7 @@
       </categories>
       <tags>
         <tag>Min_25筛</tag>
+        <tag>LibreOJ</tag>
       </tags>
   </entry>
   <entry>
@@ -32,11 +33,11 @@
         <category>题解</category>
       </categories>
       <tags>
+        <tag>洲阁筛</tag>
         <tag>UOJ</tag>
         <tag>NOI</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
-        <tag>洲阁筛</tag>
         <tag>杜教筛</tag>
       </tags>
   </entry>

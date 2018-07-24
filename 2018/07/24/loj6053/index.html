@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Min_25筛," />
+  <meta name="keywords" content="Min_25筛,LibreOJ," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Description今有一积性函数$f(x)$，满足以下性质  $f(1) = 1$。 对任意质数$p$和正整数$c$，有$f(p^c) = p\oplus c$。  给定正整数$n$，求$\sum_{i = 1}^n f(i)$，答案模1000000007。 $n\leq 10^{10}$。 Solution算是一道不那么水的Min_25筛板子题？ Min_25筛最核心的地方就是对于质数的答案">
-<meta name="keywords" content="Min_25筛">
+<meta name="description" content="Description今有一积性函数$f(x)$，满足以下性质  $f(1) = 1$。 对任意质数$p$和正整数$c$，有$f(p^c) = p\oplus c$。  给定正整数$n$，求$\sum_{i = 1}^n f(i)$，答案模1000000007。 $n\leq 10^{10}$。">
+<meta name="keywords" content="Min_25筛,LibreOJ">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LibreOJ 6053 简单的函数">
 <meta property="og:url" content="https://yahyachan.github.io/2018/07/24/loj6053/index.html">
 <meta property="og:site_name" content="danihao123&#39;s Blog">
-<meta property="og:description" content="Description今有一积性函数$f(x)$，满足以下性质  $f(1) = 1$。 对任意质数$p$和正整数$c$，有$f(p^c) = p\oplus c$。  给定正整数$n$，求$\sum_{i = 1}^n f(i)$，答案模1000000007。 $n\leq 10^{10}$。 Solution算是一道不那么水的Min_25筛板子题？ Min_25筛最核心的地方就是对于质数的答案">
+<meta property="og:description" content="Description今有一积性函数$f(x)$，满足以下性质  $f(1) = 1$。 对任意质数$p$和正整数$c$，有$f(p^c) = p\oplus c$。  给定正整数$n$，求$\sum_{i = 1}^n f(i)$，答案模1000000007。 $n\leq 10^{10}$。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-24T05:42:43.050Z">
+<meta property="og:updated_time" content="2018-07-24T05:46:05.952Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LibreOJ 6053 简单的函数">
-<meta name="twitter:description" content="Description今有一积性函数$f(x)$，满足以下性质  $f(1) = 1$。 对任意质数$p$和正整数$c$，有$f(p^c) = p\oplus c$。  给定正整数$n$，求$\sum_{i = 1}^n f(i)$，答案模1000000007。 $n\leq 10^{10}$。 Solution算是一道不那么水的Min_25筛板子题？ Min_25筛最核心的地方就是对于质数的答案">
+<meta name="twitter:description" content="Description今有一积性函数$f(x)$，满足以下性质  $f(1) = 1$。 对任意质数$p$和正整数$c$，有$f(p^c) = p\oplus c$。  给定正整数$n$，求$\sum_{i = 1}^n f(i)$，答案模1000000007。 $n\leq 10^{10}$。">
 
 
 
@@ -404,6 +404,7 @@
 </ul>
 <p>给定正整数$n$，求$\sum_{i = 1}^n f(i)$，答案模<code>1000000007</code>。</p>
 <p>$n\leq 10^{10}$。</p>
+<a id="more"></a>
 <h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>算是一道<del>不那么水的</del>Min_25筛板子题？</p>
 <p>Min_25筛最核心的地方就是对于质数的答案求前缀和。那么我们考虑对任意质数$p$，$f(p)$的取值。然后我们会发现除了$2$以外的所有质数都是奇数，所以对于$2$有$f(p) = p + 1$，对其他质数有$f(p) = p - 1$。</p>
 <p>那么我们把质数的答案分为两部分考虑：一部分是$p$，另一部分是后面的加减一。前面一部分就是质数本身的和，几乎就是最简单的Min_25筛；后面也不难，只需要对于小于等于2的情况特判一下就完了。</p>
@@ -444,6 +445,8 @@
         <div class="post-tags">
           
             <a href="/tags/Min-25筛/" rel="tag"># Min_25筛</a>
+          
+            <a href="/tags/LibreOJ/" rel="tag"># LibreOJ</a>
           
         </div>
       
@@ -577,7 +580,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
