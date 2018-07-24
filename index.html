@@ -399,45 +399,18 @@
 
       
         
-          
-            <h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>定义复数$a + bi$为$k$的约数，当且仅当$a, b$为整数且存在整数$c, d$满足$(a + bi)(c + di) = k$。</p>
-<p>给定$n$，求$1$到$n$中所有整数的实部大于$0$的约数的实部的和。</p>
+          <h2 id="description">Description</h2>
+<p>定义复数<span class="math inline">\(a + bi\)</span>为<span class="math inline">\(k\)</span>的约数，当且仅当<span class="math inline">\(a, b\)</span>为整数且存在整数<span class="math inline">\(c, d\)</span>满足<span class="math inline">\((a + bi)(c + di) = k\)</span>。</p>
+<p>给定<span class="math inline">\(n\)</span>，求<span class="math inline">\(1\)</span>到<span class="math inline">\(n\)</span>中所有整数的实部大于<span class="math inline">\(0\)</span>的约数的实部的和。</p>
 <p>答案模<code>1004535809</code>。</p>
-<p>$n\leq 10^{10}$。</p>
-<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p><del>为啥这题和某课件上的简化版差距这么大啊……</del></p>
-<p>考虑一个复数$(a + bi)(c + di) = k$意味着什么，其实也就是下面两个式子：</p>
-<script type="math/tex; mode=display">
-ac - bd = k\\
-ad + bc = 0</script><p>由第二个式子可得：</p>
-<script type="math/tex; mode=display">
-\frac{a}{b} = -\frac{c}{d}</script><p>那么我们考虑将$a, b$约去他们两个之间的最大公约数，$c, d$也做一样的操作。那么上式还是成立的，并且等号两边的分式都已经最简化了，因此此时有$a = c, b = -d$。</p>
-<p>带回最早的式子（两个复数的积那个）可以得到：</p>
-<script type="math/tex; mode=display">
-c(a^2 + b^2) = k</script><p>这个$c$是我们先前约去的常数的积。从此式也可以看出$(a^2+b^2)|k$，并且贡献一定是$a$乘上一个常数。</p>
-<p>那么我们枚举互质数对$(a, b)$，其对答案的贡献是$a\sigma(\frac{n}{a^2 + b^2})$（这里$\sigma$表示$\sigma_1$，即约束之和）。</p>
-<p>因此最终答案为：</p>
-<script type="math/tex; mode=display">
-\begin{aligned}
-\quad&\sum_{i = 1}^n\sum_{a\perp b, (a^2 + b^2) | i} a\sigma(\frac{i}{a^2+b^2})
-\end{aligned}</script><p>这玩怕不是几乎不可做……因此我们考虑枚举$k = a^2 + b^2$：</p>
-<script type="math/tex; mode=display">
-\begin{aligned}
-\quad&\sum_{k = 1}^n\sum_{a\perp b, a^2 + b^2 = k} a\sum_{k | i}\sigma(\frac{i}{k})\\
-=&\sum_{k = 1}^n\sum_{a\perp b, a^2 + b^2 = k} aD(\lfloor\frac{n}{k}\rfloor)\\
-=&\sum_{k = 1}^nD(\lfloor\frac{n}{k}\rfloor)\sum_{a\perp b, a^2 + b^2 = k} a\\
-=&\sum_{k = 1}^nD(\lfloor\frac{n}{k}\rfloor)f(k)
-\end{aligned}</script><p>其中$D$为$\sigma$的前缀和，$f(k)$表记的是啥可以根据上下文推导一下（逃</p>
-<p>这个形式几乎和杜教筛如出一辙……像杜教筛一样先大力数论分块，然后先考虑怎么处理$D$，很显然有一个$O(\sqrt{n})$的做法：</p>
-<script type="math/tex; mode=display">
-\sum_{i = 1}^n i\lfloor\frac{n}{i}\rfloor</script><p>如此一来我们可以考虑先预处理不大于$n^\frac{2}{3}$的$D$值，其他情况用上面的式子求（甚至不需要记忆化复杂度也是对的）。用杜教筛那种复杂度证明可以证出这部分的复杂度是$O(n^\frac{2}{3})$的。</p>
-<p>然后我们发现我们其实也要处理$f$的前缀和$F$……但是有个互质在这这个玩意并不好处理。那么我们考虑类似于狄利克雷卷积的一些思路？定义一个$G(x) = \sum<em>{1\leq a^2+b^2\leq x}a$，这个东西可以很方便的用$O(\sqrt{n})$的复杂度求（$G(x)=\sum</em>{i = 1}^{\lfloor\sqrt{x}\rfloor}i\lfloor\sqrt{x - i^2}\rfloor$），然后我们发现有：</p>
-<script type="math/tex; mode=display">
-G(x) = \sum_{i = 1}^{\lfloor\sqrt{x}\rfloor}iF(\lfloor\frac{x}{i^2}\rfloor)</script><p>然后这个还是有点像杜教筛的一些形式啊！我们发现我们要抽出来的事$F(x)$，因此移一下项就有了：</p>
-<script type="math/tex; mode=display">
-F(x)=G(x) - \sum_{i = 2}^{\lfloor\sqrt{x}\rfloor}iF(\lfloor\frac{x}{i^2}\rfloor)</script><p>还是如出一辙的处理套路啊……对于大于$n^\frac{2}{3}$的情况我们直接用这个式子$O(\sqrt{n})$求（顺便记忆化）；其他情况就要考虑预处理了，那么我们考虑预处理$f(x)$本身，这个东西可以通过枚举$a$然后枚举$b$最后判断是否互质的搞法在$O(n^\frac{2}{3}\log n)$的复杂度里搞出来。总复杂度证明还是和杜教筛如出一辙。</p>
-<p>然后做完了？其实并没有。我们上面钦点了复数虚部为正整数。至于负整数和正整数的情况对称，答案完全一致。如果虚部为$0$的话那么参与运算的全都是正整数，因此此时答案就是$D(n)$了。</p>
-<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utility&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unordered_map&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">5000000</span>;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"><span class="keyword">const</span> ll ha = <span class="number">1004535809L</span>L;</span><br><span class="line">ll d[N + <span class="number">5</span>], f[N + <span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> prm[N + <span class="number">5</span>]; <span class="keyword">bool</span> vis[N + <span class="number">5</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!b) &#123;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> gcd(b, a % b);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sieve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">  vis[<span class="number">1</span>] = <span class="literal">true</span>; d[<span class="number">1</span>] = <span class="number">1</span>; f[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= N; i ++) &#123;</span><br><span class="line">    <span class="keyword">if</span>(!vis[i]) &#123;</span><br><span class="line">      d[i] = i + <span class="number">1</span>; prm[cnt ++] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; cnt; j ++) &#123;</span><br><span class="line">      <span class="keyword">int</span> v = i * prm[j];</span><br><span class="line">      <span class="keyword">if</span>(v &gt; N) <span class="keyword">break</span>;</span><br><span class="line">      vis[v] = <span class="literal">true</span>;</span><br><span class="line">      <span class="keyword">if</span>(i % prm[j] == <span class="number">0</span>) &#123;</span><br><span class="line">        d[v] = d[i] * d[prm[j]] - (ll)prm[j] * d[i / prm[j]];</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        d[v] = d[i] * d[prm[j]];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i * i &lt;= N; i ++) &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j * j + i * i &lt;= N; j ++) &#123;</span><br><span class="line">      <span class="keyword">if</span>(gcd(i, j) == <span class="number">1</span>) &#123;</span><br><span class="line">        f[j * j + i * i] += i;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; i ++) &#123;</span><br><span class="line">    d[i] = (d[i] + d[i - <span class="number">1</span>]) % ha;</span><br><span class="line">    f[i] = (f[i] + f[i - <span class="number">1</span>]) % ha;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">unordered_map</span>&lt;ll, ll&gt; ma_d;</span><br><span class="line"><span class="function">ll <span class="title">S</span><span class="params">(ll n)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">const</span> ll inv_2 = <span class="number">502267905L</span>L;</span><br><span class="line">  ll ret = ((n % ha) * ((n + <span class="number">1</span>) % ha)) % ha;</span><br><span class="line">  ret = (ret * inv_2) % ha;</span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">sigma</span><span class="params">(ll n)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(n &lt;= (ll)N) <span class="keyword">return</span> d[n];</span><br><span class="line">  <span class="keyword">if</span>(ma_d.count(n)) <span class="keyword">return</span> ma_d[n];</span><br><span class="line">  ll ret = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(ll i = <span class="number">1</span>; i &lt;= n;) &#123;</span><br><span class="line">    ll next = n / (n / i);</span><br><span class="line">    ll delta = (S(next) - S(i - <span class="number">1</span>) + ha) % ha;</span><br><span class="line">    delta = (delta * ((n / i) % ha)) % ha;</span><br><span class="line">    ret = (ret + delta) % ha;</span><br><span class="line">    i = next + <span class="number">1L</span>L;</span><br><span class="line">  &#125;</span><br><span class="line">  ma_d[n] = ret;</span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">unordered_map</span>&lt;ll, ll&gt; ma_f;</span><br><span class="line"><span class="function">ll <span class="title">calc_f</span><span class="params">(ll n)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(n &lt;= (ll)N) <span class="keyword">return</span> f[n];</span><br><span class="line">  <span class="keyword">if</span>(ma_f.count(n)) <span class="keyword">return</span> ma_f[n];</span><br><span class="line">  ll ret = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(ll i = <span class="number">1</span>; i * i &lt;= n; i ++) &#123;</span><br><span class="line">    ll delta = <span class="built_in">floor</span>(<span class="built_in">sqrt</span>(n - i * i));</span><br><span class="line">    delta %= ha; delta = (delta * i) % ha;</span><br><span class="line">    ret = (ret + delta) % ha;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(ll i = <span class="number">2</span>; i * i &lt;= n; i ++) &#123;</span><br><span class="line">    ll delta = (calc_f(n / (i * i)) * i) % ha;</span><br><span class="line">    ret = (ret - delta + ha) % ha;</span><br><span class="line">  &#125;</span><br><span class="line">  ma_f[n] = ret;</span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">calc</span><span class="params">(ll n)</span> </span>&#123;</span><br><span class="line">  ll ret = <span class="number">0</span>, las = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(ll i = <span class="number">1</span>; i &lt;= n;) &#123;</span><br><span class="line">    ll next = n / (n / i);</span><br><span class="line">    ll th = calc_f(next);</span><br><span class="line">    ll delta = (th - las + ha) % ha;</span><br><span class="line">    delta = (delta * sigma(n / i)) % ha;</span><br><span class="line">    ret = (ret + delta) % ha;</span><br><span class="line">    las = th; i = next + <span class="number">1L</span>L;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  sieve();</span><br><span class="line">  ll n; <span class="built_in">scanf</span>(<span class="string">"%lld"</span>, &amp;n);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, (calc(n) * <span class="number">2L</span>L + sigma(n)) % ha);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+<p><span class="math inline">\(n\leq 10^{10}\)</span>。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/24/loj6052/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -587,13 +560,14 @@ F(x)=G(x) - \sum_{i = 2}^{\lfloor\sqrt{x}\rfloor}iF(\lfloor\frac{x}{i^2}\rfloor)
 
       
         
-          <h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>今有一积性函数$f(x)$，满足以下性质</p>
+          <h2 id="description">Description</h2>
+<p>今有一积性函数<span class="math inline">\(f(x)\)</span>，满足以下性质</p>
 <ul>
-<li>$f(1) = 1$。</li>
-<li>对任意质数$p$和正整数$c$，有$f(p^c) = p\oplus c$。</li>
+<li><span class="math inline">\(f(1) = 1\)</span>。</li>
+<li>对任意质数<span class="math inline">\(p\)</span>和正整数<span class="math inline">\(c\)</span>，有<span class="math inline">\(f(p^c) = p\oplus c\)</span>。</li>
 </ul>
-<p>给定正整数$n$，求$\sum_{i = 1}^n f(i)$，答案模<code>1000000007</code>。</p>
-<p>$n\leq 10^{10}$。</p>
+<p>给定正整数<span class="math inline">\(n\)</span>，求<span class="math inline">\(\sum_{i = 1}^n f(i)\)</span>，答案模<code>1000000007</code>。</p>
+<p><span class="math inline">\(n\leq 10^{10}\)</span>。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/07/24/loj6053/#more" rel="contents">
@@ -750,8 +724,9 @@ F(x)=G(x) - \sum_{i = 2}^{\lfloor\sqrt{x}\rfloor}iF(\lfloor\frac{x}{i^2}\rfloor)
 
       
         
-          <h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>要求你从$Z_n$（模$n$的剩余系）里选出$k$个不重复元素，使得他们的和模$n$为0。求方案数。</p>
-<p>$1\leq n\leq 10^9, 1\leq k\leq 10^3$。</p>
+          <h2 id="description">Description</h2>
+<p>要求你从<span class="math inline">\(Z_n\)</span>（模<span class="math inline">\(n\)</span>的剩余系）里选出<span class="math inline">\(k\)</span>个不重复元素，使得他们的和模<span class="math inline">\(n\)</span>为0。求方案数。</p>
+<p><span class="math inline">\(1\leq n\leq 10^9, 1\leq k\leq 10^3\)</span>。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/07/21/BZOJ4314/#more" rel="contents">
@@ -908,8 +883,9 @@ F(x)=G(x) - \sum_{i = 2}^{\lfloor\sqrt{x}\rfloor}iF(\lfloor\frac{x}{i^2}\rfloor)
 
       
         
-          <h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>求有多少数值不同的分数$\frac{x}{y}$（$1\leq x\leq n, 1\leq y\leq m$），满足其在$k$进制下化为小数之后事纯循环小数（即小数部分是无限循环的）。</p>
-<p>$1\leq n, m\leq 10^9,2\leq k\leq 2000$。</p>
+          <h2 id="description">Description</h2>
+<p>求有多少数值不同的分数<span class="math inline">\(\frac{x}{y}\)</span>（<span class="math inline">\(1\leq x\leq n, 1\leq y\leq m\)</span>），满足其在<span class="math inline">\(k\)</span>进制下化为小数之后事纯循环小数（即小数部分是无限循环的）。</p>
+<p><span class="math inline">\(1\leq n, m\leq 10^9,2\leq k\leq 2000\)</span>。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/07/21/NOI2016D1T3/#more" rel="contents">
@@ -1226,7 +1202,7 @@ F(x)=G(x) - \sum_{i = 2}^{\lfloor\sqrt{x}\rfloor}iF(\lfloor\frac{x}{i^2}\rfloor)
 
       
         
-          <p><del>通过OEIS等传统艺能</del>易知答案为$\frac{n(n + 1)}{2(2n - 1)}$。然后下面说一下怎么证明……</p>
+          <p><del>通过OEIS等传统艺能</del>易知答案为<span class="math inline">\(\frac{n(n + 1)}{2(2n - 1)}\)</span>。然后下面说一下怎么证明……</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/07/17/loj2105/#more" rel="contents">
@@ -1542,10 +1518,11 @@ F(x)=G(x) - \sum_{i = 2}^{\lfloor\sqrt{x}\rfloor}iF(\lfloor\frac{x}{i^2}\rfloor)
 
       
         
-          <h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>给定一个$n\times m$网格图，其中有一些点是障碍，有一些点是平原。</p>
-<p>现在要求你用若干无重边无自环的不相交简单环覆盖所有平原。有一些点$(i, j)$如果满足经过的两条边一条是横着的一套是竖着的那么就会获得$V_{i, j}$的收益。</p>
+          <h2 id="description">Description</h2>
+<p>给定一个<span class="math inline">\(n\times m\)</span>网格图，其中有一些点是障碍，有一些点是平原。</p>
+<p>现在要求你用若干无重边无自环的不相交简单环覆盖所有平原。有一些点<span class="math inline">\((i, j)\)</span>如果满足经过的两条边一条是横着的一套是竖着的那么就会获得<span class="math inline">\(V_{i, j}\)</span>的收益。</p>
 <p>求是否有解，如果有解的话输出最大收益。</p>
-<p>$n\le 150$，$m\le 30$，$0\le V_{i, j}\le 100$。</p>
+<p><span class="math inline">\(n\le 150\)</span>，<span class="math inline">\(m\le 30\)</span>，<span class="math inline">\(0\le V_{i, j}\le 100\)</span>。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/07/11/BZOJ4261/#more" rel="contents">
@@ -1863,10 +1840,16 @@ F(x)=G(x) - \sum_{i = 2}^{\lfloor\sqrt{x}\rfloor}iF(\lfloor\frac{x}{i^2}\rfloor)
       
         
           
-            <h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><p>行内公式：$\int_{-\infty}^{+\infty}e^{x^2}\mathrm{d}x$。</p>
-<p>行间公式：</p>
-<script type="math/tex; mode=display">
-\int u\mathrm{d}v = uv - \int v\mathrm{d}u</script><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// C++ code</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> a, b; <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;a, &amp;b);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, a + b); <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <h1 id="一级标题">一级标题</h1>
+<h2 id="二级标题">二级标题</h2>
+<h3 id="三级标题">三级标题</h3>
+<h4 id="四级标题">四级标题</h4>
+<h5 id="五级标题">五级标题</h5>
+<p>行内公式：<span class="math inline">\(\int_{-\infty}^{+\infty}e^{x^2}\mathrm{d}x\)</span>。</p>
+<p>行间公式： <span class="math display">\[
+\int u\mathrm{d}v = uv - \int v\mathrm{d}u
+\]</span></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// C++ code</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> a, b; <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;a, &amp;b);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, a + b); <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>嗯，OC！</p>
 
           

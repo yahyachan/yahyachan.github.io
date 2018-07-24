@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="通过OEIS等传统艺能易知答案为$\frac{n(n + 1)}{2(2n - 1)}$。然后下面说一下怎么证明……">
+<meta name="description" content="通过OEIS等传统艺能易知答案为\(\frac{n(n + 1)}{2(2n - 1)}\)。然后下面说一下怎么证明……">
 <meta name="keywords" content="TJOI,生成函数,广义二项式定理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="「TJOI2015」概率论">
 <meta property="og:url" content="https://yahyachan.github.io/2018/07/17/loj2105/index.html">
 <meta property="og:site_name" content="danihao123&#39;s Blog">
-<meta property="og:description" content="通过OEIS等传统艺能易知答案为$\frac{n(n + 1)}{2(2n - 1)}$。然后下面说一下怎么证明……">
+<meta property="og:description" content="通过OEIS等传统艺能易知答案为\(\frac{n(n + 1)}{2(2n - 1)}\)。然后下面说一下怎么证明……">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-07-17T07:28:22.282Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="「TJOI2015」概率论">
-<meta name="twitter:description" content="通过OEIS等传统艺能易知答案为$\frac{n(n + 1)}{2(2n - 1)}$。然后下面说一下怎么证明……">
+<meta name="twitter:description" content="通过OEIS等传统艺能易知答案为\(\frac{n(n + 1)}{2(2n - 1)}\)。然后下面说一下怎么证明……">
 
 
 
@@ -397,42 +397,42 @@
       
 
       
-        <p><del>通过OEIS等传统艺能</del>易知答案为$\frac{n(n + 1)}{2(2n - 1)}$。然后下面说一下怎么证明……</p>
+        <p><del>通过OEIS等传统艺能</del>易知答案为<span class="math inline">\(\frac{n(n + 1)}{2(2n - 1)}\)</span>。然后下面说一下怎么证明……</p>
 <a id="more"></a>
-<p>令虑$n$个点的二叉树的方案数为$H_n$（其实很显然就是卡塔兰数列），令$n$个点的所有二叉树的叶子数的和为$F_n$。</p>
-<p>考虑推导$H_n$的生成函数。我们知道（下面只考虑$n &gt; 0$，我们钦定$H_0 = 1$）：</p>
-<script type="math/tex; mode=display">
-H_n = \sum_{i = 0}^{n - 1} H_i H_{n - i - 1}</script><p>所以说对于$H$的生成函数，我们可以列方程：</p>
-<script type="math/tex; mode=display">
-H(x) = xH^2(x) + 1</script><p>解得：</p>
-<script type="math/tex; mode=display">
-H(x) = \frac{1 \pm \sqrt{1 - 4x}}{2x}</script><p>通过收敛性可以得知（具体地说……如果取得是加号，那么$H(x)$在0处不收敛，与$H(x)$的零次项系数的取值有限的事实明显背道相驰），应取$H(x) = \frac{1 - \sqrt{1 - 4x}}{2x}$。</p>
-<p>由于$H$就是卡塔兰数列，所以有$H_n = \frac{1}{n + 1}\binom{2n}{n}$。</p>
-<p>然后对于$F$，我们考虑左右儿子分别的贡献，就可以列式得（这里考虑$n &gt; 1$的情况，$F_1=1$）：</p>
-<script type="math/tex; mode=display">
-F_n = 2\sum_{i = 1}^{n - 1} F_i H_{n - i - 1}</script><p>所以可以列出方程：</p>
-<script type="math/tex; mode=display">
-F(x) = 2xF(x)H(x) + x</script><p>然后解得：</p>
-<script type="math/tex; mode=display">
-F(x) = \frac{x}{\sqrt{1 - 4x}}</script><p>下面那个开根，看起来很不好弄。我们尝试用广义二项式定理展开它，就可以得到：</p>
-<script type="math/tex; mode=display">
-F(x) = \sum_{i = 1}^{+\infty} \binom{-0.5}{i - 1}(-4)^{i - 1} x^i</script><p>这里牵扯到了任意实数的组合数……定义可以参考维基（具体是二项式定理那篇）。然后我们去考虑$F_n$：</p>
-<script type="math/tex; mode=display">
+<p>令虑<span class="math inline">\(n\)</span>个点的二叉树的方案数为<span class="math inline">\(H_n\)</span>（其实很显然就是卡塔兰数列），令<span class="math inline">\(n\)</span>个点的所有二叉树的叶子数的和为<span class="math inline">\(F_n\)</span>。</p>
+<p>考虑推导<span class="math inline">\(H_n\)</span>的生成函数。我们知道（下面只考虑<span class="math inline">\(n &gt; 0\)</span>，我们钦定<span class="math inline">\(H_0 = 1\)</span>）： <span class="math display">\[
+H_n = \sum_{i = 0}^{n - 1} H_i H_{n - i - 1}
+\]</span> 所以说对于<span class="math inline">\(H\)</span>的生成函数，我们可以列方程： <span class="math display">\[
+H(x) = xH^2(x) + 1
+\]</span> 解得： <span class="math display">\[
+H(x) = \frac{1 \pm \sqrt{1 - 4x}}{2x}
+\]</span> 通过收敛性可以得知（具体地说……如果取得是加号，那么<span class="math inline">\(H(x)\)</span>在0处不收敛，与<span class="math inline">\(H(x)\)</span>的零次项系数的取值有限的事实明显背道相驰），应取<span class="math inline">\(H(x) = \frac{1 - \sqrt{1 - 4x}}{2x}\)</span>。</p>
+<p>由于<span class="math inline">\(H\)</span>就是卡塔兰数列，所以有<span class="math inline">\(H_n = \frac{1}{n + 1}\binom{2n}{n}\)</span>。</p>
+<p>然后对于<span class="math inline">\(F\)</span>，我们考虑左右儿子分别的贡献，就可以列式得（这里考虑<span class="math inline">\(n &gt; 1\)</span>的情况，<span class="math inline">\(F_1=1\)</span>）： <span class="math display">\[
+F_n = 2\sum_{i = 1}^{n - 1} F_i H_{n - i - 1}
+\]</span> 所以可以列出方程： <span class="math display">\[
+F(x) = 2xF(x)H(x) + x
+\]</span> 然后解得： <span class="math display">\[
+F(x) = \frac{x}{\sqrt{1 - 4x}}
+\]</span> 下面那个开根，看起来很不好弄。我们尝试用广义二项式定理展开它，就可以得到： <span class="math display">\[
+F(x) = \sum_{i = 1}^{+\infty} \binom{-0.5}{i - 1}(-4)^{i - 1} x^i
+\]</span> 这里牵扯到了任意实数的组合数……定义可以参考维基（具体是二项式定理那篇）。然后我们去考虑<span class="math inline">\(F_n\)</span>： <span class="math display">\[
 \begin{aligned}
-F_n &= \frac{(-0.5)^{\underline{n - 1}}(-4)^{n - 1}}{(n - 1)!}\\
-&=\frac{1}{(n - 1)!}\prod_{i = 0}^{n - 2} (-0.5 - i)\cdot (-4)\\
-&=\frac{2^{n - 1}}{(n - 1)!}\prod_{i = 0}^{n - 2} (1 + 2i)\\
-&=\frac{2^{n - 1}}{(n - 1)!}\cdot\frac{(2n - 2)!}{2^{n - 1}(n - 1)!}\\
-&=\frac{(2n - 2)!}{(n - 1)!(n - 1)!}\\
-&=\binom{2n - 2}{n - 1}
-\end{aligned}</script><p>最后的答案是一个$\frac{F_n}{H_n}$，不妨推一下：</p>
-<script type="math/tex; mode=display">
+F_n &amp;= \frac{(-0.5)^{\underline{n - 1}}(-4)^{n - 1}}{(n - 1)!}\\
+&amp;=\frac{1}{(n - 1)!}\prod_{i = 0}^{n - 2} (-0.5 - i)\cdot (-4)\\
+&amp;=\frac{2^{n - 1}}{(n - 1)!}\prod_{i = 0}^{n - 2} (1 + 2i)\\
+&amp;=\frac{2^{n - 1}}{(n - 1)!}\cdot\frac{(2n - 2)!}{2^{n - 1}(n - 1)!}\\
+&amp;=\frac{(2n - 2)!}{(n - 1)!(n - 1)!}\\
+&amp;=\binom{2n - 2}{n - 1}
+\end{aligned}
+\]</span> 最后的答案是一个<span class="math inline">\(\frac{F_n}{H_n}\)</span>，不妨推一下： <span class="math display">\[
 \begin{aligned}
-\frac{F_n}{H_n} &= \frac{(n + 1)\binom{2n - 2}{n - 1}}{\binom{2n}{n}}\\
-&=\frac{(n + 1)(2n - 2)!n!n!}{(n-1)!(n-1)!(2n)!}\\
-&=\frac{(n + 1)n^2}{2n(2n - 1)}\\
-&=\frac{(n + 1)n}{2(2n - 1)}
-\end{aligned}</script><p>终于搞出来了……</p>
+\frac{F_n}{H_n} &amp;= \frac{(n + 1)\binom{2n - 2}{n - 1}}{\binom{2n}{n}}\\
+&amp;=\frac{(n + 1)(2n - 2)!n!n!}{(n-1)!(n-1)!(2n)!}\\
+&amp;=\frac{(n + 1)n^2}{2n(2n - 1)}\\
+&amp;=\frac{(n + 1)n}{2(2n - 1)}
+\end{aligned}
+\]</span> 终于搞出来了……</p>
 <p>代码不用贴了吧……（逃</p>
 
       
