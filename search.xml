@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[后缀XXX可持久化大坑]]></title>
+    <url>%2F2018%2F07%2F25%2Fsuffix%2F</url>
+    <content type="text"><![CDATA[我谔谔，我今天才学的后缀数组（之前只会后缀自动机）。 然后就想开个后缀家族大坑？ 后缀数组 介绍 虽然说可能在各位巨佬眼里这已经是烂大街的东西了……但我现在才会（逃 思想很简单吧，对于原串的所有后缀排个序（按字典序升序），形成了一个数组\(\mathrm{sa}\)，就叫做后缀数组，方便起见定义\(\mathrm{rk}[i]\)表示\(i\ldots n\)这一段后缀在\(\mathrm{sa}\)中的排名。 然后考虑怎么求这玩意吧…… 倍增排序求SA 如果直接按照定义，快排加暴力比较弄的话，\(O(n^2\log n)\)的复杂度没什么用（其实有个比较贱的方法事你可以预处理哈希然后二分比较两个后缀就匪快了）。 我们考虑采取倍增的思想，依次比较各个后缀的长度为\(1,2,4,8,16,\ldots\)的前缀，这样的话总是可以比较出最后的结果。 更大的好处是，假如我们已经有了\(2^t\)下的答案，我们要对\(2^{t + 1}\)的情况排序。那么每个后缀我们可以直接视为一个二元组\((a, b)\)，其中\(a,b\)分别是\(2^t\)下的排名。 这样的话我们可以直接用这种思想套上快排，复杂度\(O(n\log^2 n)\)。但观察到二元组的两元的值域都不超过\(n\)，所以把快排改成桶排，这样复杂度就是\(O(n\log n)\)的了。 然后更多细节参考代码吧。 SA的应用：height数组 这样看的话SA好像没啥用处？ 我们定义一个\(\mathrm{height}[i]\)表示排名为\(i\)的后缀和他的上一名的LCP。如果你学过后缀树的话，你会发现把后缀树的叶子按照对应后缀字典序排序一下，然后这个\(\mathrm{height}\)就是每个叶子和他左侧的叶子的LCA的深度。 直接按照定义求这玩意显然复杂度\(O(n^2)\)，难以接受。然后我们定义\(h(i) = \mathrm{height}[\mathrm{rk}[i]]\)，然后我们发现有： \[ h(i)\geq h(i - 1) - 1 \] 证明的话考虑\(h(i - 1)\geq 1\)的情况就行了。我们假设\(a = i - 1, b = \mathrm{sa}[\mathrm{rk}[a] - 1]\)，那么若\(h(i - 1)\geq 1\)，那么我们把两者截去开头一个字符还会得到两个新的后缀\(a&#39;,b&#39;\)，注意到有\(a&#39; = i, b&#39; = b + 1\)，且\(\mathbf{LCP}(a&#39;,b&#39;) = h(i - 1) - 1\)，考虑到字典序意义上\(a &gt; b\)，那么显然字典序意义下也有\(i &gt; b + 1\)，那么说明\(\mathrm{rk}[i] - 1\leq b + 1\)，因此\(\mathrm{sa}[\mathrm{rk}[i] - 1]\)在排序后的后缀树中一定不会比\(b + 1\)离\(i\)更远，换言之\(\mathrm{sa}[\mathrm{rk}[i] - 1]\)和\(i\)在树中的LCA深度（也就是串中的LCP大小）不会小于\(h(i - 1) - 1\)。 根据这个东西，就可以很轻松的\(O(n)\)求出\(\mathrm{height}\)数组了。 题目 POJ 2774 Long Long Message Description 给两个串，求两者的最长公共子串。 两个串的长度都不超过100000。 Solution 考虑把两个串强行接在一起（顺便中间加上一个特殊字符作为分隔符以防越界），那么两者的公共子串一定是某两个在分隔符两端的后缀的公共前缀，而我们要取出最长的情况。 那么我们按照\(\mathrm{sa}\)的顺序扫描所有后缀，如果出现相邻两个后缀在分隔符两侧，那就取他们的\(\mathrm{height}\)值更新答案即可。 Code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;cctype&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;int idx(char c) &#123; if(c == '$') &#123; return 27; &#125; else &#123; return c - 'a' + 1; &#125;&#125;const int maxn = 200005;char S[maxn]; int sz;int sa[maxn], rk[maxn], height[maxn];void process() &#123; static int fir[maxn], sec[maxn]; static int buf[maxn], tmp[maxn]; for(int i = 1; i &lt;= sz; i ++) buf[idx(S[i])] ++; for(int i = 1; i &lt;= 27; i ++) buf[i] += buf[i - 1]; for(int i = 1; i &lt;= sz; i ++) rk[i] = buf[idx(S[i]) - 1] + 1; for(int t = 1; t &lt;= sz; t &lt;&lt;= 1) &#123; for(int i = 1; i &lt;= sz; i ++) &#123; fir[i] = rk[i]; sec[i] = (i + t &gt; sz) ? 0 : rk[i + t]; &#125; std::fill(buf, buf + sz + 1, 0); for(int i = 1; i &lt;= sz; i ++) buf[sec[i]] ++; for(int i = 1; i &lt;= sz; i ++) buf[i] += buf[i - 1]; for(int i = 1; i &lt;= sz; i ++) tmp[buf[sec[i]] --] = i; std::fill(buf, buf + sz + 1, 0); for(int i = 1; i &lt;= sz; i ++) buf[fir[i]] ++; for(int i = 1; i &lt;= sz; i ++) buf[i] += buf[i - 1]; for(int i = sz; i &gt;= 1; i --) &#123; int j = tmp[i]; sa[buf[fir[j]] --] = j; &#125; bool unique = true; for(int i = 1, las = 0; i &lt;= sz; i ++) &#123; int j = sa[i]; if(!las) &#123; rk[j] = 1; &#125; else &#123; if(fir[j] == fir[las] &amp;&amp; sec[j] == sec[las]) &#123; unique = false; rk[j] = rk[las]; &#125; else &#123; rk[j] = rk[las] + 1; &#125; &#125; las = j; &#125; if(unique) break; &#125; for(int i = 1, k = 0; i &lt;= sz; i ++) &#123; if(rk[i] == 1) &#123; k = 0; &#125; else &#123; if(k &gt; 0) k --; int j = sa[rk[i] - 1]; while(i + k &lt;= sz &amp;&amp; j + k &lt;= sz &amp;&amp; S[i + k] == S[j + k]) k ++; &#125; height[rk[i]] = k; &#125;&#125;int s1, s2;int solve() &#123; process(); int ans = 0; for(int i = 2; i &lt;= sz; i ++) &#123; int a = sa[i], b = sa[i - 1]; bool v1 = a &lt;= s1, v2 = b &lt;= s1; if(v1 ^ v2) &#123; ans = std::max(ans, height[i]); &#125; &#125; return ans;&#125;int main() &#123; scanf("%s", S + 1); s1 = strlen(S + 1); S[s1 + 1] = '$'; scanf("%s", S + s1 + 2); sz = strlen(S + 1); printf("%d\n", solve()); return 0;&#125; 后缀自动机 还在路上，马上就来了（鸽并感）]]></content>
+      <categories>
+        <category>大坑</category>
+      </categories>
+      <tags>
+        <tag>后缀自动机</tag>
+        <tag>后缀数组</tag>
+        <tag>后缀树</tag>
+        <tag>后缀平衡树</tag>
+        <tag>POJ</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[LibreOJ 6052 「雅礼集训 2017 Day11」DIV]]></title>
     <url>%2F2018%2F07%2F24%2Floj6052%2F</url>
     <content type="text"><![CDATA[Description 定义复数\(a + bi\)为\(k\)的约数，当且仅当\(a, b\)为整数且存在整数\(c, d\)满足\((a + bi)(c + di) = k\)。 给定\(n\)，求\(1\)到\(n\)中所有整数的实部大于\(0\)的约数的实部的和。 答案模1004535809。 \(n\leq 10^{10}\)。 Solution 为啥这题和某课件上的简化版差距这么大啊…… 考虑一个复数\((a + bi)(c + di) = k\)意味着什么，其实也就是下面两个式子： \[ ac - bd = k\\ ad + bc = 0 \] 由第二个式子可得： \[ \frac{a}{b} = -\frac{c}{d} \] 那么我们考虑将\(a, b\)约去他们两个之间的最大公约数，\(c, d\)也做一样的操作。那么上式还是成立的，并且等号两边的分式都已经最简化了，因此此时有\(a = c, b = -d\)。 带回最早的式子（两个复数的积那个）可以得到： \[ c(a^2 + b^2) = k \] 这个\(c\)是我们先前约去的常数的积。从此式也可以看出\((a^2+b^2)|k\)，并且贡献一定是\(a\)乘上一个常数。 那么我们枚举互质数对\((a, b)\)，其对答案的贡献是\(a\sigma(\frac{n}{a^2 + b^2})\)（这里\(\sigma\)表示\(\sigma_1\)，即约束之和）。 因此最终答案为： \[ \begin{aligned} \quad&amp;\sum_{i = 1}^n\sum_{a\perp b, (a^2 + b^2) | i} a\sigma(\frac{i}{a^2+b^2}) \end{aligned} \] 这玩怕不是几乎不可做……因此我们考虑枚举\(k = a^2 + b^2\)： \[ \begin{aligned} \quad&amp;\sum_{k = 1}^n\sum_{a\perp b, a^2 + b^2 = k} a\sum_{k | i}\sigma(\frac{i}{k})\\ =&amp;\sum_{k = 1}^n\sum_{a\perp b, a^2 + b^2 = k} aD(\lfloor\frac{n}{k}\rfloor)\\ =&amp;\sum_{k = 1}^nD(\lfloor\frac{n}{k}\rfloor)\sum_{a\perp b, a^2 + b^2 = k} a\\ =&amp;\sum_{k = 1}^nD(\lfloor\frac{n}{k}\rfloor)f(k) \end{aligned} \] 其中\(D\)为\(\sigma\)的前缀和，\(f(k)\)表记的是啥可以根据上下文推导一下（逃 这个形式几乎和杜教筛如出一辙……像杜教筛一样先大力数论分块，然后先考虑怎么处理\(D\)，很显然有一个\(O(\sqrt{n})\)的做法： \[ \sum_{i = 1}^n i\lfloor\frac{n}{i}\rfloor \] 如此一来我们可以考虑先预处理不大于\(n^\frac{2}{3}\)的\(D\)值，其他情况用上面的式子求（甚至不需要记忆化复杂度也是对的）。用杜教筛那种复杂度证明可以证出这部分的复杂度是\(O(n^\frac{2}{3})\)的。 然后我们发现我们其实也要处理\(f​\)的前缀和\(F​\)……但是有个互质在这这个玩意并不好处理。那么我们考虑类似于狄利克雷卷积的一些思路？定义一个\(G(x) = \sum_{1\leq a^2+b^2\leq x}a​\)，这个东西可以很方便的用\(O(\sqrt{n})​\)的复杂度求（\(G(x)=\sum_{i = 1}^{\lfloor\sqrt{x}\rfloor}i\lfloor\sqrt{x - i^2}\rfloor​\)），然后我们发现有： \[ G(x) = \sum_{i = 1}^{\lfloor\sqrt{x}\rfloor}iF(\lfloor\frac{x}{i^2}\rfloor) \] 然后这个还是有点像杜教筛的一些形式啊！我们发现我们要抽出来的事\(F(x)\)，因此移一下项就有了： \[ F(x)=G(x) - \sum_{i = 2}^{\lfloor\sqrt{x}\rfloor}iF(\lfloor\frac{x}{i^2}\rfloor) \] 还是如出一辙的处理套路啊……对于大于\(n^\frac{2}{3}\)的情况我们直接用这个式子\(O(\sqrt{n})\)求（顺便记忆化）；其他情况就要考虑预处理了，那么我们考虑预处理\(f(x)\)本身，这个东西可以通过枚举\(a\)然后枚举\(b\)最后判断是否互质的搞法在\(O(n^\frac{2}{3}\log n)\)的复杂度里搞出来。总复杂度证明还是和杜教筛如出一辙。 然后做完了？其实并没有。我们上面钦点了复数虚部为正整数。至于负整数和正整数的情况对称，答案完全一致。如果虚部为\(0\)的话那么参与运算的全都是正整数，因此此时答案就是\(D(n)\)了。 Code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;cmath&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;unordered_map&gt;const int N = 5000000;using ll = long long;const ll ha = 1004535809LL;ll d[N + 5], f[N + 5];int prm[N + 5]; bool vis[N + 5];int gcd(int a, int b) &#123; if(!b) &#123; return a; &#125; else &#123; return gcd(b, a % b); &#125;&#125;void sieve() &#123; int cnt = 0; vis[1] = true; d[1] = 1; f[1] = 0; for(int i = 2; i &lt;= N; i ++) &#123; if(!vis[i]) &#123; d[i] = i + 1; prm[cnt ++] = i; &#125; for(int j = 0; j &lt; cnt; j ++) &#123; int v = i * prm[j]; if(v &gt; N) break; vis[v] = true; if(i % prm[j] == 0) &#123; d[v] = d[i] * d[prm[j]] - (ll)prm[j] * d[i / prm[j]]; break; &#125; else &#123; d[v] = d[i] * d[prm[j]]; &#125; &#125; &#125; for(int i = 1; i * i &lt;= N; i ++) &#123; for(int j = 1; j * j + i * i &lt;= N; j ++) &#123; if(gcd(i, j) == 1) &#123; f[j * j + i * i] += i; &#125; &#125; &#125; for(int i = 1; i &lt;= N; i ++) &#123; d[i] = (d[i] + d[i - 1]) % ha; f[i] = (f[i] + f[i - 1]) % ha; &#125;&#125;std::unordered_map&lt;ll, ll&gt; ma_d;ll S(ll n) &#123; static const ll inv_2 = 502267905LL; ll ret = ((n % ha) * ((n + 1) % ha)) % ha; ret = (ret * inv_2) % ha; return ret;&#125;ll sigma(ll n) &#123; if(n &lt;= (ll)N) return d[n]; if(ma_d.count(n)) return ma_d[n]; ll ret = 0; for(ll i = 1; i &lt;= n;) &#123; ll next = n / (n / i); ll delta = (S(next) - S(i - 1) + ha) % ha; delta = (delta * ((n / i) % ha)) % ha; ret = (ret + delta) % ha; i = next + 1LL; &#125; ma_d[n] = ret; return ret;&#125;std::unordered_map&lt;ll, ll&gt; ma_f;ll calc_f(ll n) &#123; if(n &lt;= (ll)N) return f[n]; if(ma_f.count(n)) return ma_f[n]; ll ret = 0; for(ll i = 1; i * i &lt;= n; i ++) &#123; ll delta = floor(sqrt(n - i * i)); delta %= ha; delta = (delta * i) % ha; ret = (ret + delta) % ha; &#125; for(ll i = 2; i * i &lt;= n; i ++) &#123; ll delta = (calc_f(n / (i * i)) * i) % ha; ret = (ret - delta + ha) % ha; &#125; ma_f[n] = ret; return ret;&#125;ll calc(ll n) &#123; ll ret = 0, las = 0; for(ll i = 1; i &lt;= n;) &#123; ll next = n / (n / i); ll th = calc_f(next); ll delta = (th - las + ha) % ha; delta = (delta * sigma(n / i)) % ha; ret = (ret + delta) % ha; las = th; i = next + 1LL; &#125; return ret;&#125;int main() &#123; sieve(); ll n; scanf("%lld", &amp;n); printf("%lld\n", (calc(n) * 2LL + sigma(n)) % ha); return 0;&#125;]]></content>
@@ -8,8 +23,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>狄利克雷卷积</tag>
         <tag>杜教筛</tag>
+        <tag>狄利克雷卷积</tag>
         <tag>LibreOJ</tag>
         <tag>雅礼集训</tag>
       </tags>
@@ -47,12 +62,12 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>UOJ</tag>
-        <tag>NOI</tag>
-        <tag>狄利克雷卷积</tag>
-        <tag>莫比乌斯反演</tag>
         <tag>洲阁筛</tag>
         <tag>杜教筛</tag>
+        <tag>狄利克雷卷积</tag>
+        <tag>莫比乌斯反演</tag>
+        <tag>UOJ</tag>
+        <tag>NOI</tag>
       </tags>
   </entry>
   <entry>
@@ -91,8 +106,8 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>洲阁筛</tag>
         <tag>Min_25筛</tag>
+        <tag>洲阁筛</tag>
         <tag>SPOJ</tag>
       </tags>
   </entry>
@@ -116,11 +131,11 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>狄利克雷卷积</tag>
-        <tag>莫比乌斯反演</tag>
-        <tag>杜教筛</tag>
         <tag>生成函数</tag>
         <tag>贝尔级数</tag>
+        <tag>杜教筛</tag>
+        <tag>狄利克雷卷积</tag>
+        <tag>莫比乌斯反演</tag>
       </tags>
   </entry>
   <entry>
