@@ -9,7 +9,6 @@
       </categories>
       <tags>
         <tag>SPOJ</tag>
-        <tag>TJOI</tag>
         <tag>后缀自动机</tag>
         <tag>后缀数组</tag>
         <tag>后缀树</tag>
@@ -17,8 +16,9 @@
         <tag>POJ</tag>
         <tag>LibreOJ</tag>
         <tag>SDOI</tag>
-        <tag>ZJOI</tag>
+        <tag>TJOI</tag>
         <tag>HEOI</tag>
+        <tag>ZJOI</tag>
       </tags>
   </entry>
   <entry>
@@ -29,8 +29,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>杜教筛</tag>
         <tag>狄利克雷卷积</tag>
+        <tag>杜教筛</tag>
         <tag>LibreOJ</tag>
         <tag>雅礼集训</tag>
       </tags>
@@ -69,11 +69,11 @@
       </categories>
       <tags>
         <tag>洲阁筛</tag>
-        <tag>杜教筛</tag>
-        <tag>狄利克雷卷积</tag>
-        <tag>莫比乌斯反演</tag>
         <tag>UOJ</tag>
         <tag>NOI</tag>
+        <tag>狄利克雷卷积</tag>
+        <tag>莫比乌斯反演</tag>
+        <tag>杜教筛</tag>
       </tags>
   </entry>
   <entry>
@@ -99,8 +99,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>TJOI</tag>
         <tag>生成函数</tag>
+        <tag>TJOI</tag>
         <tag>广义二项式定理</tag>
       </tags>
   </entry>
@@ -137,11 +137,11 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>生成函数</tag>
-        <tag>贝尔级数</tag>
-        <tag>杜教筛</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
+        <tag>杜教筛</tag>
+        <tag>贝尔级数</tag>
+        <tag>生成函数</tag>
       </tags>
   </entry>
   <entry>
