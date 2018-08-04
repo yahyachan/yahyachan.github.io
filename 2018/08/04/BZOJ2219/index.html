@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Description 给定正整数\(A, B, K\)，求方程\(x^A\equiv B\pmod{2K+1}\)在\(Z_{2K+1}\)中的解的数量。 多组询问，组数不超过1000。 \(1\leq A,B\leq 10^9, 1\leq K\leq 5\times 10^8\)。 Solution 算是一道综合性很强的题目了…… 先将模数分解质因数，对每一种质因子幂单独求解，然">
+<meta name="description" content="Description 给定正整数\(A, B, K\)，求方程\(x^A\equiv B\pmod{2K+1}\)在\(Z_{2K+1}\)中的解的数量。 多组询问，组数不超过1000。 \(1\leq A,B\leq 10^9, 1\leq K\leq 5\times 10^8\)。">
 <meta name="keywords" content="BZOJ,BSGS,原根,指标,同余方程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BZOJ 2219 数论之神">
 <meta property="og:url" content="https://yahyachan.github.io/2018/08/04/BZOJ2219/index.html">
 <meta property="og:site_name" content="danihao123&#39;s Blog">
-<meta property="og:description" content="Description 给定正整数\(A, B, K\)，求方程\(x^A\equiv B\pmod{2K+1}\)在\(Z_{2K+1}\)中的解的数量。 多组询问，组数不超过1000。 \(1\leq A,B\leq 10^9, 1\leq K\leq 5\times 10^8\)。 Solution 算是一道综合性很强的题目了…… 先将模数分解质因数，对每一种质因子幂单独求解，然">
+<meta property="og:description" content="Description 给定正整数\(A, B, K\)，求方程\(x^A\equiv B\pmod{2K+1}\)在\(Z_{2K+1}\)中的解的数量。 多组询问，组数不超过1000。 \(1\leq A,B\leq 10^9, 1\leq K\leq 5\times 10^8\)。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-04T08:11:07.829Z">
+<meta property="og:updated_time" content="2018-08-04T08:57:55.073Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BZOJ 2219 数论之神">
-<meta name="twitter:description" content="Description 给定正整数\(A, B, K\)，求方程\(x^A\equiv B\pmod{2K+1}\)在\(Z_{2K+1}\)中的解的数量。 多组询问，组数不超过1000。 \(1\leq A,B\leq 10^9, 1\leq K\leq 5\times 10^8\)。 Solution 算是一道综合性很强的题目了…… 先将模数分解质因数，对每一种质因子幂单独求解，然">
+<meta name="twitter:description" content="Description 给定正整数\(A, B, K\)，求方程\(x^A\equiv B\pmod{2K+1}\)在\(Z_{2K+1}\)中的解的数量。 多组询问，组数不超过1000。 \(1\leq A,B\leq 10^9, 1\leq K\leq 5\times 10^8\)。">
 
 
 
@@ -401,6 +401,7 @@
 <p>给定正整数<span class="math inline">\(A, B, K\)</span>，求方程<span class="math inline">\(x^A\equiv B\pmod{2K+1}\)</span>在<span class="math inline">\(Z_{2K+1}\)</span>中的解的数量。</p>
 <p>多组询问，组数不超过1000。</p>
 <p><span class="math inline">\(1\leq A,B\leq 10^9, 1\leq K\leq 5\times 10^8\)</span>。</p>
+<a id="more"></a>
 <h2 id="solution">Solution</h2>
 <p>算是一道综合性很强的题目了……</p>
 <p>先将模数分解质因数，对每一种质因子幂单独求解，然后由中国剩余定理之类的知道最后的解数是每一部分的解数的积。</p>
