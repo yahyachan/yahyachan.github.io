@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="BZOJ,容斥原理,线性基," />
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="danihao123&apos;s Blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="danihao123&#39;s Blog">
-<meta property="og:url" content="https://yahyachan.github.io/archives/index.html">
+<meta name="description" content="Description 定义两个点数相同的图\(G_1,G_2\)的异或为一个新图\(G\)。\(G\)的点数和原来两个图一样，并且对于一条边\((i, j)\)，如果在\(G_1,G_2\)中的出现次数异或起来为\(1\)的话，那么\((i, j)\)会出现在\(G\)中，反之则不会出现。 给出\(s\)个有\(n\)个点的图\(G_1, G_2,\ldots,G_s\)，求这些图有多少个子">
+<meta name="keywords" content="BZOJ,容斥原理,线性基">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BZOJ 4671 异或图">
+<meta property="og:url" content="https://yahyachan.github.io/2018/08/06/BZOJ4671/index.html">
 <meta property="og:site_name" content="danihao123&#39;s Blog">
-<meta property="og:description" content="danihao123&apos;s Blog">
+<meta property="og:description" content="Description 定义两个点数相同的图\(G_1,G_2\)的异或为一个新图\(G\)。\(G\)的点数和原来两个图一样，并且对于一条边\((i, j)\)，如果在\(G_1,G_2\)中的出现次数异或起来为\(1\)的话，那么\((i, j)\)会出现在\(G\)中，反之则不会出现。 给出\(s\)个有\(n\)个点的图\(G_1, G_2,\ldots,G_s\)，求这些图有多少个子">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-06T11:08:03.890Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="danihao123&#39;s Blog">
-<meta name="twitter:description" content="danihao123&apos;s Blog">
+<meta name="twitter:title" content="BZOJ 4671 异或图">
+<meta name="twitter:description" content="Description 定义两个点数相同的图\(G_1,G_2\)的异或为一个新图\(G\)。\(G\)的点数和原来两个图一样，并且对于一条边\((i, j)\)，如果在\(G_1,G_2\)中的出现次数异或起来为\(1\)的话，那么\((i, j)\)会出现在\(G\)中，反之则不会出现。 给出\(s\)个有\(n\)个点的图\(G_1, G_2,\ldots,G_s\)，求这些图有多少个子">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yahyachan.github.io/archives/"/>
+  <link rel="canonical" href="https://yahyachan.github.io/2018/08/06/BZOJ4671/"/>
 
 
 
 
 
-  <title>归档 | danihao123's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>BZOJ 4671 异或图 | danihao123's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -143,7 +145,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-archive">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -281,629 +283,204 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yahyachan.github.io/2018/08/06/BZOJ4671/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="danihao123">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://danihao123.is-programmer.com/user_files/danihao123/config/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="danihao123's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">BZOJ 4671 异或图</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-06T18:51:35+08:00">
+                2018-08-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 16 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/题解/" itemprop="url" rel="index">
+                    <span itemprop="name">题解</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/06/BZOJ4671/" itemprop="url">
-              
-                <span itemprop="name">BZOJ 4671 异或图</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-06T18:51:35+08:00"
-              content="2018-08-06" >
-          08-06
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/04/loj6076/" itemprop="url">
-              
-                <span itemprop="name">LibreOJ 6076 「2017 山东一轮集训 Day6」三元组</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-04T18:43:22+08:00"
-              content="2018-08-04" >
-          08-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/04/BZOJ2219/" itemprop="url">
-              
-                <span itemprop="name">BZOJ 2219 数论之神</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-04T15:52:02+08:00"
-              content="2018-08-04" >
-          08-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h2 id="description">Description</h2>
+<p>定义两个点数相同的图<span class="math inline">\(G_1,G_2\)</span>的异或为一个新图<span class="math inline">\(G\)</span>。<span class="math inline">\(G\)</span>的点数和原来两个图一样，并且对于一条边<span class="math inline">\((i, j)\)</span>，如果在<span class="math inline">\(G_1,G_2\)</span>中的出现次数异或起来为<span class="math inline">\(1\)</span>的话，那么<span class="math inline">\((i, j)\)</span>会出现在<span class="math inline">\(G\)</span>中，反之则不会出现。</p>
+<p>给出<span class="math inline">\(s\)</span>个有<span class="math inline">\(n\)</span>个点的图<span class="math inline">\(G_1, G_2,\ldots,G_s\)</span>，求这些图有多少个子集异或起来得到的图是一个联通图。</p>
+<p><span class="math inline">\(2\leq n\leq 10, 1\leq s\leq 60\)</span>。</p>
+<a id="more"></a>
+<h2 id="solution">Solution</h2>
+<p>数数题，启动！</p>
+<p>恰好有一个连通块的情况是不好统计的，但是至少有一个连通块的情况很好统计。我们只需要枚举<span class="math inline">\(n\)</span>个点的集合划分（<span class="math inline">\(B_{10} = 21147\)</span>，所以不虚），保证不同集合之间没有边就行了。这样假设划出来了<span class="math inline">\(c\)</span>个集合，那么最后的连通块数一定不小于<span class="math inline">\(c\)</span>。</p>
+<p>考虑不同集合之间没有边的条件如何处理。注意到这样就要求了包含这条边的图只用了偶数个，那么把所有这种条件列成一个方程组就是一个<span class="math inline">\(s\)</span>元异或方程组。而我们知道一个<span class="math inline">\(s\)</span>元异或方程组（假设其矩阵为<span class="math inline">\(A\)</span>）的解数为<span class="math inline">\(2^{s - r(A)}\)</span>，而<span class="math inline">\(r(A)\)</span>就等于该矩阵的线性基数量，用线性基那一套传统艺能就可以求了。</p>
+<p>然后我们现在只求出了至少<span class="math inline">\(c\)</span>个连通块的方案，要想知道只有一个连通块的方案，势必要容斥一下。根据容斥系数那一套理论，我们要求右边的条件是<span class="math inline">\([n = 1]\)</span>，因此容斥系数<span class="math inline">\(\mathrm{coef}_i\)</span>应当满足： <span class="math display">\[
+\sum_{i = 1}^n \begin{Bmatrix}n\\i\end{Bmatrix}\mathrm{coef}_i = [n = 1]
+\]</span> <del>使用打表等传统艺能可知</del><span class="math inline">\(\mathrm{coef}_i = (-1)^{i - 1}(i - 1)!\)</span>，然后这题就做完力……</p>
+<h2 id="code">Code</h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utility&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bitset&gt;</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxs = <span class="number">62</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxm = <span class="number">60</span>;</span><br><span class="line"><span class="function">ll <span class="title">lowbit</span><span class="params">(ll x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x &amp; (-x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, m, s;</span><br><span class="line">ll L[maxn][maxn];</span><br><span class="line">ll M[maxm];</span><br><span class="line"><span class="function">ll <span class="title">gj</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> ll bas[maxs];</span><br><span class="line">  <span class="built_in">std</span>::fill(bas, bas + s, <span class="number">0L</span>L);</span><br><span class="line">  <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i ++) &#123;</span><br><span class="line">    ll x = M[i];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = s - <span class="number">1</span>; j &gt;= <span class="number">0</span>; j --) &#123;</span><br><span class="line">      <span class="keyword">if</span>(!((<span class="number">1L</span>L &lt;&lt; (ll(j))) &amp; x)) <span class="keyword">continue</span>;</span><br><span class="line">      <span class="keyword">if</span>(bas[j]) &#123;</span><br><span class="line">        x ^= bas[j];</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        cnt ++; bas[j] = x;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> (<span class="number">1L</span>L &lt;&lt; (ll(s - cnt)));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> bel[maxn]; ll f[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> cnt)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(x &gt; n) &#123;</span><br><span class="line">    m = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt;= n; j ++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(bel[i] == bel[j]) <span class="keyword">continue</span>;</span><br><span class="line">        M[++ m] = L[i][j];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    f[cnt] += gj();</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= cnt + <span class="number">1</span>; i ++) &#123;</span><br><span class="line">    bel[x] = i;</span><br><span class="line">    dfs(x + <span class="number">1</span>, <span class="built_in">std</span>::max(i, cnt));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;s);</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s; i ++) &#123;</span><br><span class="line">    <span class="keyword">char</span> S[maxs]; <span class="built_in">scanf</span>(<span class="string">"%s"</span>, S);</span><br><span class="line">    <span class="keyword">if</span>(!n) &#123;</span><br><span class="line">      <span class="keyword">int</span> l = <span class="built_in">strlen</span>(S);</span><br><span class="line">      n = (<span class="number">1</span> + (<span class="keyword">int</span>((<span class="built_in">sqrt</span>(<span class="number">1</span> + <span class="number">8</span> * l))))) / <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j ++) &#123;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> k = j + <span class="number">1</span>; k &lt;= n; k ++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(S[cnt] == <span class="string">'1'</span>) &#123;</span><br><span class="line">          L[j][k] ^= (<span class="number">1L</span>L &lt;&lt; (ll(i)));</span><br><span class="line">        &#125;</span><br><span class="line">        cnt ++;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> LOCAL</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"n : %d\n"</span>, n);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  dfs(<span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">  ll ans = <span class="number">0</span>, fac = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</span><br><span class="line">    ll delta = fac * f[i];</span><br><span class="line">    <span class="keyword">if</span>(!(i &amp; <span class="number">1</span>)) delta *= <span class="number">-1L</span>L;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> LOCAL</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"delta(%d) : %lld\n"</span>, i, delta);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">    ans += delta;</span><br><span class="line">    fac *= (ll)i;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/02/loj2014/" itemprop="url">
-              
-                <span itemprop="name">LibreOJ 2014 「SCOI2016」萌萌哒</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-02T20:43:52+08:00"
-              content="2018-08-02" >
-          08-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/28/NCTraining25/" itemprop="url">
-              
-                <span itemprop="name">牛客练习赛23</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-28T14:15:58+08:00"
-              content="2018-07-28" >
-          07-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/25/suffix/" itemprop="url">
-              
-                <span itemprop="name">后缀XXX可持久化大坑</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-25T16:24:26+08:00"
-              content="2018-07-25" >
-          07-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/24/loj6052/" itemprop="url">
-              
-                <span itemprop="name">LibreOJ 6052 「雅礼集训 2017 Day11」DIV</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-24T20:51:25+08:00"
-              content="2018-07-24" >
-          07-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/24/loj6053/" itemprop="url">
-              
-                <span itemprop="name">LibreOJ 6053 简单的函数</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-24T13:34:20+08:00"
-              content="2018-07-24" >
-          07-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/21/BZOJ4314/" itemprop="url">
-              
-                <span itemprop="name">BZOJ 4314 倍数？倍数！</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-21T18:42:08+08:00"
-              content="2018-07-21" >
-          07-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/21/NOI2016D1T3/" itemprop="url">
-              
-                <span itemprop="name">UOJ 221「NOI2016」循环之美</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-21T09:58:02+08:00"
-              content="2018-07-21" >
-          07-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/18/BZOJ3551/" itemprop="url">
-              
-                <span itemprop="name">BZOJ 3551「ONTAK2010」Peaks加强版</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-18T20:58:12+08:00"
-              content="2018-07-18" >
-          07-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/17/loj2105/" itemprop="url">
-              
-                <span itemprop="name">「TJOI2015」概率论</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-17T15:08:55+08:00"
-              content="2018-07-17" >
-          07-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/14/MIN-25-sieve/" itemprop="url">
-              
-                <span itemprop="name">Min_25筛学习笔记</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-14T16:21:54+08:00"
-              content="2018-07-14" >
-          07-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/11/BZOJ4261/" itemprop="url">
-              
-                <span itemprop="name">「BZOJ 4261」建设游乐场</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-11T20:21:01+08:00"
-              content="2018-07-11" >
-          07-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/11/bell-series/" itemprop="url">
-              
-                <span itemprop="name">贝尔级数在积性函数毒瘤题中的应用</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-11T16:01:02+08:00"
-              content="2018-07-11" >
-          07-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/11/test/" itemprop="url">
-              
-                <span itemprop="name">一些测试</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-11T11:55:09+08:00"
-              content="2018-07-11" >
-          07-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    danihao123
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yahyachan.github.io/2018/08/06/BZOJ4671/" title="BZOJ 4671 异或图">https://yahyachan.github.io/2018/08/06/BZOJ4671/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/BZOJ/" rel="tag"># BZOJ</a>
+          
+            <a href="/tags/容斥原理/" rel="tag"># 容斥原理</a>
+          
+            <a href="/tags/线性基/" rel="tag"># 线性基</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/04/loj6076/" rel="next" title="LibreOJ 6076 「2017 山东一轮集训 Day6」三元组">
+                <i class="fa fa-chevron-left"></i> LibreOJ 6076 「2017 山东一轮集训 Day6」三元组
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -911,6 +488,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODYwMi8xNTEzMA"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -931,8 +517,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1032,6 +627,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#description"><span class="nav-number">1.</span> <span class="nav-text">Description</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solution"><span class="nav-number">2.</span> <span class="nav-text">Solution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#code"><span class="nav-number">3.</span> <span class="nav-text">Code</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1172,6 +783,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -1200,6 +815,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
