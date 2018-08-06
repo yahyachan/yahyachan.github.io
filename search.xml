@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[AGC001E BBQ Hard]]></title>
+    <url>%2F2018%2F08%2F06%2Fagc001E%2F</url>
+    <content type="text"><![CDATA[Description 你有\(n\)个串，第\(i\)个串上有\(A_i\)块肉和\(B_i\)块菜。现在选出两个串，将他们中的肉和菜放在一起重新排列，求总方案数。 \(2\leq n\leq 200000, 1\leq A_i,B_i\leq 2000\)。 Solution 很显然对于两个串\(i, j\)，对答案的贡献是： \[ \binom{A_i + B_i + A_j + B_j}{A_i + A_j} \] 这个东西有什么组合意义吗？答案是有的。就是在一个平面上从原点走到\((A_i + A_j, B_i + B_j)\)，每次只向上或者向右走一格的方案数，然后我们把整个坐标系平移一下就可以把这个东西变成从\((-A_i, -B_i)\)走到\((A_j, B_j)\)。 然后我们建出所有的点，就是要我们求所有正点走到所有负点的方案数之和。这个东西很好DP，我们先把横纵坐标都加2000，然后根据到\((0, 0)\)的曼哈顿距离从小到大递推即可。 Code 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;utility&gt;using pii = std::pair&lt;int, int&gt;;const int ha = 1000000007;using ll = long long;ll pow_mod(ll a, ll b) &#123; ll ans = 1, res = a; while(b) &#123; if(1LL &amp; b) ans = ans * res % (ll)ha; res = res * res % (ll)ha; b &gt;&gt;= 1; &#125; return ans;&#125;ll inv(ll x) &#123; return pow_mod(x, ha - 2);&#125;ll fac[10005], ifac[10005];void process() &#123; int n = 10000; fac[0] = 1; for(int i = 1; i &lt;= n; i ++) &#123; fac[i] = (fac[i - 1] * (ll(i))) % (ll)ha; &#125; ifac[n] = inv(fac[n]); for(int i = n - 1; i &gt;= 0; i --) &#123; ifac[i] = ifac[i + 1] * (ll(i + 1)) % (ll)ha; &#125;&#125;ll C(int x, int y) &#123; ll ret = fac[x]; ret = ret * ifac[x - y] % (ll)ha; ret = ret * ifac[y] % (ll)ha; return ret;&#125;pii P[200005]; int d[4005][4005];int n;int dp() &#123;#ifdef LOCAL puts("11111"); fflush(stdout);#endif for(int i = 1; i &lt;= n; i ++) &#123; int x = P[i].first, y = P[i].second; d[2000 - x][2000 - y] ++; &#125; for(int dis = 1; dis &lt;= 8000; dis ++) &#123; for(int i = std::max(0, dis - 4000); i &lt;= std::min(4000, dis); i ++) &#123; int j = dis - i; if(i &gt; 0) d[i][j] = (d[i][j] + d[i - 1][j]) % ha; if(j &gt; 0) d[i][j] = (d[i][j] + d[i][j - 1]) % ha; &#125; &#125;#ifdef LOCAL puts("Gou!"); fflush(stdout);#endif int ans = 0; for(int i = 1; i &lt;= n; i ++) &#123; int x = P[i].first, y = P[i].second; ans = (ans + d[x + 2000][y + 2000]) % ha; ans = (ans - C(2 * x + 2 * y, 2 * x) + ha) % ha; &#125; static const ll inv_2 = 500000004; ans = (((ll(ans)) * inv_2) % (ll)ha); return ans;&#125;int main() &#123; scanf("%d", &amp;n); for(int i = 1; i &lt;= n; i ++) &#123; scanf("%d%d", &amp;P[i].first, &amp;P[i].second); &#125; process(); printf("%d\n", dp()); return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>AtCoder</tag>
+        <tag>DP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[BZOJ 4671 异或图]]></title>
     <url>%2F2018%2F08%2F06%2FBZOJ4671%2F</url>
     <content type="text"><![CDATA[Description 定义两个点数相同的图\(G_1,G_2\)的异或为一个新图\(G\)。\(G\)的点数和原来两个图一样，并且对于一条边\((i, j)\)，如果在\(G_1,G_2\)中的出现次数异或起来为\(1\)的话，那么\((i, j)\)会出现在\(G\)中，反之则不会出现。 给出\(s\)个有\(n\)个点的图\(G_1, G_2,\ldots,G_s\)，求这些图有多少个子集异或起来得到的图是一个联通图。 \(2\leq n\leq 10, 1\leq s\leq 60\)。 Solution 数数题，启动！ 恰好有一个连通块的情况是不好统计的，但是至少有一个连通块的情况很好统计。我们只需要枚举\(n\)个点的集合划分（\(B_{10} = 21147\)，所以不虚），保证不同集合之间没有边就行了。这样假设划出来了\(c\)个集合，那么最后的连通块数一定不小于\(c\)。 考虑不同集合之间没有边的条件如何处理。注意到这样就要求了包含这条边的图只用了偶数个，那么把所有这种条件列成一个方程组就是一个\(s\)元异或方程组。而我们知道一个\(s\)元异或方程组（假设其矩阵为\(A\)）的解数为\(2^{s - r(A)}\)，而\(r(A)\)就等于该矩阵的线性基数量，用线性基那一套传统艺能就可以求了。 然后我们现在只求出了至少\(c\)个连通块的方案，要想知道只有一个连通块的方案，势必要容斥一下。根据容斥系数那一套理论，我们要求右边的条件是\([n = 1]\)，因此容斥系数\(\mathrm{coef}_i\)应当满足： \[ \sum_{i = 1}^n \begin{Bmatrix}n\\i\end{Bmatrix}\mathrm{coef}_i = [n = 1] \] 使用打表等传统艺能可知\(\mathrm{coef}_i = (-1)^{i - 1}(i - 1)!\)，然后这题就做完力…… Code 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;cmath&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;bitset&gt;typedef long long ll;const int maxn = 12;const int maxs = 62;const int maxm = 60;ll lowbit(ll x) &#123; return x &amp; (-x);&#125;int n, m, s;ll L[maxn][maxn];ll M[maxm];ll gj() &#123; static ll bas[maxs]; std::fill(bas, bas + s, 0LL); int cnt = 0; for(int i = 1; i &lt;= m; i ++) &#123; ll x = M[i]; for(int j = s - 1; j &gt;= 0; j --) &#123; if(!((1LL &lt;&lt; (ll(j))) &amp; x)) continue; if(bas[j]) &#123; x ^= bas[j]; &#125; else &#123; cnt ++; bas[j] = x; break; &#125; &#125; &#125; return (1LL &lt;&lt; (ll(s - cnt)));&#125;int bel[maxn]; ll f[maxn];void dfs(int x, int cnt) &#123; if(x &gt; n) &#123; m = 0; for(int i = 1; i &lt;= n; i ++) &#123; for(int j = i + 1; j &lt;= n; j ++) &#123; if(bel[i] == bel[j]) continue; M[++ m] = L[i][j]; &#125; &#125; f[cnt] += gj(); return; &#125; for(int i = 1; i &lt;= cnt + 1; i ++) &#123; bel[x] = i; dfs(x + 1, std::max(i, cnt)); &#125;&#125;int main() &#123; scanf("%d", &amp;s); for(int i = 0; i &lt; s; i ++) &#123; char S[maxs]; scanf("%s", S); if(!n) &#123; int l = strlen(S); n = (1 + (int((sqrt(1 + 8 * l))))) / 2; &#125; int cnt = 0; for(int j = 1; j &lt;= n; j ++) &#123; for(int k = j + 1; k &lt;= n; k ++) &#123; if(S[cnt] == '1') &#123; L[j][k] ^= (1LL &lt;&lt; (ll(i))); &#125; cnt ++; &#125; &#125; &#125;#ifdef LOCAL printf("n : %d\n", n);#endif dfs(1, 0); ll ans = 0, fac = 1; for(int i = 1; i &lt;= n; i ++) &#123; ll delta = fac * f[i]; if(!(i &amp; 1)) delta *= -1LL;#ifdef LOCAL printf("delta(%d) : %lld\n", i, delta);#endif ans += delta; fac *= (ll)i; &#125; printf("%lld\n", ans); return 0;&#125;]]></content>
@@ -173,8 +185,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>TJOI</tag>
         <tag>生成函数</tag>
+        <tag>TJOI</tag>
         <tag>广义二项式定理</tag>
       </tags>
   </entry>
@@ -214,8 +226,8 @@
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
         <tag>杜教筛</tag>
-        <tag>生成函数</tag>
         <tag>贝尔级数</tag>
+        <tag>生成函数</tag>
       </tags>
   </entry>
   <entry>
