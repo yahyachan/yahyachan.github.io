@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ARC062F Painting Graphs with AtCoDeer]]></title>
+    <url>%2F2018%2F08%2F07%2Farc062F%2F</url>
+    <content type="text"><![CDATA[Description 有一个\(n\)个点\(m\)条边的简单（即无重边无自环）无向图，现在有\(k\)种颜色，要求你给每条边染色。 然后你每次可以选择一个简单环，进行一次循环位移。如果一个染色方案能经过若干次该种操作来变成另一种染色方案，那么称这两种染色方案本质相同。 求有多少种不同的染色方案，答案对\(10^9+7\)取模。 \(1\le n\leq 50, 1\leq m, k\leq 100\)。 Solution 首先一件很显然的事情是，每个点双之间是互相独立的，也就是说最后的答案是所有点双的答案之积。所以先求一遍点双再说。 然后点双可以分为三种情况来考虑： 第一种：只有一条边的点双。这种很好处理，答案就是\(k\)。 第二种：只有一个简单环的点双。这个可以转化为一个序列染色，然后可以做若干次循环位移。假设序列（环）长\(l\)，那么做\(x\)次循环位移得到的置换的轮换数为\(\gcd(l, x)\)，套用一下Pólya定理就可以得到答案： \[ \frac{1}{l}\sum_{i = 0}^{l - 1}k^{\gcd(l, i)} \] 第三种：其他情况。这样的话一定会出现环套环的现象，可以证明这样可以凑出所有的置换。那么只要两种方案不同，那么他们一定会在某种颜色的使用次数上不同。所以问题就转化为了\(x_1 + x_2+\ldots+x_k = l\)（\(l\)为该点双中的边数，其中每个变量为自然数）的解的数量。这是一个经典的隔板法问题，答案为： \[ \binom{l + k - 1}{k - 1} \] Code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;vector&gt;#include &lt;stack&gt;using ll = long long;const ll ha = 1000000007LL;ll pow_mod(ll a, ll b) &#123; ll ans = 1, res = a; while(b) &#123; if(1LL &amp; b) ans = ans * res % ha; res = res * res % ha; b &gt;&gt;= 1; &#125; return ans;&#125;ll inv(ll x) &#123; return pow_mod(x, ha - 2LL);&#125;ll fac[200005], ifac[200005];void process() &#123; int n = 200000; fac[0] = 1; for(int i = 1; i &lt;= n; i ++) fac[i] = (ll)i * fac[i - 1] % ha; ifac[n] = inv(fac[n]); for(int i = n - 1; i &gt;= 0; i --) ifac[i] = (ll(i + 1)) * ifac[i + 1] % ha;&#125;ll C(int n, int m) &#123; if(n &lt; m) return 0; ll ret = fac[n] * ifac[n - m] % ha; ret = ret * ifac[m] % ha; return ret;&#125;const int maxn = 100005;const int maxm = 200005;std::vector&lt;int&gt; G[maxn];void add_edge(int u, int v) &#123; G[u].push_back(v);&#125;void ins_edge(int u, int v) &#123; add_edge(u, v); add_edge(v, u);&#125;int n, m, k;int bcnt = 0, clk = 0;int pre[maxn], bccno[maxn];int pn[maxm], en[maxm];using pii = std::pair&lt;int, int&gt;;int dfs(int x, int fa = -1) &#123; static std::stack&lt;pii&gt; S; int lowu = pre[x] = ++ clk; for(int v : G[x]) &#123; pii e = pii(x, v); if(!pre[v]) &#123; S.push(e); int lowv = dfs(v, x); lowu = std::min(lowu, lowv); if(lowv &gt;= pre[x]) &#123; bcnt ++; pn[bcnt] = en[bcnt] = 0; while(true) &#123; pii ee = S.top(); S.pop(); int a = ee.first, b = ee.second; en[bcnt] ++; if(bccno[a] != bcnt) pn[bcnt] ++, bccno[a] = bcnt; if(bccno[b] != bcnt) pn[bcnt] ++, bccno[b] = bcnt; if(a == x &amp;&amp; v == b) break; &#125; &#125; &#125; else if(v != fa &amp;&amp; pre[v] &lt; pre[x]) &#123; S.push(e); lowu = std::min(lowu, pre[v]); &#125; &#125; return lowu;&#125;void calc_bcc() &#123; for(int i = 1; i &lt;= n; i ++) &#123; if(!pre[i]) dfs(i); &#125;&#125;int gcd(int a, int b) &#123; if(!b) return a; else return gcd(b, a % b);&#125;ll calc(int x) &#123; if(en[x] == 1) &#123; return k; &#125; else if(en[x] == pn[x]) &#123; ll ret = 0; for(int i = 0; i &lt; en[x]; i ++) &#123; ret = (ret + pow_mod(k, gcd(i, en[x]))) % ha; &#125; ret = ret * inv(en[x]) % ha; return ret; &#125; else &#123; return C(en[x] + k - 1, k - 1); &#125;&#125;int main() &#123; process(); scanf("%d%d%d", &amp;n, &amp;m, &amp;k); for(int i = 1; i &lt;= m; i ++) &#123; int u, v; scanf("%d%d", &amp;u, &amp;v); ins_edge(u, v); &#125; calc_bcc(); ll ans = 1LL; for(int i = 1; i &lt;= bcnt; i ++) &#123; ans = ans * calc(i) % ha; &#125; printf("%lld\n", ans); return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>AtCoder</tag>
+        <tag>点-双连通分量</tag>
+        <tag>Pólya定理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[AGC005F Many Easy Problems]]></title>
     <url>%2F2018%2F08%2F07%2Fagc005F%2F</url>
     <content type="text"><![CDATA[Description 有一棵\(n\)个点的树，假设有一个常数\(k(1\leq k\leq n)\)，我们从树中任意选出\(k\)个点（这样的方案数显然为\(\binom{n}{k}\)） ，并且选出这\(k\)个点之外的尽可能少的原树点使得这些点和那\(k\)个点的导出子图联通（显然这样的方案唯一），我们称这个导出子图的总点数为这个方案的价值。 对于每个\(k(1\leq k\leq n)\)，求出所有从树中选出\(k\)个点的方案的价值之和。 \(1\leq n\leq 200000\)，答案模\(924844033\)输出。 Solution ao秒啊，，， 如果考虑那个导出子图中点的贡献，是肥肠苦难滴。那么我们尝试转化成边的贡献。 注意到那个导出子图一定是一棵树，所以点数等于边数加一。那个加一最后做出的总贡献显然为\(\binom{n}{k}\)，因此我们接下来考虑处理边的贡献就行了。 但直接考虑边的贡献还是不可做滴，所以考虑使用补集转换，用所有情况减去不做贡献的情况。不做贡献的话那么选出的\(k\)个点一定在那条边的两侧。因此对于每条边，如果其一侧的子树大小为\(a\)，那么这条边对答案的贡献为\(\binom{n}{k} - \binom{a}{k} - \binom{n - a}{k}\)。 可是要对所有\(k\)都求一遍的话，全都DFS一遍非常的不现实。硬骨头在于减号后面的东西，其意义就是每一个边的一侧大小为\(a\)，那么就要在总答案里减去一个\(\binom{a}{k}\)。因此我们考虑把每个边两侧的子树大小都放到一个桶\(b\)里，其中\(b_i\)表示大小为\(i\)的子树出现了多少次。那么最后答案要在\(n\binom{n}{k}\)的基础上减去一个： \[ a_k = \sum_{i = 1}^n b_i\binom{i}{k} \] 但是这个东西不好递推也不好卷积，我们尝试两边乘\(k\)再整理整理： \[ a_kk!=\sum_{i = 1}^n b_ii!\cdot\frac{1}{(i - k)!} \] 然而这还是一个不好递推也不好卷积的东西……但是我们采用一种传统艺能：把一个串反过来。因此我们定义\(c_i = \frac{1}{(n - i)!}\)，这样原式就化成了： \[ a_kk!=\sum_{i = 1}^n b_ii!c_{n - i + k} \] 显然有\(n - i + k + i = n + k\)，因此这个物事就可以卷积力，，， 但是模数除了是质数以外，好像题里面也没告诉别的。但是通过WolframAlpha可以发现这个模数减一之后是\(2^{21}\)的倍数，并且这个模数本身有一个原根为\(5\)，所以是一个相当优秀的NTT模数。 Code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;vector&gt;using ll = long long;const ll ha = 924844033;const ll bs = 5;ll pow_mod(ll a, ll b) &#123; ll ans = 1, res = a; while(b) &#123; if(1LL &amp; b) ans = ans * res % ha; res = res * res % ha; b &gt;&gt;= 1; &#125; return ans;&#125;ll inv(ll x) &#123; return pow_mod(x, ha - 2LL);&#125;ll fac[200005], ifac[200005];void process() &#123; int n = 200000; fac[0] = 1; for(int i = 1; i &lt;= n; i ++) fac[i] = (ll)i * fac[i - 1] % ha; ifac[n] = inv(fac[n]); for(int i = n - 1; i &gt;= 0; i --) ifac[i] = (ll(i + 1)) * ifac[i + 1] % ha;&#125;ll C(int n, int m) &#123; if(n &lt; m) return 0; ll ret = fac[n] * ifac[n - m] % ha; ret = ret * ifac[m] % ha; return ret;&#125;int flip(int bi, int x) &#123; int ans = 0; for(int i = 0; i &lt; bi; i ++) &#123; if((1 &lt;&lt; i) &amp; x) &#123; ans |= (1 &lt;&lt; (bi - i - 1)); &#125; &#125; return ans;&#125;void NTT(ll *A, int bi, bool flag = false) &#123; int n = 1 &lt;&lt; bi; for(int i = 0; i &lt; n; i ++) &#123; int f = flip(bi, i); if(f &lt; i) std::swap(A[f], A[i]); &#125; for(int L = 1; L &lt; n; L &lt;&lt;= 1) &#123; ll xi_n = pow_mod(bs, (ha - 1LL) / (ll(L &lt;&lt; 1))); if(flag) xi_n = inv(xi_n); for(int i = 0; i &lt; n; i += (L &lt;&lt; 1)) &#123; ll xi = 1LL; for(int j = i; j &lt; i + L; j ++) &#123; ll x = A[j], y = A[j + L]; A[j] = (x + (y * xi) % ha) % ha; A[j + L] = (x - (y * xi) % ha + ha) % ha; xi = xi * xi_n % ha; &#125; &#125; &#125; if(flag) &#123; ll inv_n = inv(n); for(int i = 0; i &lt; n; i ++) A[i] = A[i] * inv_n % ha; &#125;&#125;std::vector&lt;int&gt; G[200005];void add_edge(int u, int v) &#123; G[u].push_back(v);&#125;void ins_edge(int u, int v) &#123; add_edge(u, v); add_edge(v, u);&#125;ll a[800005], b[800005]; int siz[200005], n;void dfs(int x, int fa = -1) &#123; siz[x] = 1; for(int v : G[x]) &#123; if(v != fa) &#123; dfs(v, x); b[siz[v]] ++; b[n - siz[v]] ++; siz[x] += siz[v]; &#125; &#125;&#125;int main() &#123; process(); scanf("%d", &amp;n); for(int i = 1; i &lt;= n - 1; i ++) &#123; int u, v; scanf("%d%d", &amp;u, &amp;v); ins_edge(u, v); &#125; dfs(1); for(int i = 0; i &lt;= n; i ++) &#123; b[i] = b[i] * fac[i] % ha; a[i] = ifac[n - i]; &#125; int bi = 0, len = 1; while(len &lt;= 2 * n) &#123; bi ++; len &lt;&lt;= 1; &#125; NTT(a, bi); NTT(b, bi); for(int i = 0; i &lt; len; i ++) a[i] = a[i] * b[i] % ha; NTT(a, bi, true); for(int i = 1; i &lt;= n; i ++) &#123; ll ret = (ll)n * C(n, i) % ha; ret = (ret - a[n + i] * ifac[i] % ha + ha) % ha; printf("%lld\n", ret); &#125; return 0;&#125;]]></content>
@@ -33,8 +46,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>DP</tag>
         <tag>AtCoder</tag>
+        <tag>DP</tag>
       </tags>
   </entry>
   <entry>
@@ -59,8 +72,8 @@
       </categories>
       <tags>
         <tag>洲阁筛</tag>
-        <tag>LibreOJ</tag>
         <tag>Min_25筛</tag>
+        <tag>LibreOJ</tag>
         <tag>山东省队集训</tag>
       </tags>
   </entry>
@@ -119,8 +132,8 @@
         <category>大坑</category>
       </categories>
       <tags>
-        <tag>LibreOJ</tag>
         <tag>SPOJ</tag>
+        <tag>LibreOJ</tag>
         <tag>TJOI</tag>
         <tag>后缀自动机</tag>
         <tag>后缀数组</tag>
@@ -154,8 +167,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>LibreOJ</tag>
         <tag>Min_25筛</tag>
+        <tag>LibreOJ</tag>
       </tags>
   </entry>
   <entry>
@@ -179,8 +192,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>NOI</tag>
         <tag>UOJ</tag>
+        <tag>NOI</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
         <tag>洲阁筛</tag>
