@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[BZOJ 1566 「NOI2009」管道取珠]]></title>
+    <url>%2F2018%2F08%2F07%2FBZOJ1566%2F</url>
+    <content type="text"><![CDATA[Description 有两个长度分别为\(n,m\)的珠子序列\(S,T\)，每种珠子可能是黑色或者白色，同色的珠子视为本质相同。 我们进行\(n + m\)次操作，每次从\(S,T\)中的一个的头部取出一个珠子，放到我们结果序列的尾部，这样能形成一个新的序列。定义两种方案不同，当且仅当存在一步使得这一步两种方案一个从\(S\)取一个从\(T\)取。那么我们假设最后可能的结果序列有\(k\)种，我们把他们用\(1\ldots k\)编号，假设\(a_k\)为编号为\(k\)的序列的操作方案数量，求： \[ \sum_{i = 1}^k a_i^2 \] \(n,m\leq 500\)。 Solution 那个平方是不是很不好处理啊…… 那么\(a_i\)一定可以表示为若干个\(1\)相加，每个\(1\)都代表了一种可以形成序列\(i\)的操作方案，平方之后这些\(1\)就会两两配对（参考二项式定理？）。 那么问题就转化成了求有多少对（可以相同也可以不相同的）操作序列可以生成同样的结果序列。这个DP一下就好力，，， Code 123456789101112131415161718192021222324252627282930313233#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;const int ha = 1024523;int d[2][505][505];char S[505], T[505];int main() &#123; int n, m; scanf("%d%d%s%s", &amp;n, &amp;m, S + 1, T + 1); d[0][0][0] = 1; for(int i = 1; i &lt;= n + m; i ++) &#123; int now = i &amp; 1; int pre = now ^ 1; memset(d[now], 0, sizeof(d[now])); for(int j = 0; j &lt;= i &amp;&amp; j &lt;= n; j ++) &#123; if(i - j &gt; m) continue; for(int k = 0; k &lt;= i &amp;&amp; k &lt;= n; k ++) &#123; if(i - k &gt; m) continue; int &amp;ans = d[now][j][k]; bool A0 = j &gt; 0, B0 = k &gt; 0; bool A1 = j &lt; i, B1 = k &lt; i; if(A0 &amp;&amp; B0 &amp;&amp; S[j] == S[k]) ans = (ans + d[pre][j - 1][k - 1]) % ha; if(A1 &amp;&amp; B1 &amp;&amp; T[i - j] == T[i - k]) ans = (ans + d[pre][j][k]) % ha; if(A0 &amp;&amp; B1 &amp;&amp; S[j] == T[i - k]) ans = (ans + d[pre][j - 1][k]) % ha; if(A1 &amp;&amp; B0 &amp;&amp; T[i - j] == S[k]) ans = (ans + d[pre][j][k - 1]) % ha;#ifdef LOCAL printf("d[%d][%d][%d] : %d\n", i, j, k, ans);#endif &#125; &#125; &#125; printf("%d\n", d[(n + m) &amp; 1][n][n]); return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>BZOJ</tag>
+        <tag>NOI</tag>
+        <tag>DP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[AGC001E BBQ Hard]]></title>
     <url>%2F2018%2F08%2F06%2Fagc001E%2F</url>
     <content type="text"><![CDATA[Description 你有\(n\)个串，第\(i\)个串上有\(A_i\)块肉和\(B_i\)块菜。现在选出两个串，将他们中的肉和菜放在一起重新排列，求总方案数。 \(2\leq n\leq 200000, 1\leq A_i,B_i\leq 2000\)。 Solution 很显然对于两个串\(i, j\)，对答案的贡献是： \[ \binom{A_i + B_i + A_j + B_j}{A_i + A_j} \] 这个东西有什么组合意义吗？答案是有的。就是在一个平面上从原点走到\((A_i + A_j, B_i + B_j)\)，每次只向上或者向右走一格的方案数，然后我们把整个坐标系平移一下就可以把这个东西变成从\((-A_i, -B_i)\)走到\((A_j, B_j)\)。 然后我们建出所有的点，就是要我们求所有正点走到所有负点的方案数之和。这个东西很好DP，我们先把横纵坐标都加2000，然后根据到\((0, 0)\)的曼哈顿距离从小到大递推即可。 Code 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;utility&gt;using pii = std::pair&lt;int, int&gt;;const int ha = 1000000007;using ll = long long;ll pow_mod(ll a, ll b) &#123; ll ans = 1, res = a; while(b) &#123; if(1LL &amp; b) ans = ans * res % (ll)ha; res = res * res % (ll)ha; b &gt;&gt;= 1; &#125; return ans;&#125;ll inv(ll x) &#123; return pow_mod(x, ha - 2);&#125;ll fac[10005], ifac[10005];void process() &#123; int n = 10000; fac[0] = 1; for(int i = 1; i &lt;= n; i ++) &#123; fac[i] = (fac[i - 1] * (ll(i))) % (ll)ha; &#125; ifac[n] = inv(fac[n]); for(int i = n - 1; i &gt;= 0; i --) &#123; ifac[i] = ifac[i + 1] * (ll(i + 1)) % (ll)ha; &#125;&#125;ll C(int x, int y) &#123; ll ret = fac[x]; ret = ret * ifac[x - y] % (ll)ha; ret = ret * ifac[y] % (ll)ha; return ret;&#125;pii P[200005]; int d[4005][4005];int n;int dp() &#123;#ifdef LOCAL puts("11111"); fflush(stdout);#endif for(int i = 1; i &lt;= n; i ++) &#123; int x = P[i].first, y = P[i].second; d[2000 - x][2000 - y] ++; &#125; for(int dis = 1; dis &lt;= 8000; dis ++) &#123; for(int i = std::max(0, dis - 4000); i &lt;= std::min(4000, dis); i ++) &#123; int j = dis - i; if(i &gt; 0) d[i][j] = (d[i][j] + d[i - 1][j]) % ha; if(j &gt; 0) d[i][j] = (d[i][j] + d[i][j - 1]) % ha; &#125; &#125;#ifdef LOCAL puts("Gou!"); fflush(stdout);#endif int ans = 0; for(int i = 1; i &lt;= n; i ++) &#123; int x = P[i].first, y = P[i].second; ans = (ans + d[x + 2000][y + 2000]) % ha; ans = (ans - C(2 * x + 2 * y, 2 * x) + ha) % ha; &#125; static const ll inv_2 = 500000004; ans = (((ll(ans)) * inv_2) % (ll)ha); return ans;&#125;int main() &#123; scanf("%d", &amp;n); for(int i = 1; i &lt;= n; i ++) &#123; scanf("%d%d", &amp;P[i].first, &amp;P[i].second); &#125; process(); printf("%d\n", dp()); return 0;&#125;]]></content>
@@ -8,8 +21,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>AtCoder</tag>
         <tag>DP</tag>
+        <tag>AtCoder</tag>
       </tags>
   </entry>
   <entry>
@@ -154,9 +167,9 @@
         <category>题解</category>
       </categories>
       <tags>
+        <tag>NOI</tag>
         <tag>洲阁筛</tag>
         <tag>UOJ</tag>
-        <tag>NOI</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
         <tag>杜教筛</tag>
