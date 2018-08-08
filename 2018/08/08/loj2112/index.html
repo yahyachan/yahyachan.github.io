@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="DP,期望DP,LibreOJ,HNOI," />
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="danihao123&apos;s Blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="danihao123&#39;s Blog">
-<meta property="og:url" content="https://yahyachan.github.io/categories/题解/index.html">
+<meta name="description" content="Description 给你\(n\)张用\(1\ldots n\)编号的牌，第\(i\)张牌发动概率为\(p_i\)，造成伤害为\(d_i\)。 然后有\(r\)回合，每回合会从当前没用过的牌里从小到大考虑，依次试图去发动（如果有一个成功发动的话就不会往下接着尝试，这回合结束）。求期望造成的伤害。 每个点共\(T(1\leq T\leq 444)\)组数据，\(1\leq n\leq 22">
+<meta name="keywords" content="DP,期望DP,LibreOJ,HNOI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LibreOJ 2112 「HNOI2015」亚瑟王">
+<meta property="og:url" content="https://yahyachan.github.io/2018/08/08/loj2112/index.html">
 <meta property="og:site_name" content="danihao123&#39;s Blog">
-<meta property="og:description" content="danihao123&apos;s Blog">
+<meta property="og:description" content="Description 给你\(n\)张用\(1\ldots n\)编号的牌，第\(i\)张牌发动概率为\(p_i\)，造成伤害为\(d_i\)。 然后有\(r\)回合，每回合会从当前没用过的牌里从小到大考虑，依次试图去发动（如果有一个成功发动的话就不会往下接着尝试，这回合结束）。求期望造成的伤害。 每个点共\(T(1\leq T\leq 444)\)组数据，\(1\leq n\leq 22">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-08T14:55:20.949Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="danihao123&#39;s Blog">
-<meta name="twitter:description" content="danihao123&apos;s Blog">
+<meta name="twitter:title" content="LibreOJ 2112 「HNOI2015」亚瑟王">
+<meta name="twitter:description" content="Description 给你\(n\)张用\(1\ldots n\)编号的牌，第\(i\)张牌发动概率为\(p_i\)，造成伤害为\(d_i\)。 然后有\(r\)回合，每回合会从当前没用过的牌里从小到大考虑，依次试图去发动（如果有一个成功发动的话就不会往下接着尝试，这回合结束）。求期望造成的伤害。 每个点共\(T(1\leq T\leq 444)\)组数据，\(1\leq n\leq 22">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yahyachan.github.io/categories/题解/"/>
+  <link rel="canonical" href="https://yahyachan.github.io/2018/08/08/loj2112/"/>
 
 
 
 
 
-  <title>分类: 题解 | danihao123's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>LibreOJ 2112 「HNOI2015」亚瑟王 | danihao123's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -143,7 +145,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -281,311 +283,207 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block category">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>题解<small>分类</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yahyachan.github.io/2018/08/08/loj2112/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="danihao123">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://danihao123.is-programmer.com/user_files/danihao123/config/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="danihao123's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/08/08/loj2112/" itemprop="url">
-              
-                <span itemprop="name">LibreOJ 2112 「HNOI2015」亚瑟王</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">LibreOJ 2112 「HNOI2015」亚瑟王</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-08T22:42:46+08:00"
-              content="2018-08-08" >
-          08-08
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-08T22:42:46+08:00">
+                2018-08-08
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/题解/" itemprop="url" rel="index">
+                    <span itemprop="name">题解</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/08/loj2478/" itemprop="url">
-              
-                <span itemprop="name">LibreOJ 2478 「九省联考 2018」林克卡特树</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-08T15:44:23+08:00"
-              content="2018-08-08" >
-          08-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/08/CF739E/" itemprop="url">
-              
-                <span itemprop="name">CF739E Gosha is hunting</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-08T13:32:17+08:00"
-              content="2018-08-08" >
-          08-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/07/BZOJ3569/" itemprop="url">
-              
-                <span itemprop="name">BZOJ 3569 DZY Loves Chinese II</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-07T21:38:34+08:00"
-              content="2018-08-07" >
-          08-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/07/arc062F/" itemprop="url">
-              
-                <span itemprop="name">ARC062F Painting Graphs with AtCoDeer</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-07T15:07:48+08:00"
-              content="2018-08-07" >
-          08-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/07/agc005F/" itemprop="url">
-              
-                <span itemprop="name">AGC005F Many Easy Problems</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-07T12:49:24+08:00"
-              content="2018-08-07" >
-          08-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/07/BZOJ1566/" itemprop="url">
-              
-                <span itemprop="name">BZOJ 1566 「NOI2009」管道取珠</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-07T11:12:12+08:00"
-              content="2018-08-07" >
-          08-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/06/agc001E/" itemprop="url">
-              
-                <span itemprop="name">AGC001E BBQ Hard</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-06T20:45:05+08:00"
-              content="2018-08-06" >
-          08-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/06/BZOJ4671/" itemprop="url">
-              
-                <span itemprop="name">BZOJ 4671 异或图</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-06T18:51:35+08:00"
-              content="2018-08-06" >
-          08-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/04/loj6076/" itemprop="url">
-              
-                <span itemprop="name">LibreOJ 6076 「2017 山东一轮集训 Day6」三元组</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-04T18:43:22+08:00"
-              content="2018-08-04" >
-          08-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <h2 id="description">Description</h2>
+<p>给你<span class="math inline">\(n\)</span>张用<span class="math inline">\(1\ldots n\)</span>编号的牌，第<span class="math inline">\(i\)</span>张牌发动概率为<span class="math inline">\(p_i\)</span>，造成伤害为<span class="math inline">\(d_i\)</span>。</p>
+<p>然后有<span class="math inline">\(r\)</span>回合，每回合会从当前没用过的牌里从小到大考虑，依次试图去发动（如果有一个成功发动的话就不会往下接着尝试，这回合结束）。求期望造成的伤害。</p>
+<p>每个点共<span class="math inline">\(T(1\leq T\leq 444)\)</span>组数据，<span class="math inline">\(1\leq n\leq 220, 0\leq r\leq 132, 0&lt;p_i&lt;1, 0\leq d_i\leq 1000\)</span>。</p>
+<a id="more"></a>
+<h2 id="solution">Solution</h2>
+<p>这DP有毒.jpg</p>
+<p>直接做是肯定不可做的……因此我们考虑利用期望线性性，分别考虑每张牌可能对答案有什么贡献。</p>
+<p>然后还是一脸不可做……但是注意到对于每张牌，我们计算他的贡献的时候并不关心之前具体有哪些牌发动了，我们只关心他自己被考虑了多少次……（这里假设一张牌即使被用了还是会被考虑只不过不会再发动，下同）</p>
+<p>然后考虑定义状态<span class="math inline">\(f_{i, j}\)</span>表示第<span class="math inline">\(i\)</span>张牌被恰好考虑了<span class="math inline">\(j\)</span>次的概率。这样DP的话只需要考虑上一张牌发动与否即可，所以有： <span class="math display">\[
+f_{i, j} = f_{i - 1, j}(1-p_{i - 1})^j + f_{i - 1, j + 1}(1 - (1 - p_{i - 1})^{j + 1})
+\]</span> 状态转移方程还是很好懂的……前面一项就是前一张牌一直没有被发动，第二项就是前面一项曾经被发动过。</p>
+<p>然后就没有然后了……顺便注意预处理<span class="math inline">\((1 - p_i)\)</span>的幂能快不少。</p>
+<h2 id="code">Code</h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> R;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">225</span>;</span><br><span class="line">R p[maxn], d[maxn], f[maxn][maxn], G[maxn][maxn];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> T; <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;T);</span><br><span class="line">  <span class="keyword">while</span>(T --) &#123;</span><br><span class="line">    <span class="keyword">int</span> n, r; <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;n, &amp;r);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</span><br><span class="line">      <span class="built_in">scanf</span>(<span class="string">"%lf%lf"</span>, &amp;p[i], &amp;d[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">std</span>::fill(f[<span class="number">0</span>], f[<span class="number">0</span>] + r + <span class="number">2</span>, <span class="number">0.00</span>);</span><br><span class="line">    f[<span class="number">0</span>][r] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n; i ++) &#123;</span><br><span class="line">      R bs = <span class="number">1</span> - p[i]; G[i][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= r + <span class="number">1</span>; j ++) &#123;</span><br><span class="line">        G[i][j] = G[i][j - <span class="number">1</span>] * bs;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</span><br><span class="line">      f[i][r + <span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= r; j ++) &#123;</span><br><span class="line">        f[i][j] = <span class="number">0</span>;</span><br><span class="line">        f[i][j] += f[i - <span class="number">1</span>][j] * G[i - <span class="number">1</span>][j];</span><br><span class="line">        f[i][j] += f[i - <span class="number">1</span>][j + <span class="number">1</span>] * (<span class="number">1</span> - G[i - <span class="number">1</span>][j + <span class="number">1</span>]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    R ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= r; j ++) &#123;</span><br><span class="line">        ans += f[i][j] * (<span class="number">1</span> - G[i][j]) * d[i];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%.10lf\n"</span>, ans);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    danihao123
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yahyachan.github.io/2018/08/08/loj2112/" title="LibreOJ 2112 「HNOI2015」亚瑟王">https://yahyachan.github.io/2018/08/08/loj2112/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DP/" rel="tag"># DP</a>
+          
+            <a href="/tags/期望DP/" rel="tag"># 期望DP</a>
+          
+            <a href="/tags/LibreOJ/" rel="tag"># LibreOJ</a>
+          
+            <a href="/tags/HNOI/" rel="tag"># HNOI</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/08/loj2478/" rel="next" title="LibreOJ 2478 「九省联考 2018」林克卡特树">
+                <i class="fa fa-chevron-left"></i> LibreOJ 2478 「九省联考 2018」林克卡特树
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/categories/题解/page/2/">2</a><a class="extend next" rel="next" href="/categories/题解/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -593,6 +491,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODYwMi8xNTEzMA"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -613,8 +520,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -714,6 +630,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#description"><span class="nav-number">1.</span> <span class="nav-text">Description</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solution"><span class="nav-number">2.</span> <span class="nav-text">Solution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#code"><span class="nav-number">3.</span> <span class="nav-text">Code</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -854,6 +786,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -882,6 +818,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
