@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[LibreOJ 2478 「九省联考 2018」林克卡特树]]></title>
+    <url>%2F2018%2F08%2F08%2Floj2478%2F</url>
+    <content type="text"><![CDATA[Description 有一个\(n\)个点的带边权树，要求你取出\(k + 1\)条点不相交的链（链可以只有一个单点），使得这些链的边权和最大。 \(0\leq k&lt; n\leq 3\times 10^5\)，边权绝对值不超过\(10^6\)。 Solution wqs二分第三题…… 下面说的\(k\)默认都是原题中的\(k + 1\)。 要是\(nk\)不大的话，那么有一个经典的搞法就是树上DP，记状态\(f_{i,s.0/1/2}\)表示点\(i\)这个子树总共取了\(k\)条链，\(i\)本身在这些链中度数为\(0/1/2\)的情况的最优解，转移还是比较显（fan）然（suo）的…… 然后\(nk\)很大……但是发现这种东西取了有收益，然后还有数量限制，要素察觉（意味深） 虽然这个东西的凸性只能感性理解或者打表理解了……我真的不会证啊 然后考虑wqs二分……具体方法就是wqs二分，里面的DP就把上面的DP去掉链数限制就行了。 然后存在一个问题就是，假设二分出来一个\(v\)，但是代价为\(v\)的时候链数比\(k\)小，代价为\(v-1\)的时候链数就比\(k\)多了。这样的话当代价为\(v\)的时候照样存在\(k\)条链的最优解，所以在\(v\)时的最优解中补上一个\(kv\)就完了…… Code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;const int maxn = 300005;const int maxm = maxn &lt;&lt; 1;int first[maxn];int next[maxm], to[maxm], dist[maxm];void add_edge(int u, int v, int d) &#123; static int cnt = 0; cnt ++; next[cnt] = first[u]; first[u] = cnt; to[cnt] = v; dist[cnt] = d;&#125;void ins_edge(int u, int v, int d) &#123; add_edge(u, v, d); add_edge(v, u, d);&#125;typedef long long ll;struct pii &#123; ll a; int b; pii() &#123;&#125; pii(ll x, int y) &#123; a = x; b = y; &#125; bool operator &lt;(const pii &amp;res) const &#123; if(a == res.a) &#123; return b &gt; res.b; &#125; else &#123; return a &lt; res.a; &#125; &#125; bool operator ==(const pii &amp;res) const &#123; return (a == res.a) &amp;&amp; (b == res.b); &#125;&#125;;pii operator +(const pii &amp;a, const pii &amp;b) &#123; return pii(a.a + b.a, a.b + b.b);&#125;pii d[maxn][3];void dfs(int x, int fa, const ll &amp;cost) &#123; d[x][0] = pii(0LL, 0); d[x][1] = d[x][2] = pii(-cost, 1); for(int i = first[x]; i; i = next[i]) &#123; int v = to[i]; if(v != fa) &#123; dfs(v, x, cost); pii maxv = std::max(d[v][0], std::max(d[v][1], d[v][2])); pii t2 = std::max(maxv + d[x][2], d[x][1] + d[v][1] + pii((ll)dist[i] + cost, -1)); d[x][2] = std::max(d[x][2], t2); pii t1 = std::max(maxv + d[x][1], d[x][0] + d[v][1] + pii((ll)dist[i], 0)); d[x][1] = std::max(d[x][1], t1); d[x][0] = std::max(d[x][0], d[x][0] + maxv); &#125; &#125;&#125;int main() &#123; int n, k; scanf("%d%d", &amp;n, &amp;k); k ++; ll L = 0LL, R = 0LL; for(int i = 1; i &lt;= n - 1; i ++) &#123; int u, v, w; scanf("%d%d%d", &amp;u, &amp;v, &amp;w); ins_edge(u, v, w); R += std::max(0, w); L = std::min(L, (ll)-w); &#125; while(L &lt; R) &#123;#ifdef LOCAL printf("Range (%lld, %lld)\n", L, R); fflush(stdout);#endif ll M = L + (R - L) / 2LL; dfs(1, -1, M); pii t = std::max(d[1][0], std::max(d[1][1], d[1][2])); if(t.b &lt;= k) &#123; R = M; &#125; else &#123; L = M + 1LL; &#125; &#125; dfs(1, -1, L); pii t = std::max(d[1][0], std::max(d[1][1], d[1][2])); printf("%lld\n", t.a + (ll)k * L); return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>DP</tag>
+        <tag>wqs二分</tag>
+        <tag>多省联考</tag>
+        <tag>树形DP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[CF739E Gosha is hunting]]></title>
     <url>%2F2018%2F08%2F08%2FCF739E%2F</url>
     <content type="text"><![CDATA[Description 有\(n\)个精灵，你手里有\(A\)个普通球和\(B\)个超级球。对于第\(i\)个精灵，只用普通球捕获的概率为\(p_i\)，只用超级球捕获的概率为\(u_i\)。对于每只精灵，你可以不去捕获他，也可以选择用普通球和超级球中的一种去捕获，也可以先用一种再用另一种，但是要注意不能在同一个精灵上使用多个普通球或者多个超级球。 请你安排一种合理的策略，使得捕获精灵的期望尽可能大，并输出最大期望。 \(2\leq n\leq 2000,0\leq A, B\leq n, 0\leq p_i,u_i\leq 1\)。 Solution wqs二分第二题…… 看到个数限制，每个有收益，要素察觉（意味深） 然后考虑往wqs二分上靠，但是限制有两种，那么我们就要考虑用wqs二分套wqs二分了。 然后下面考虑那玩意是不是真的有凸性……这个东西是三维的情况，普通球限制（设为\(x\)）、超级球限制（设为\(y\)）和收益（设为\(z\)）这三维，那么我们要求\(x\)固定的时候\(y\)是凸的，并且每种\(x\)的最优解也是凸的。 固定\(x\)的话，我们考虑\(y\)不断增大的情况。在\(x\)固定且限制存在的情况下，我们会发现每个超级球能给答案带来的最大贡献是一定的，那么考虑将这些贡献排序，我们一定会取前\(y\)项的和。也就是说超级球给答案的贡献是一个前缀和，差分一下就会得到原序列，而原序列是一个递减的序列，所以斜率递减，自然就凸力，，， 那么\(x\)的最优解是凸的，证明也是前缀和这一套理论……\(x\)限制存在时一定会优先选贡献最大的，然后排序之后就相当于前缀和，前缀和差分完了是递减的所以凸。 Code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;cmath&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;const int maxn = 100005;using R = double;const R eps = 1e-9;R f[maxn], p[maxn], u[maxn];int cnt_a[maxn], cnt_b[maxn];int n;bool dp(R v1, R v2) &#123; f[0] = 0; cnt_a[0] = cnt_b[0] = 0; for(int i = 1; i &lt;= n; i ++) &#123; f[i] = f[i - 1]; cnt_a[i] = cnt_a[i - 1]; cnt_b[i] = cnt_b[i - 1]; if(f[i - 1] + p[i] - v1 &gt; f[i]) &#123; f[i] = f[i - 1] + p[i] - v1; cnt_a[i] = cnt_a[i - 1] + 1; cnt_b[i] = cnt_b[i - 1]; &#125; if(f[i - 1] + u[i] - v2 &gt; f[i]) &#123; f[i] = f[i - 1] + u[i] - v2; cnt_a[i] = cnt_a[i - 1]; cnt_b[i] = cnt_b[i - 1] + 1; &#125; if(f[i - 1] + 1 - (1 - p[i]) * (1 - u[i]) - v1 - v2 &gt; f[i]) &#123; f[i] = f[i - 1] + 1 - (1 - p[i]) * (1 - u[i]) - v1 - v2; cnt_a[i] = cnt_a[i - 1] + 1; cnt_b[i] = cnt_b[i - 1] + 1; &#125; &#125; return true;&#125;int main() &#123; int A, B; scanf("%d%d%d", &amp;n, &amp;A, &amp;B); for(int i = 1; i &lt;= n; i ++) scanf("%lf", &amp;p[i]); for(int i = 1; i &lt;= n; i ++) scanf("%lf", &amp;u[i]); R l1 = 0, r1 = 1, l2, r2; while(r1 - l1 &gt; eps) &#123; R m1 = (l1 + r1) / 2; l2 = 0, r2 = 1; while(r2 - l2 &gt; eps) &#123; R m2 = (l2 + r2) / 2; if(dp(m1, m2) &amp;&amp; cnt_b[n] &gt; B) &#123; l2 = m2; &#125; else &#123; r2 = m2; &#125; &#125; if(dp(m1, r2) &amp;&amp; cnt_a[n] &gt; A) &#123; l1 = m1; &#125; else &#123; r1 = m1; &#125; &#125; dp(r1, r2); printf("%.5lf\n", f[n] + (R)A * r1 + (R)B * r2); return 0;&#125;]]></content>
@@ -98,8 +112,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>洲阁筛</tag>
         <tag>Min_25筛</tag>
+        <tag>洲阁筛</tag>
         <tag>LibreOJ</tag>
         <tag>山东省队集训</tag>
       </tags>
@@ -220,10 +234,10 @@
       </categories>
       <tags>
         <tag>NOI</tag>
+        <tag>洲阁筛</tag>
         <tag>UOJ</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
-        <tag>洲阁筛</tag>
         <tag>杜教筛</tag>
       </tags>
   </entry>
@@ -263,8 +277,8 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>洲阁筛</tag>
         <tag>Min_25筛</tag>
+        <tag>洲阁筛</tag>
         <tag>SPOJ</tag>
       </tags>
   </entry>
