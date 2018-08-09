@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[LibreOJ 2542 「PKUWC2018」随机游走]]></title>
+    <url>%2F2018%2F08%2F09%2Floj2542%2F</url>
+    <content type="text"><![CDATA[Description 有一个\(n\)个点的树，有一个固定的点为\(x\)。 \(Q\)次询问，每次给你一个集合。要求你求出从\(x\)出发，每一步都等概率随机选择一条邻边走过去，将集合中每个点都走了至少一遍的话期望的步数为多少（\(x\)视为一开始就经过了）。答案模\(998244353\)输出。 \(1\leq n\leq 18, Q\leq 5000\)。 Solution 高，高啊.jpg 考虑期望步数的实质是集合中最晚一个经过的点被经过的期望步数。最大值不好算，我们就考虑用MIN-MAX容斥，转成最小值。因此问题转化成了从\(x\)出发最早走到一个集合中至少一个点的期望步数。 这个东西的话，先枚举那个集合\(S\)，然后考虑期望DP。设状态\(f_i\)表示从\(i\)出发的期望步数，那么有： \[ f_i = \begin{cases} 0 &amp; \text{if } i\in S,\\ \frac{f_{\mathrm{fa}_i}+\sum f_{\mathrm{ch}_{i, j}}}{d_i} + 1 &amp; \text{if }i\notin S. \end{cases} \] 其中\(\mathrm{fa_i}\)表示\(i\)的父亲，\(\mathrm{ch}_{i, j}\)表示\(i\)的第\(j\)个儿子，\(d_i\)表示\(i\)的度数。如果这样直接高消做的话，那么DP+高消部分的复杂度是\(O(2^nn^3)\)，有点吃不消（但据说可以过的）。 考虑到这样一件事：对于任意叶子或者是属于\(S\)的点，他们的\(f\)都可以表示为父亲的\(f\)的若干倍加上一个常数。那么我们DFS一遍，一个只有这两类点儿子的父亲\(i\)在DFS完了自己所有儿子之后，就能知道\(\sum f_{\mathrm{ch}_{i, j}}\)这个东西可以如何用\(f_i\)的若干倍加上一个常数来表示，这样一来移项再整理一下\(f_i\)也就可以用\(f_{\mathrm{fa}_i}\)的若干倍加上一个常数来表示了。如此往上一直推，推到根节点的话根节点的父亲的答案为0，所以最终答案就是那个最后的常数了。 Code 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;vector&gt;using ll = long long;const ll ha = 998244353LL;ll pow_mod(ll a, ll b) &#123; ll ans = 1, res = a; while(b) &#123; if(1LL &amp; b) ans = ans * res % ha; res = res * res % ha; b &gt;&gt;= 1; &#125; return ans;&#125;ll inv(ll x) &#123; return pow_mod(x, ha - 2LL);&#125;struct Rec &#123; ll x, y; Rec(ll a = 0, ll b = 0) &#123; x = a; y = b; &#125;&#125;;Rec operator +(const Rec &amp;a, const Rec &amp;b) &#123; return Rec((a.x + b.x) % ha, (a.y + b.y) % ha);&#125;Rec operator -(const Rec &amp;a, const Rec &amp;b) &#123; return Rec((a.x - b.x + ha) % ha, (a.y - b.y + ha) % ha);&#125;Rec operator *(const Rec &amp;a, const ll &amp;v) &#123; return Rec(a.x * v % ha, a.y * v % ha);&#125;Rec operator *(const ll &amp;v, const Rec &amp;a) &#123; return Rec(a.x * v % ha, a.y * v % ha);&#125;const int maxn = 20;std::vector&lt;int&gt; G[maxn]; int deg[maxn];Rec dfs(int s, int x, int fa) &#123; if((1 &lt;&lt; (x - 1)) &amp; s) return Rec(); Rec lt(deg[x], ha - deg[x]); for(int v : G[x]) &#123; if(v != fa) &#123; lt = lt - dfs(s, v, x); &#125; &#125; ll inv_A = inv(lt.x); return Rec(inv_A, ((ha - lt.y) % ha) * inv_A % ha);&#125;ll minv[1 &lt;&lt; 18], ps[1 &lt;&lt; 18];int cnt[1 &lt;&lt; 18];ll dir(int x) &#123; if(x &amp; 1) &#123; return 1; &#125; else &#123; return ha - 1LL; &#125;&#125;int main() &#123; int n, Q, x; scanf("%d%d%d", &amp;n, &amp;Q, &amp;x); for(int i = 1; i &lt;= n - 1; i ++) &#123; int u, v; scanf("%d%d", &amp;u, &amp;v); G[u].push_back(v); G[v].push_back(u); deg[u] ++; deg[v] ++; &#125; for(int s = 1; s &lt; (1 &lt;&lt; n); s ++) &#123; minv[s] = dfs(s, x, -1).y; &#125; for(int s = 1; s &lt; (1 &lt;&lt; n); s ++) &#123; for(int i = 0; i &lt; n; i ++) &#123; if((1 &lt;&lt; i) &amp; s) cnt[s] ++; &#125; &#125; while(Q --) &#123; int k; scanf("%d", &amp;k); int s = 0; while(k --) &#123; int x; scanf("%d", &amp;x); s |= (1 &lt;&lt; (x - 1)); &#125; ll ret = 0; for(int t = s; t; t = (t - 1) &amp; s) &#123; ret = (ret + (dir(cnt[t]) * minv[t]) % ha) % ha; &#125; printf("%lld\n", ret); &#125; return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>DP</tag>
+        <tag>容斥原理</tag>
+        <tag>期望DP</tag>
+        <tag>概率与期望</tag>
+        <tag>LibreOJ</tag>
+        <tag>PKUWC</tag>
+        <tag>树上DP</tag>
+        <tag>高斯消元</tag>
+        <tag>MIN-MAX容斥</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[LibreOJ 2541 「PKUWC2018」猎人杀]]></title>
     <url>%2F2018%2F08%2F09%2Floj2541%2F</url>
     <content type="text"><![CDATA[Description 有\(n\)个人，第\(i\)人有一个正整数权值\(w_i\)。 每个人死后要开枪打死另一个人，假设剩下的人权值和为\(S\)，那么编号为\(i\)的活人被选中的概率为\(\frac{w_i}{S}\)。至于第一枪的话，随机选择一个人，第\(i\)个人被选中的概率为\(\frac{w_i}{\sum_{i = 1}^nw_i}\)。 问编号为\(1\)的人有多少概率成为最后一个死的人。 \(\sum_{i = 1}^n w_i\leq 10^5\)。 Solution 这思路ao神，，， 一个非常毒瘤的事情是每个人被打死的概率都在时刻变动，我们考虑让每个人被击中的概率不变。 这样的话我们规定可以向死人开枪，但是一个人不能死两次（大雾），但他可以接着往下开枪。这样的话其实和原来的模型是一样的，下面证明一下： 首先先说一个引理吧：级数\(\sum_{i = 0}^{+\infty} a^ig=\frac{g}{1 - a}(0\leq a&lt;1)\)。 证明倒还简单。把\(g\)提出来，然后后面用等比数列求和公式可以得到\(\frac{1-a^{\infty}}{1-a}\)，而\(\lim_{x\rightarrow +\infty} a^x = 0(0\leq a &lt; 1)\)，带回去就得到了\(\frac{1}{1-a}\)，乘上\(g\)就是\(\frac{g}{1-a}\)。 然后我们考虑假设现在死掉的人的权值和为\(T\)，总权值和为\(S\)。那么下一个死掉的人是\(i\)的概率就是： \[ \sum_{k = 0}^{\infty} (\frac{T}{S})^k\frac{w_i}{S} \] 应用上面的结论，这个东西可以化简为\(\frac{w_i}{S}\cdot\frac{S}{S - T} = \frac{w_i}{S - T}\)，正是我们想要的那个概率…… 但接下来还不好做……然后我们想一想我们直接做是要求了恰好0个人在\(1\)之后死，那要是我们求至少\(k\)个人在\(1\)之后死呢？ 假设这\(k\)个人的权值和为\(T\)，总权值和为\(S\)。那么这个集合对答案的贡献为： \[ (-1)^k\sum_{i = 0}^{\infty}(1 - \frac{T + w_1}{S})^i \frac{w_1}{S} \] 前面的\((-1)^k\)是容斥系数，然后后面的级数又可以应用上面的引理了！这次可以推出来后面的级数为\(\frac{w_1}{T + w_1}\)。 虽然推出来了式子，不过我们总不能枚举子集再容斥吧？注意到如果两个集合\(T\)一样的话，那么他们（不考虑容斥系数的话）对答案贡献一样。所以我们考虑如何去搞每个\(T\)的所有对应集合的容斥系数之和就行了，这个东西的生成函数显然是： \[ \prod_{i = 2}^n(1-x^{w_i}) \] 然后这玩意就是分治FFT的经典题了…… Code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;cmath&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;memory&gt;#include &lt;vector&gt;using ll = long long;const ll ha = 998244353LL;ll pow_mod(ll a, ll b) &#123; ll ans = 1, res = a; while(b) &#123; if(1LL &amp; b) ans = ans * res % ha; res = res * res % ha; b &gt;&gt;= 1; &#125; return ans;&#125;ll inv(ll x) &#123; return pow_mod(x, ha - 2LL);&#125;int flip(int bi, int x) &#123; int ans = 0; for(int i = 0; i &lt; bi; i ++) &#123; if((1 &lt;&lt; i) &amp; x) &#123; ans |= (1 &lt;&lt; (bi - i - 1)); &#125; &#125; return ans;&#125;void NTT(ll *A, int bi, bool flag = false) &#123; int n = 1 &lt;&lt; bi; for(int i = 0; i &lt; n; i ++) &#123; int f = flip(bi, i); if(f &lt; i) std::swap(A[f], A[i]); &#125; for(int L = 1; L &lt; n; L &lt;&lt;= 1) &#123; ll xi_n = pow_mod(3LL, (ha - 1LL) / (ll(L &lt;&lt; 1))); if(flag) xi_n = inv(xi_n); for(int i = 0; i &lt; n; i += (L &lt;&lt; 1)) &#123; ll xi = 1; for(int j = i; j &lt; i + L; j ++) &#123; ll x = A[j], y = A[j + L]; A[j] = (x + (y * xi) % ha) % ha; A[j + L] = (x - (y * xi) % ha + ha) % ha; xi = xi * xi_n % ha; &#125; &#125; &#125; if(flag) &#123; ll inv_n = inv(n); for(int i = 0; i &lt; n; i ++) &#123; A[i] = A[i] * inv_n % ha; &#125; &#125;&#125;struct Poly &#123; ll *A; int n; Poly(int len) &#123; A = (ll*)calloc(len + 1, sizeof(ll)); n = len; &#125; ~Poly() &#123; free(A); &#125;&#125;;const int maxn = 100005;int n; int w[maxn];Poly *div_con(int L, int R) &#123; if(L == R) &#123; Poly *ret = new Poly(w[L]); ret -&gt; A[0] = 1; ret -&gt; A[w[L]] = ha - 1LL; return ret; &#125; else &#123; static ll A[maxn &lt;&lt; 2], B[maxn &lt;&lt; 2]; int M = (L + R) / 2; Poly *l = div_con(L, M), *r = div_con(M + 1, R); int rn = l -&gt; n + r -&gt; n; int bi = 0, len = 1; while(len &lt;= rn) &#123; len &lt;&lt;= 1; bi ++; &#125; std::copy((l -&gt; A), (l -&gt; A) + l -&gt; n + 1, A); std::copy((r -&gt; A), (r -&gt; A) + r -&gt; n + 1, B); std::fill(A + l -&gt; n + 1, A + len, 0LL); std::fill(B + r -&gt; n + 1, B + len, 0LL); delete l; delete r; NTT(A, bi); NTT(B, bi); for(int i = 0; i &lt; len; i ++) A[i] = A[i] * B[i] % ha; NTT(A, bi, true); Poly *ret = new Poly(rn); std::copy(A, A + rn + 1, ret -&gt; A); return ret; &#125;&#125;int main() &#123; scanf("%d", &amp;n); for(int i = 1; i &lt;= n; i ++) scanf("%d", &amp;w[i]); Poly *P = div_con(2, n); ll *A = P -&gt; A; int len = P -&gt; n; ll ans = 0; for(int i = 0; i &lt;= len; i ++) &#123; ll delta = A[i]; delta = delta * (ll(w[1])) % ha; delta = delta * inv(w[1] + i) % ha; ans = (ans + delta) % ha; &#125; printf("%lld\n", ans); return 0;&#125;]]></content>
@@ -11,8 +30,8 @@
         <tag>容斥原理</tag>
         <tag>概率与期望</tag>
         <tag>多项式卷积</tag>
-        <tag>生成函数</tag>
         <tag>LibreOJ</tag>
+        <tag>生成函数</tag>
         <tag>PKUWC</tag>
         <tag>分治FFT</tag>
       </tags>
@@ -143,8 +162,8 @@
       </categories>
       <tags>
         <tag>BZOJ</tag>
-        <tag>线性基</tag>
         <tag>容斥原理</tag>
+        <tag>线性基</tag>
       </tags>
   </entry>
   <entry>
@@ -155,8 +174,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>洲阁筛</tag>
         <tag>Min_25筛</tag>
+        <tag>洲阁筛</tag>
         <tag>LibreOJ</tag>
         <tag>山东省队集训</tag>
       </tags>
@@ -170,8 +189,8 @@
       </categories>
       <tags>
         <tag>BZOJ</tag>
-        <tag>原根</tag>
         <tag>BSGS</tag>
+        <tag>原根</tag>
         <tag>指标</tag>
         <tag>同余方程</tag>
       </tags>
@@ -200,11 +219,11 @@
         <category>比赛</category>
       </categories>
       <tags>
+        <tag>原根</tag>
         <tag>NowCoder</tag>
         <tag>贪心</tag>
         <tag>子序列自动机</tag>
         <tag>位运算</tag>
-        <tag>原根</tag>
         <tag>概率与期望</tag>
       </tags>
   </entry>
@@ -218,13 +237,13 @@
       <tags>
         <tag>SPOJ</tag>
         <tag>LibreOJ</tag>
-        <tag>TJOI</tag>
         <tag>后缀自动机</tag>
         <tag>后缀数组</tag>
         <tag>后缀树</tag>
         <tag>后缀平衡树</tag>
         <tag>POJ</tag>
         <tag>SDOI</tag>
+        <tag>TJOI</tag>
         <tag>HEOI</tag>
         <tag>ZJOI</tag>
       </tags>
@@ -277,10 +296,10 @@
       </categories>
       <tags>
         <tag>NOI</tag>
+        <tag>洲阁筛</tag>
         <tag>UOJ</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
-        <tag>洲阁筛</tag>
         <tag>杜教筛</tag>
       </tags>
   </entry>
@@ -320,8 +339,8 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>洲阁筛</tag>
         <tag>Min_25筛</tag>
+        <tag>洲阁筛</tag>
         <tag>SPOJ</tag>
       </tags>
   </entry>
