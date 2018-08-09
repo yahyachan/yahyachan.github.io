@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[LibreOJ 2541 「PKUWC2018」猎人杀]]></title>
+    <url>%2F2018%2F08%2F09%2Floj2541%2F</url>
+    <content type="text"><![CDATA[Description 有\(n\)个人，第\(i\)人有一个正整数权值\(w_i\)。 每个人死后要开枪打死另一个人，假设剩下的人权值和为\(S\)，那么编号为\(i\)的活人被选中的概率为\(\frac{w_i}{S}\)。至于第一枪的话，随机选择一个人，第\(i\)个人被选中的概率为\(\frac{w_i}{\sum_{i = 1}^nw_i}\)。 问编号为\(1\)的人有多少概率成为最后一个死的人。 \(\sum_{i = 1}^n w_i\leq 10^5\)。 Solution 这思路ao神，，， 一个非常毒瘤的事情是每个人被打死的概率都在时刻变动，我们考虑让每个人被击中的概率不变。 这样的话我们规定可以向死人开枪，但是一个人不能死两次（大雾），但他可以接着往下开枪。这样的话其实和原来的模型是一样的，下面证明一下： 首先先说一个引理吧：级数\(\sum_{i = 0}^{+\infty} a^ig=\frac{g}{1 - a}(0\leq a&lt;1)\)。 证明倒还简单。把\(g\)提出来，然后后面用等比数列求和公式可以得到\(\frac{1-a^{\infty}}{1-a}\)，而\(\lim_{x\rightarrow +\infty} a^x = 0(0\leq a &lt; 1)\)，带回去就得到了\(\frac{1}{1-a}\)，乘上\(g\)就是\(\frac{g}{1-a}\)。 然后我们考虑假设现在死掉的人的权值和为\(T\)，总权值和为\(S\)。那么下一个死掉的人是\(i\)的概率就是： \[ \sum_{k = 0}^{\infty} (\frac{T}{S})^k\frac{w_i}{S} \] 应用上面的结论，这个东西可以化简为\(\frac{w_i}{S}\cdot\frac{S}{S - T} = \frac{w_i}{S - T}\)，正是我们想要的那个概率…… 但接下来还不好做……然后我们想一想我们直接做是要求了恰好0个人在\(1\)之后死，那要是我们求至少\(k\)个人在\(1\)之后死呢？ 假设这\(k\)个人的权值和为\(T\)，总权值和为\(S\)。那么这个集合对答案的贡献为： \[ (-1)^k\sum_{i = 0}^{\infty}(1 - \frac{T + w_1}{S})^i \frac{w_1}{S} \] 前面的\((-1)^k\)是容斥系数，然后后面的级数又可以应用上面的引理了！这次可以推出来后面的级数为\(\frac{w_1}{T + w_1}\)。 虽然推出来了式子，不过我们总不能枚举子集再容斥吧？注意到如果两个集合\(T\)一样的话，那么他们（不考虑容斥系数的话）对答案贡献一样。所以我们考虑如何去搞每个\(T\)的所有对应集合的容斥系数之和就行了，这个东西的生成函数显然是： \[ \prod_{i = 2}^n(1-x^{w_i}) \] 然后这玩意就是分治FFT的经典题了…… Code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;cmath&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;memory&gt;#include &lt;vector&gt;using ll = long long;const ll ha = 998244353LL;ll pow_mod(ll a, ll b) &#123; ll ans = 1, res = a; while(b) &#123; if(1LL &amp; b) ans = ans * res % ha; res = res * res % ha; b &gt;&gt;= 1; &#125; return ans;&#125;ll inv(ll x) &#123; return pow_mod(x, ha - 2LL);&#125;int flip(int bi, int x) &#123; int ans = 0; for(int i = 0; i &lt; bi; i ++) &#123; if((1 &lt;&lt; i) &amp; x) &#123; ans |= (1 &lt;&lt; (bi - i - 1)); &#125; &#125; return ans;&#125;void NTT(ll *A, int bi, bool flag = false) &#123; int n = 1 &lt;&lt; bi; for(int i = 0; i &lt; n; i ++) &#123; int f = flip(bi, i); if(f &lt; i) std::swap(A[f], A[i]); &#125; for(int L = 1; L &lt; n; L &lt;&lt;= 1) &#123; ll xi_n = pow_mod(3LL, (ha - 1LL) / (ll(L &lt;&lt; 1))); if(flag) xi_n = inv(xi_n); for(int i = 0; i &lt; n; i += (L &lt;&lt; 1)) &#123; ll xi = 1; for(int j = i; j &lt; i + L; j ++) &#123; ll x = A[j], y = A[j + L]; A[j] = (x + (y * xi) % ha) % ha; A[j + L] = (x - (y * xi) % ha + ha) % ha; xi = xi * xi_n % ha; &#125; &#125; &#125; if(flag) &#123; ll inv_n = inv(n); for(int i = 0; i &lt; n; i ++) &#123; A[i] = A[i] * inv_n % ha; &#125; &#125;&#125;struct Poly &#123; ll *A; int n; Poly(int len) &#123; A = (ll*)calloc(len + 1, sizeof(ll)); n = len; &#125; ~Poly() &#123; free(A); &#125;&#125;;const int maxn = 100005;int n; int w[maxn];Poly *div_con(int L, int R) &#123; if(L == R) &#123; Poly *ret = new Poly(w[L]); ret -&gt; A[0] = 1; ret -&gt; A[w[L]] = ha - 1LL; return ret; &#125; else &#123; static ll A[maxn &lt;&lt; 2], B[maxn &lt;&lt; 2]; int M = (L + R) / 2; Poly *l = div_con(L, M), *r = div_con(M + 1, R); int rn = l -&gt; n + r -&gt; n; int bi = 0, len = 1; while(len &lt;= rn) &#123; len &lt;&lt;= 1; bi ++; &#125; std::copy((l -&gt; A), (l -&gt; A) + l -&gt; n + 1, A); std::copy((r -&gt; A), (r -&gt; A) + r -&gt; n + 1, B); std::fill(A + l -&gt; n + 1, A + len, 0LL); std::fill(B + r -&gt; n + 1, B + len, 0LL); delete l; delete r; NTT(A, bi); NTT(B, bi); for(int i = 0; i &lt; len; i ++) A[i] = A[i] * B[i] % ha; NTT(A, bi, true); Poly *ret = new Poly(rn); std::copy(A, A + rn + 1, ret -&gt; A); return ret; &#125;&#125;int main() &#123; scanf("%d", &amp;n); for(int i = 1; i &lt;= n; i ++) scanf("%d", &amp;w[i]); Poly *P = div_con(2, n); ll *A = P -&gt; A; int len = P -&gt; n; ll ans = 0; for(int i = 0; i &lt;= len; i ++) &#123; ll delta = A[i]; delta = delta * (ll(w[1])) % ha; delta = delta * inv(w[1] + i) % ha; ans = (ans + delta) % ha; &#125; printf("%lld\n", ans); return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>容斥原理</tag>
+        <tag>概率与期望</tag>
+        <tag>多项式卷积</tag>
+        <tag>生成函数</tag>
+        <tag>LibreOJ</tag>
+        <tag>PKUWC</tag>
+        <tag>分治FFT</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[LibreOJ 2537 「PKUWC2018」Minimax]]></title>
     <url>%2F2018%2F08%2F09%2Floj2537%2F</url>
     <content type="text"><![CDATA[Description 有一个\(n\)个点的以\(1\)为根的树，每个点至多有两个儿子。 对于每个叶子，他的权值事确定的，且两两不同。对于一个非叶子结点\(i\)，他有一个系数\(p_i(0&lt;p_i&lt;1)\)，满足有\(p_i\)的概率该点权值为子节点权值最大值，其他情况下为最小值。 那么我们会发现每种权值根节点都可能取到，假设有\(m\)种权值，第\(i\)小的权值为\(v_i\)，\(v_i\)成为根节点权值的概率为\(d_i\)。那么求： \[ \sum_{i = 1}^m i\cdot v_i\cdot d_i^2 \] \(1\leq n\leq 300000, 0\leq v_i\leq 10^9\)。 Solution 从PKUWC开始，苦思冥想了很久，然后看到了一句每个点至多有两个儿子。 我想脱口而出一句μαλάκας。 考虑使用线段树来存储一个点所有可能的权值的概率。那么叶子很好处理，只有一个儿子的点只需要用儿子的树就行了，唯一麻烦的就是有两个儿子的点。 这个东西很显然可以线段树合并吧……注意到右边树第\(i\)小的概率\(p_i\)会发生如下变化： \[ p_i = p_i&#39;(pS_{l, 1\ldots i - 1} + (1 - p)S_{l, i+1\ldots n}) \] 这里\(S_{l,a\ldots b}\)代表左边树本来\([a, b]\)这一段的和，\(p_i&#39;\)代表变换前的\(p_i\)，\(p\)就是这一个结点取最大的概率。 因此线段树合并的时候维护一下两边树分别在当前合并结点两侧的和就行了…… Code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;cmath&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;vector&gt;using ll = long long;const ll ha = 998244353LL;ll pow_mod(ll a, ll b) &#123; ll ans = 1, res = a; while(b) &#123; if(1LL &amp; b) ans = ans * res % ha; res = res * res % ha; b &gt;&gt;= 1; &#125; return ans;&#125;ll inv(ll x) &#123; return pow_mod(x, ha - 2LL);&#125;const int bufsiz = 50 * 1024 * 1024;char buf[bufsiz];void *alloc(size_t size) &#123; static char *cur = buf; if(cur - buf + size &gt; bufsiz) &#123; return malloc(size); &#125; else &#123; char *ret = cur; cur += size; return ret; &#125;&#125;struct Node &#123; Node *lc, *rc; ll s, mulv; void maintain(); void paint(ll v); void pushdown();&#125;;Node *nil;void Node::maintain() &#123; s = (lc -&gt; s + rc -&gt; s) % ha;&#125;void Node::paint(ll v) &#123; if(this != nil) &#123; mulv = mulv * v % ha; s = s * v % ha; &#125;&#125;void Node::pushdown() &#123; if(mulv != 1LL) &#123; lc -&gt; paint(mulv); rc -&gt; paint(mulv); mulv = 1LL; &#125;&#125;void init_pool() &#123; nil = (Node*)alloc(sizeof(Node)); nil -&gt; lc = nil -&gt; rc = nil; nil -&gt; s = 0; nil -&gt; mulv = 1;&#125;Node *alloc_node(ll s = 1, Node *lc = nil, Node *rc = nil) &#123; Node *ret = (Node*)alloc(sizeof(Node)); ret -&gt; s = s; ret -&gt; mulv = 1; ret -&gt; lc = lc; ret -&gt; rc = rc; return ret;&#125;Node *modify(Node *o, int L, int R, int p, ll v) &#123; if(o == nil) o = alloc_node(v, nil, nil); if(L &lt; R) &#123; int M = (L + R) / 2; if(p &lt;= M) &#123; o -&gt; lc = modify(o -&gt; lc, L, M, p, v); &#125; else &#123; o -&gt; rc = modify(o -&gt; rc, M + 1, R, p, v); &#125; &#125; return o;&#125;Node *merge(Node *l, Node *r, const ll &amp;p, ll lp, ll ls, ll rp, ll rs) &#123; if(l == nil &amp;&amp; r == nil) return nil; if(l == nil) &#123; ll v1 = p * lp % ha; ll v2 = ((1LL - p + ha) % ha) * ls % ha; r -&gt; paint((v1 + v2) % ha); return r; &#125; if(r == nil) &#123; ll v1 = p * rp % ha; ll v2 = ((1 - p + ha) % ha) * rs % ha; l -&gt; paint((v1 + v2) % ha); return l; &#125; l -&gt; pushdown(); r -&gt; pushdown(); ll l1 = l -&gt; lc -&gt; s, l2 = l -&gt; rc -&gt; s; ll r1 = r -&gt; lc -&gt; s, r2 = r -&gt; rc -&gt; s; l -&gt; lc = merge(l -&gt; lc, r -&gt; lc, p, lp, (ls + l2) % ha, rp, (rs + r2) % ha); l -&gt; rc = merge(l -&gt; rc, r -&gt; rc, p, (lp + l1) % ha, ls, (rp + r1) % ha, rs); l -&gt; maintain(); return l;&#125;const int maxn = 300005;int cnt;ll A[maxn], p[maxn];std::vector&lt;int&gt; G[maxn];Node *solve(int x) &#123; if(G[x].size() == 0) &#123; int v = std::lower_bound(A + 1, A + 1 + cnt, p[x]) - A; return modify(nil, 1, cnt, v, 1); &#125; else if(G[x].size() == 1) &#123; return solve(G[x][0]); &#125; else &#123; static const ll inv_w = inv(10000); p[x] = p[x] * inv_w % ha; Node *l = solve(G[x][0]), *r = solve(G[x][1]); return merge(l, r, p[x], 0, 0, 0, 0); &#125;&#125;ll calc(Node *o, int L, int R) &#123; if(o == nil) return 0; if(L == R) &#123; ll prob = o -&gt; s; ll ret = prob * prob % ha; ret = ret * ((ll)L * (A[L] % ha) % ha) % ha; return ret; &#125; else &#123; o -&gt; pushdown(); ll ret = 0; int M = (L + R) / 2; ret = (ret + calc(o -&gt; lc, L, M)) % ha; ret = (ret + calc(o -&gt; rc, M + 1, R)) % ha; return ret; &#125;&#125;int main() &#123; init_pool(); int n; scanf("%d", &amp;n); for(int i = 1; i &lt;= n; i ++) &#123; int fa; scanf("%d", &amp;fa); G[fa].push_back(i); &#125; cnt = 0; for(int i = 1; i &lt;= n; i ++) &#123; scanf("%lld", &amp;p[i]); if(G[i].empty()) &#123; A[++ cnt] = p[i]; &#125; &#125; std::sort(A + 1, A + 1 + cnt); printf("%lld\n", calc(solve(1), 1, cnt)); return 0;&#125;]]></content>
@@ -138,8 +155,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>Min_25筛</tag>
         <tag>洲阁筛</tag>
+        <tag>Min_25筛</tag>
         <tag>LibreOJ</tag>
         <tag>山东省队集训</tag>
       </tags>
@@ -153,8 +170,8 @@
       </categories>
       <tags>
         <tag>BZOJ</tag>
-        <tag>BSGS</tag>
         <tag>原根</tag>
+        <tag>BSGS</tag>
         <tag>指标</tag>
         <tag>同余方程</tag>
       </tags>
@@ -183,11 +200,11 @@
         <category>比赛</category>
       </categories>
       <tags>
-        <tag>原根</tag>
         <tag>NowCoder</tag>
         <tag>贪心</tag>
         <tag>子序列自动机</tag>
         <tag>位运算</tag>
+        <tag>原根</tag>
         <tag>概率与期望</tag>
       </tags>
   </entry>
@@ -220,9 +237,9 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>LibreOJ</tag>
-        <tag>杜教筛</tag>
         <tag>狄利克雷卷积</tag>
+        <tag>杜教筛</tag>
+        <tag>LibreOJ</tag>
         <tag>雅礼集训</tag>
       </tags>
   </entry>
@@ -260,11 +277,11 @@
       </categories>
       <tags>
         <tag>NOI</tag>
-        <tag>洲阁筛</tag>
-        <tag>杜教筛</tag>
+        <tag>UOJ</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
-        <tag>UOJ</tag>
+        <tag>洲阁筛</tag>
+        <tag>杜教筛</tag>
       </tags>
   </entry>
   <entry>
@@ -290,8 +307,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>TJOI</tag>
         <tag>生成函数</tag>
+        <tag>TJOI</tag>
         <tag>广义二项式定理</tag>
       </tags>
   </entry>
@@ -303,8 +320,8 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>Min_25筛</tag>
         <tag>洲阁筛</tag>
+        <tag>Min_25筛</tag>
         <tag>SPOJ</tag>
       </tags>
   </entry>
@@ -328,11 +345,11 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>生成函数</tag>
-        <tag>贝尔级数</tag>
-        <tag>杜教筛</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
+        <tag>杜教筛</tag>
+        <tag>贝尔级数</tag>
+        <tag>生成函数</tag>
       </tags>
   </entry>
   <entry>
