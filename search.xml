@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[LibreOJ 2320 「清华集训 2017」生成树计数]]></title>
+    <url>%2F2018%2F08%2F10%2Floj2320%2F</url>
+    <content type="text"><![CDATA[Description 有一个图有\(n\)个树形连通块，第\(i\)个有\(a_i\)个点。你需要再连\(n - 1\)条边使得这个图变成一个树。 对于一个方案\(T\)，我们记\(d_i\)表示第\(i\)个连通块向外连了多少边。那么我们称其价值为： \[ \mathrm{val}(T) = (\sum_{i = 1}^n d_i^m)(\prod_{i = 1}^n d_i^m) \] 其中\(m\)为给定常数。求所有可能的树的价值之和。 \(n\leq 30000, m\leq 30, a_i\in Z_{998244353}\)。 Solution 辣鸡卡常题毁我青春.jpg 先化简一下式子： \[ \begin{aligned} \quad&amp;\sum_{T} (\sum_{i = 1}^nd_i^m)(\prod_{i = 1}^nd_i^m)\\ =&amp;\sum_{T}\sum_{i = 1}^n d_i^{2m}\prod_{j\neq i} d_i^m \end{aligned} \] 观察到度数对答案的贡献一点，很容易想到Prufer序列。我们知道如果一个点度数为\(d_i\)，那么他在Prufer序列中也会出现\(d_i - 1\)次。因此这个问题转化成了一个排列问题……事指数型生成函数的用武之地。 那么我们很容易想到定义两类生成函数： \[ \begin{aligned} A_i(x) &amp;= \sum_{k = 0}^{+\infty}\frac{(k + 1)^{2m}A_i^{k + 1}x^k}{k!}\\ B_i(x) &amp;= \sum_{k = 0}^{+\infty}\frac{(k + 1)^{m}A_i^{k + 1}x^k}{k!} \end{aligned} \] 很显然答案生成函数就是\(\sum_{i = 1}^n A_i(x)\prod_{j\neq i} B_i(x)\)。然后下面先考虑一下那个\(A_i(x)\)……注意到他的系数全都和\(k + 1\)有关，但是\(x\)的次数为\(k\)，因此用积分将其右移（记\(C_i(x) = \int A_i(x)\mathrm{d}x\)）： \[ \begin{aligned} C_i(x) &amp;= \sum_{k = 1}^{+\infty} \frac{k^{2m} A_i^k x^k}{k!}\\ &amp;=\sum_{k = 0}^{+\infty} \frac{k^{2m} A_i^k x^k}{k!}\\ &amp;=\sum_{k = 0}^{+\infty}\frac{(A_ix)^k}{k!}\sum_{j = 0}^{2m}\begin{Bmatrix}2m\\ j\end{Bmatrix}k^{\underline{j}}\\ &amp;=\sum_{j = 0}^{2m}\begin{Bmatrix}2m\\ j\end{Bmatrix}j!\sum_{k = 0}^{+\infty}\frac{(A_ix)^k}{k!}\binom{k}{j}\\ &amp;=\sum_{j = 0}^{2m}\begin{Bmatrix}2m\\ j\end{Bmatrix}j!\cdot\frac{A_i^jx^j}{j!}e^{A_ix}\\ &amp;=\sum_{j = 0}^{2m}\begin{Bmatrix}2m\\ j\end{Bmatrix}A_i^jx^je^{A_ix} \end{aligned} \] 然后再推回去： \[ \begin{aligned} A_i(x) &amp;= C_i&#39;(x)\\ &amp;= \sum_{j = 0}^{2m}\begin{Bmatrix}2m\\ j\end{Bmatrix}A_i^j(jx^{j - 1}e^{A_ix} + A_ix^je^{A_ix})\\ &amp;= e^{A_ix}\sum_{j = 0}^{2m}\begin{Bmatrix}2m\\ j + 1\end{Bmatrix}(j + 1)A_i^{j + 1}x^j + \begin{Bmatrix}2m\\ j\end{Bmatrix}A_i^{j + 1}x^j\\ &amp;= e^{A_ix}\sum_{j = 0}^{2m}A_i^{j + 1}\begin{Bmatrix}2m + 1\\ j + 1\end{Bmatrix}x^j \end{aligned} \] 最后一步用了第二类斯特林数的递推公式……类似的我们可以得到\(B_i(x)=e^{A_ix}\sum_{j = 0}^{m}A_i^{j + 1}\begin{Bmatrix}m + 1\\ j + 1\end{Bmatrix}x^j\)。 然后我们提出所有的\(e^{cx}\)的形式，然后剩下的东西就全都是\(2m\)次以下的多项式了…… 最后我们发现我们要求类似于\(\sum_{i = 1}^n A_i(x)\prod_{j\neq i}B_i(x)\)这样的形式，分治FFT一下即可。 注意常数啊……这玩意卡常剧毒。讲个笑话，我ban掉NTT的循环展开之后卡过了最后一个点…… Code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169170171172173174175176177178179180181182183184185186187188189190191192193194195196197198199200201202203204205206207208209210211212213214215216217218219220221#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;cmath&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;memory&gt;#include &lt;vector&gt;using ll = long long;constexpr ll ha = 998244353LL;inline ll pow_mod(ll a, ll b) &#123; ll ans = 1, res = a; while(b) &#123; if(1LL &amp; b) ans = ans * res % ha; res = res * res % ha; b &gt;&gt;= 1; &#125; return ans;&#125;inline ll inv(ll x) &#123; return pow_mod(x, ha - 2LL);&#125;const int maxn = 30005;ll fac[maxn], ifac[maxn];inline void process_fac() &#123; int n = 30000; fac[0] = 1; for(int i = 1; i &lt;= n; i ++) &#123; fac[i] = fac[i - 1] * (ll)i % ha; &#125; ifac[n] = inv(fac[n]); for(int i = n - 1; i &gt;= 0; i --) &#123; ifac[i] = ifac[i + 1] * (ll(i + 1)) % ha; &#125;&#125;ll S[105][105];inline void process_S() &#123; int n = 62; S[0][0] = 1; for(int i = 1; i &lt;= n; i ++) &#123; S[i][1] = S[i][i] = 1; for(int j = 2; j &lt; i; j ++) &#123; S[i][j] = ((S[i - 1][j] * (ll)j) % ha + S[i - 1][j - 1]); if(S[i][j] &gt; ha) S[i][j] -= ha; &#125; &#125;&#125;inline int flip(int bi, int x) &#123; int ans = 0; for(int i = 0; i &lt; bi; i ++) &#123; if((1 &lt;&lt; i) &amp; x) &#123; ans |= (1 &lt;&lt; (bi - i - 1)); &#125; &#125; return ans;&#125;inline void NTT(ll *A, int bi, bool flag = false) &#123; int n = 1 &lt;&lt; bi; for(int i = 1, j = 0; i &lt; n; i ++) &#123; int k = n; do j ^= (k &gt;&gt;= 1); while ((j &amp; k) == 0); if(i &lt; j) std::swap(A[j], A[i]); &#125; for(int L = 1; L &lt; n; L &lt;&lt;= 1) &#123; ll c = (ha - 1LL) / (ll(L &lt;&lt; 1)); if(flag) c = ha - 1LL - c; ll xi_n = pow_mod(3LL, c); ll *B = A + L; for(int i = 0; i &lt; n; i += (L &lt;&lt; 1)) &#123; ll xi = 1; if(true) &#123; for(int j = i; j &lt; i + L; j ++) &#123; ll x = A[j], y = B[j] * xi % ha; A[j] = (x + y); if(A[j] &gt; ha) A[j] -= ha; B[j] = (x - y + ha); if(B[j] &gt; ha) B[j] -= ha; xi = xi * xi_n % ha; &#125; &#125; else &#123; for(int j = i; j &lt; i + L; j += 4) &#123; ll x = A[j], y = B[j] * xi % ha; A[j] = (x + y); if(A[j] &gt; ha) A[j] -= ha; B[j] = (x - y + ha); if(B[j] &gt; ha) B[j] -= ha; xi = xi * xi_n % ha; x = A[j + 1], y = B[j + 1] * xi % ha; A[j + 1] = (x + y); if(A[j + 1] &gt; ha) A[j + 1] -= ha; B[j + 1] = (x - y + ha); if(B[j + 1] &gt; ha) B[j + 1] -= ha; xi = xi * xi_n % ha; x = A[j + 2], y = B[j + 2] * xi % ha; A[j + 2] = (x + y); if(A[j + 2] &gt; ha) A[j + 2] -= ha; B[j + 2] = (x - y + ha); if(B[j + 2] &gt; ha) B[j + 2] -= ha; xi = xi * xi_n % ha; x = A[j + 3], y = B[j + 3] * xi % ha; A[j + 3] = (x + y); if(A[j + 3] &gt; ha) A[j + 3] -= ha; B[j + 3] = (x - y + ha); if(B[j + 3] &gt; ha) B[j + 3] -= ha; xi = xi * xi_n % ha; &#125; &#125; &#125; &#125; if(flag) &#123; static const ll inv_2 = inv(2); ll inv_n = 1; int cnt = bi; while(cnt --) inv_n = inv_n * inv_2 % ha; for(int i = 0; i &lt; n; i ++) &#123; A[i] = A[i] * inv_n % ha; &#125; &#125;&#125;const int bufsiz = 200 * 1024 * 1024;char buf[bufsiz];inline void *alloc(size_t size) &#123; static char *cur = buf; if(cur - buf + size &gt; bufsiz) &#123; return malloc(size); &#125; else &#123; char *ret = cur; cur += size; return ret; &#125;&#125;struct Poly &#123; ll *A; int n;&#125;;inline Poly *new_poly(int len) &#123; Poly *ret = (Poly*)alloc(sizeof(Poly)); ret -&gt; n = len; ret -&gt; A = (ll*)alloc(sizeof(Poly) * (len + 1)); return ret;&#125;using pii = std::pair&lt;Poly*, Poly*&gt;;ll a[maxn]; int n, m;pii div_con(int L, int R) &#123; if(L == R) &#123; Poly *A = new_poly(m), *B = new_poly(2 * m); ll pw = a[L]; for(int i = 0; i &lt;= (m &lt;&lt; 1); i ++) &#123; if(i &lt;= m) A -&gt; A[i] = pw * S[m + 1][i + 1] % ha; B -&gt; A[i] = pw * S[m &lt;&lt; 1 | 1][i + 1] % ha; pw = pw * a[L] % ha; &#125; return std::make_pair(A, B); &#125; else &#123; static ll t1[maxn &lt;&lt; 2], t2[maxn &lt;&lt; 2], t3[maxn &lt;&lt; 2], t4[maxn &lt;&lt; 2], t5[maxn &lt;&lt; 2]; int M = (L + R) / 2; pii tmp_l = div_con(L, M), tmp_r = div_con(M + 1, R); Poly *la = tmp_l.first, *lb = tmp_l.second; Poly *ra = tmp_r.first, *rb = tmp_r.second; int nb_n = la -&gt; n + ra -&gt; n; int nn = std::max(la -&gt; n + rb -&gt; n, lb -&gt; n + ra -&gt; n); int len = 1, bi = 0; while(len &lt;= std::max(nb_n, nn)) &#123; len &lt;&lt;= 1; bi ++; &#125; std::copy(la -&gt; A, (la -&gt; A) + la -&gt; n + 1, t1); std::copy(ra -&gt; A, (ra -&gt; A) + ra -&gt; n + 1, t2); std::fill(t1 + la -&gt; n + 1, t1 + len, 0LL); std::fill(t2 + ra -&gt; n + 1, t2 + len, 0LL); NTT(t1, bi); NTT(t2, bi); if(len &lt; 4) &#123; for(int i = 0; i &lt; len; i ++) t5[i] = t1[i] * t2[i] % ha; &#125; else &#123; for(int i = 0; i &lt; len; i += 4) &#123; t5[i] = t1[i] * t2[i] % ha; t5[i + 1] = t1[i + 1] * t2[i + 1] % ha; t5[i + 2] = t1[i + 2] * t2[i + 2] % ha; t5[i + 3] = t1[i + 3] * t2[i + 3] % ha; &#125; &#125; NTT(t5, bi, true); nb_n = std::min(nb_n, n - 2); Poly *A = new_poly(nb_n); std::copy(t5, t5 + nb_n + 1, A -&gt; A); // std::copy(la -&gt; A, (la -&gt; A) + la -&gt; n + 1, t1); // std::fill(t1 + la -&gt; n + 1, t1 + len, 0LL); // std::copy(ra -&gt; A, (ra -&gt; A) + ra -&gt; n + 1, t2); // std::fill(t2 + ra -&gt; n + 1, t2 + len, 0LL); std::copy(lb -&gt; A, (lb -&gt; A) + lb -&gt; n + 1, t3); std::fill(t3 + lb -&gt; n + 1, t3 + len, 0LL); std::copy(rb -&gt; A, (rb -&gt; A) + rb -&gt; n + 1, t4); std::fill(t4 + rb -&gt; n + 1, t4 + len, 0LL); // delete la; delete ra; delete lb; delete rb; // NTT(t1, bi); NTT(t2, bi); NTT(t3, bi); NTT(t4, bi); for(int i = 0; i &lt; len; i ++) &#123; t1[i] = t1[i] * t4[i] % ha; t2[i] = t2[i] * t3[i] % ha; t1[i] = (t1[i] + t2[i]); if(t1[i] &gt; ha) t1[i] -= ha; &#125; NTT(t1, bi, true); // NTT(t2, bi, true); // for(int i = 0; i &lt; len; i ++) t1[i] = (t1[i] + t2[i]) % ha; nn = std::min(nn, n - 2); Poly *B = new_poly(nn); std::copy(t1, t1 + nn + 1, B -&gt; A); return std::make_pair(A, B); &#125;&#125;int main() &#123; process_fac(); process_S(); scanf("%d%d", &amp;n, &amp;m); ll s = 0; for(int i = 1; i &lt;= n; i ++) &#123; scanf("%lld", &amp;a[i]); s += a[i]; if(s &gt; ha) s -= ha; &#125; Poly *B = div_con(1, n).second; ll ans = 0; ll pw = 1LL; for(int i = 0; i &lt;= n - 2; i ++) &#123; ll delta = pw * ifac[i] % ha; delta = delta * (B -&gt; A[n - 2 - i]) % ha; ans = (ans + delta); if(ans &gt; ha) ans -= ha; pw = pw * s % ha; &#125; ans = ans * fac[n - 2] % ha; printf("%lld\n", ans); return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>多项式卷积</tag>
+        <tag>LibreOJ</tag>
+        <tag>清华集训</tag>
+        <tag>Prufer序列</tag>
+        <tag>斯特林数</tag>
+        <tag>生成函数</tag>
+        <tag>指数型生成函数</tag>
+        <tag>分治FFT</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[LibreOJ 2542 「PKUWC2018」随机游走]]></title>
     <url>%2F2018%2F08%2F09%2Floj2542%2F</url>
     <content type="text"><![CDATA[Description 有一个\(n\)个点的树，有一个固定的点为\(x\)。 \(Q\)次询问，每次给你一个集合。要求你求出从\(x\)出发，每一步都等概率随机选择一条邻边走过去，将集合中每个点都走了至少一遍的话期望的步数为多少（\(x\)视为一开始就经过了）。答案模\(998244353\)输出。 \(1\leq n\leq 18, Q\leq 5000\)。 Solution 高，高啊.jpg 考虑期望步数的实质是集合中最晚一个经过的点被经过的期望步数。最大值不好算，我们就考虑用MIN-MAX容斥，转成最小值。因此问题转化成了从\(x\)出发最早走到一个集合中至少一个点的期望步数。 这个东西的话，先枚举那个集合\(S\)，然后考虑期望DP。设状态\(f_i\)表示从\(i\)出发的期望步数，那么有： \[ f_i = \begin{cases} 0 &amp; \text{if } i\in S,\\ \frac{f_{\mathrm{fa}_i}+\sum f_{\mathrm{ch}_{i, j}}}{d_i} + 1 &amp; \text{if }i\notin S. \end{cases} \] 其中\(\mathrm{fa_i}\)表示\(i\)的父亲，\(\mathrm{ch}_{i, j}\)表示\(i\)的第\(j\)个儿子，\(d_i\)表示\(i\)的度数。如果这样直接高消做的话，那么DP+高消部分的复杂度是\(O(2^nn^3)\)，有点吃不消（但据说可以过的）。 考虑到这样一件事：对于任意叶子或者是属于\(S\)的点，他们的\(f\)都可以表示为父亲的\(f\)的若干倍加上一个常数。那么我们DFS一遍，一个只有这两类点儿子的父亲\(i\)在DFS完了自己所有儿子之后，就能知道\(\sum f_{\mathrm{ch}_{i, j}}\)这个东西可以如何用\(f_i\)的若干倍加上一个常数来表示，这样一来移项再整理一下\(f_i\)也就可以用\(f_{\mathrm{fa}_i}\)的若干倍加上一个常数来表示了。如此往上一直推，推到根节点的话根节点的父亲的答案为0，所以最终答案就是那个最后的常数了。 Code 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;vector&gt;using ll = long long;const ll ha = 998244353LL;ll pow_mod(ll a, ll b) &#123; ll ans = 1, res = a; while(b) &#123; if(1LL &amp; b) ans = ans * res % ha; res = res * res % ha; b &gt;&gt;= 1; &#125; return ans;&#125;ll inv(ll x) &#123; return pow_mod(x, ha - 2LL);&#125;struct Rec &#123; ll x, y; Rec(ll a = 0, ll b = 0) &#123; x = a; y = b; &#125;&#125;;Rec operator +(const Rec &amp;a, const Rec &amp;b) &#123; return Rec((a.x + b.x) % ha, (a.y + b.y) % ha);&#125;Rec operator -(const Rec &amp;a, const Rec &amp;b) &#123; return Rec((a.x - b.x + ha) % ha, (a.y - b.y + ha) % ha);&#125;Rec operator *(const Rec &amp;a, const ll &amp;v) &#123; return Rec(a.x * v % ha, a.y * v % ha);&#125;Rec operator *(const ll &amp;v, const Rec &amp;a) &#123; return Rec(a.x * v % ha, a.y * v % ha);&#125;const int maxn = 20;std::vector&lt;int&gt; G[maxn]; int deg[maxn];Rec dfs(int s, int x, int fa) &#123; if((1 &lt;&lt; (x - 1)) &amp; s) return Rec(); Rec lt(deg[x], ha - deg[x]); for(int v : G[x]) &#123; if(v != fa) &#123; lt = lt - dfs(s, v, x); &#125; &#125; ll inv_A = inv(lt.x); return Rec(inv_A, ((ha - lt.y) % ha) * inv_A % ha);&#125;ll minv[1 &lt;&lt; 18], ps[1 &lt;&lt; 18];int cnt[1 &lt;&lt; 18];ll dir(int x) &#123; if(x &amp; 1) &#123; return 1; &#125; else &#123; return ha - 1LL; &#125;&#125;int main() &#123; int n, Q, x; scanf("%d%d%d", &amp;n, &amp;Q, &amp;x); for(int i = 1; i &lt;= n - 1; i ++) &#123; int u, v; scanf("%d%d", &amp;u, &amp;v); G[u].push_back(v); G[v].push_back(u); deg[u] ++; deg[v] ++; &#125; for(int s = 1; s &lt; (1 &lt;&lt; n); s ++) &#123; minv[s] = dfs(s, x, -1).y; &#125; for(int s = 1; s &lt; (1 &lt;&lt; n); s ++) &#123; for(int i = 0; i &lt; n; i ++) &#123; if((1 &lt;&lt; i) &amp; s) cnt[s] ++; &#125; &#125; while(Q --) &#123; int k; scanf("%d", &amp;k); int s = 0; while(k --) &#123; int x; scanf("%d", &amp;x); s |= (1 &lt;&lt; (x - 1)); &#125; ll ret = 0; for(int t = s; t; t = (t - 1) &amp; s) &#123; ret = (ret + (dir(cnt[t]) * minv[t]) % ha) % ha; &#125; printf("%lld\n", ret); &#125; return 0;&#125;]]></content>
@@ -9,10 +27,10 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>容斥原理</tag>
         <tag>期望DP</tag>
-        <tag>概率与期望</tag>
+        <tag>容斥原理</tag>
         <tag>LibreOJ</tag>
+        <tag>概率与期望</tag>
         <tag>PKUWC</tag>
         <tag>树上DP</tag>
         <tag>高斯消元</tag>
@@ -27,13 +45,13 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>容斥原理</tag>
-        <tag>概率与期望</tag>
         <tag>多项式卷积</tag>
+        <tag>容斥原理</tag>
         <tag>LibreOJ</tag>
+        <tag>概率与期望</tag>
         <tag>生成函数</tag>
-        <tag>PKUWC</tag>
         <tag>分治FFT</tag>
+        <tag>PKUWC</tag>
       </tags>
   </entry>
   <entry>
@@ -162,8 +180,8 @@
       </categories>
       <tags>
         <tag>BZOJ</tag>
-        <tag>容斥原理</tag>
         <tag>线性基</tag>
+        <tag>容斥原理</tag>
       </tags>
   </entry>
   <entry>
@@ -174,9 +192,9 @@
         <category>题解</category>
       </categories>
       <tags>
+        <tag>LibreOJ</tag>
         <tag>Min_25筛</tag>
         <tag>洲阁筛</tag>
-        <tag>LibreOJ</tag>
         <tag>山东省队集训</tag>
       </tags>
   </entry>
@@ -235,15 +253,15 @@
         <category>大坑</category>
       </categories>
       <tags>
-        <tag>SPOJ</tag>
         <tag>LibreOJ</tag>
+        <tag>SPOJ</tag>
+        <tag>TJOI</tag>
         <tag>后缀自动机</tag>
         <tag>后缀数组</tag>
         <tag>后缀树</tag>
         <tag>后缀平衡树</tag>
         <tag>POJ</tag>
         <tag>SDOI</tag>
-        <tag>TJOI</tag>
         <tag>HEOI</tag>
         <tag>ZJOI</tag>
       </tags>
@@ -256,9 +274,9 @@
         <category>题解</category>
       </categories>
       <tags>
+        <tag>LibreOJ</tag>
         <tag>狄利克雷卷积</tag>
         <tag>杜教筛</tag>
-        <tag>LibreOJ</tag>
         <tag>雅礼集训</tag>
       </tags>
   </entry>
@@ -270,8 +288,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>Min_25筛</tag>
         <tag>LibreOJ</tag>
+        <tag>Min_25筛</tag>
       </tags>
   </entry>
   <entry>
@@ -364,11 +382,11 @@
         <category>教程</category>
       </categories>
       <tags>
+        <tag>生成函数</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
         <tag>杜教筛</tag>
         <tag>贝尔级数</tag>
-        <tag>生成函数</tag>
       </tags>
   </entry>
   <entry>
