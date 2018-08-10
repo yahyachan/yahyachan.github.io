@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[CodeChef好（du）题（liu）选做]]></title>
+    <url>%2F2018%2F08%2F10%2FCC%2F</url>
+    <content type="text"><![CDATA[近期看了一些先辈的文章……柑橘要刷一些CC力，，， 怕不是有一半题都是毒瘤数据结构？ QTREE6 Query on a tree VI Description 有一棵\(n\)个点的有颜色的树，初始时每一个点都是白色。要求你支持以下两种操作（共\(m\)次）： 0 u：查询\(u\)所在的连通块有几个点。这里的话一条边当且仅当两边颜色一样才会生效。 1 u：翻转\(u\)的颜色。 \(1\leq n, m\leq 10^5\)。 Solution 记得大约一年前多听过一个挺毒瘤的树剖做法……然而柑橘还事动态树简单哎。 把每个点拆成白点和黑点，每个点如果是白色的那么他的白点向父亲连边，反之亦然，并且两者只能择其一。可以发现如果一个点所在的森林的根是同色的话那么就取根的子树大小就行了，其他情况特判一下取下面一个点。 然后还剩下一个问题就是在动态树上维护子树大小……这个的当然可以直接ETT，不过我从来没写过LCT维护子树信息所以就用了LCT。LCT维护子树信息倒也简单，就在每个Splay结点上额外开个域维护它的虚儿子信息就行了，access和link-cut的时候再修改一下这个信息，然后就做完了…… Code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;vector&gt;#include &lt;queue&gt;struct Node &#123; Node *fa, *ch[2]; int vs, s; int d() &#123; return (this == fa -&gt; ch[1]); &#125; void sc(Node *c, int dir) &#123; ch[dir] = c; c -&gt; fa = this; &#125; void maintain() &#123; s = ch[0] -&gt; s + ch[1] -&gt; s + vs; &#125;&#125;;const int maxn = 100005;Node pool[maxn &lt;&lt; 1];Node *nil, *cur;void init_pool() &#123; nil = cur = pool; nil -&gt; fa = nil -&gt; ch[0] = nil -&gt; ch[1] = nil; nil -&gt; vs = nil -&gt; s = 0;&#125;Node *T(int x, int col) &#123; return pool + (2 * x - col);&#125;int id(Node *x) &#123; return (x - pool + 1) / 2;&#125;void refresh(Node *x) &#123; x -&gt; vs = x -&gt; s = 1; x -&gt; fa = x -&gt; ch[0] = x -&gt; ch[1] = nil;&#125;bool is_root(Node *x) &#123; return (x -&gt; fa == nil || (x -&gt; fa -&gt; ch[0] != x &amp;&amp; x -&gt; fa -&gt; ch[1] != x));&#125;void zig(Node *x) &#123; int d = x -&gt; d(); Node *y = x -&gt; fa; y -&gt; sc(x -&gt; ch[d ^ 1], d); y -&gt; maintain(); if(is_root(y)) &#123; x -&gt; fa = y -&gt; fa; &#125; else &#123; y -&gt; fa -&gt; sc(x, y -&gt; d()); &#125; x -&gt; sc(y, d ^ 1); x -&gt; maintain();&#125;void splay(Node *x) &#123; while(!is_root(x)) &#123; Node *y = x -&gt; fa; if(!is_root(y)) &#123; if((x -&gt; d()) ^ (y -&gt; d())) &#123; zig(x); &#125; else &#123; zig(y); &#125; &#125; zig(x); &#125; x -&gt; maintain();&#125;Node *access(Node *x) &#123; Node *v = x, *y = nil; while(x != nil) &#123; splay(x); x -&gt; vs -= y -&gt; s - x -&gt; ch[1] -&gt; s; x -&gt; sc(y, 1); x -&gt; maintain(); y = x; x = x -&gt; fa; &#125; splay(v); return v;&#125;void link(Node *fa, Node *x) &#123; access(fa); access(x); x -&gt; fa = fa; fa -&gt; vs += x -&gt; s; fa -&gt; maintain();&#125;void cut(Node *x) &#123; access(x); x -&gt; ch[0] -&gt; fa = nil; x -&gt; ch[0] = nil; x -&gt; maintain();&#125;Node *get_root(Node *x) &#123; access(x); Node *ret = x; while(ret -&gt; ch[0] != nil) ret = ret -&gt; ch[0]; splay(ret); return ret;&#125;std::vector&lt;int&gt; G[maxn];int fa[maxn];void dfs(int x, int a = -1) &#123; fa[x] = a; for(auto v : G[x]) &#123; if(v != a) &#123; dfs(v, x); link(T(x, 0), T(v, 0)); &#125; &#125;&#125;bool col[maxn];void toogle(int x) &#123; col[x] = !col[x]; if(x == 1) return; int d = !col[x]; cut(T(x, d)); link(T(fa[x], 1 ^ d), T(x, 1 ^ d));&#125;int query(int x) &#123; int d = col[x]; Node *rt = get_root(T(x, d)); int ans = rt -&gt; s; if(col[id(rt)] != d) &#123; access(rt); splay(T(x, d)); ans = T(x, d) -&gt; s; &#125; return ans;&#125;int main() &#123; int n; scanf("%d", &amp;n); for(int i = 1; i &lt;= n - 1; i ++) &#123; int u, v; scanf("%d%d", &amp;u, &amp;v); G[u].push_back(v); G[v].push_back(u); &#125; init_pool(); for(int i = 1; i &lt;= n; i ++) &#123; refresh(T(i, 0)); refresh(T(i, 1)); &#125; dfs(1); int m; scanf("%d", &amp;m); while(m --) &#123; int op, u; scanf("%d%d", &amp;op, &amp;u); if(op == 0) &#123; printf("%d\n", query(u)); &#125; else &#123; toogle(u); &#125; &#125; return 0;&#125;]]></content>
+      <categories>
+        <category>大坑</category>
+      </categories>
+      <tags>
+        <tag>CodeChef</tag>
+        <tag>LCT</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[CF Gym101438F Tree Game]]></title>
     <url>%2F2018%2F08%2F10%2FG101438F%2F</url>
     <content type="text"><![CDATA[Description 有一个\(n\)个无色点的树，小红和小蓝二人在上面玩游戏。 游戏有很多轮，小红先手，然后两人轮替操作。每一轮操作者都必须将一个无色点染成自己的颜色，最后操作者的得分就是他自己染色的点的导出子图的连通块数量。 双方都想最大化自己和对方的得分差距，并且双方都一定采取最优策略。求最后小红和小蓝得分之差。 \(1\leq n\leq 2\times 10^5\)。 Solution 感觉算是套路题……？ 考虑转化一下那个连通块的数量。我们考虑一个人，注意到我们可以先假设所有边都不存在，这样连通块数量为\(c_A\)（即\(A\)选的点数）。然后考虑把边加回来，注意到这个过程中那个导出子图始终是一个森林，所以最终的连通块数为\(c_A - e_A\)（\(e_A\)即两侧都被\(A\)选了的边）。 那么做一下差就知道最终的答案应该是\(c_A - c_B - e_A + e_B\)。由于每个人在自己的回合必须操作，所以\(c_A - c_B\)是一个定死的值。那么考虑\(-e_A + e_B\)，注意到我们可以把一条边对答案的影响\(1\)拆成两半放到点上，然后这样的话只有两边点都被一个人选了这个边才会被归成一个人的，反之则这条边不对答案产生影响。因此我们可以对点权排序，然后小红和小蓝轮流选点即可。 Code 12345678910111213141516171819202122232425262728#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;const int maxn = 200005;int deg[maxn];int main() &#123; int n; scanf("%d", &amp;n); for(int i = 1; i &lt;= n - 1; i ++) &#123; int u, v; scanf("%d%d", &amp;u, &amp;v); deg[u] ++; deg[v] ++; &#125; std::sort(deg + 1, deg + 1 + n); int ans = 0; for(int i = 1; i &lt;= n; i ++) &#123; if(1 &amp; i) &#123; ans += deg[i]; &#125; else &#123; ans -= deg[i]; &#125; &#125; ans *= -1; ans /= 2; if(1 &amp; n) ans ++; printf("%d\n", ans); return 0;&#125;]]></content>
@@ -21,13 +33,13 @@
       </categories>
       <tags>
         <tag>多项式卷积</tag>
-        <tag>LibreOJ</tag>
         <tag>生成函数</tag>
-        <tag>分治FFT</tag>
+        <tag>LibreOJ</tag>
         <tag>清华集训</tag>
         <tag>Prufer序列</tag>
         <tag>斯特林数</tag>
         <tag>指数型生成函数</tag>
+        <tag>分治FFT</tag>
       </tags>
   </entry>
   <entry>
@@ -39,9 +51,9 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>期望DP</tag>
-        <tag>概率与期望</tag>
         <tag>容斥原理</tag>
+        <tag>概率与期望</tag>
+        <tag>期望DP</tag>
         <tag>LibreOJ</tag>
         <tag>PKUWC</tag>
         <tag>树上DP</tag>
@@ -57,13 +69,13 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>概率与期望</tag>
-        <tag>多项式卷积</tag>
         <tag>容斥原理</tag>
-        <tag>LibreOJ</tag>
+        <tag>多项式卷积</tag>
+        <tag>概率与期望</tag>
         <tag>生成函数</tag>
-        <tag>PKUWC</tag>
+        <tag>LibreOJ</tag>
         <tag>分治FFT</tag>
+        <tag>PKUWC</tag>
       </tags>
   </entry>
   <entry>
@@ -100,8 +112,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>wqs二分</tag>
         <tag>DP</tag>
+        <tag>wqs二分</tag>
         <tag>多省联考</tag>
         <tag>树形DP</tag>
       </tags>
@@ -114,9 +126,9 @@
         <category>题解</category>
       </categories>
       <tags>
+        <tag>DP</tag>
         <tag>Codeforces</tag>
         <tag>wqs二分</tag>
-        <tag>DP</tag>
         <tag>期望DP</tag>
       </tags>
   </entry>
@@ -167,8 +179,8 @@
       </categories>
       <tags>
         <tag>BZOJ</tag>
-        <tag>DP</tag>
         <tag>NOI</tag>
+        <tag>DP</tag>
       </tags>
   </entry>
   <entry>
@@ -204,9 +216,9 @@
         <category>题解</category>
       </categories>
       <tags>
+        <tag>Min_25筛</tag>
         <tag>洲阁筛</tag>
         <tag>LibreOJ</tag>
-        <tag>Min_25筛</tag>
         <tag>山东省队集训</tag>
       </tags>
   </entry>
@@ -249,8 +261,8 @@
         <category>比赛</category>
       </categories>
       <tags>
-        <tag>贪心</tag>
         <tag>原根</tag>
+        <tag>贪心</tag>
         <tag>NowCoder</tag>
         <tag>子序列自动机</tag>
         <tag>位运算</tag>
@@ -265,9 +277,9 @@
         <category>大坑</category>
       </categories>
       <tags>
-        <tag>LibreOJ</tag>
         <tag>SPOJ</tag>
         <tag>TJOI</tag>
+        <tag>LibreOJ</tag>
         <tag>后缀自动机</tag>
         <tag>后缀数组</tag>
         <tag>后缀树</tag>
@@ -300,8 +312,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>LibreOJ</tag>
         <tag>Min_25筛</tag>
+        <tag>LibreOJ</tag>
       </tags>
   </entry>
   <entry>
@@ -326,10 +338,10 @@
       </categories>
       <tags>
         <tag>NOI</tag>
+        <tag>洲阁筛</tag>
         <tag>UOJ</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
-        <tag>洲阁筛</tag>
         <tag>杜教筛</tag>
       </tags>
   </entry>
@@ -369,8 +381,8 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>洲阁筛</tag>
         <tag>Min_25筛</tag>
+        <tag>洲阁筛</tag>
         <tag>SPOJ</tag>
       </tags>
   </entry>
