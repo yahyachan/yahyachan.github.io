@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[HDU 4624 Endless Spin]]></title>
+    <url>%2F2018%2F08%2F10%2FHDU4624%2F</url>
+    <content type="text"><![CDATA[Description 有\(n\)个球排成一列，初始时都为白色。 每次操作都从所有可能的区间里等概率选择一个，将其中的球都染黑。直到所有球都染黑，这个游戏才结束。 求期望的操作次数。 \(T\)组数据（\(T\leq 50\)），\(1\leq n\leq 50\)。 Solution 感觉算是MIN-MAX容斥期望题的鼻祖了……？ 我们要求的东西事实上是一个\(\mathrm{E}[\max\{X_i\}]\)，其中\(X_i\)表示第\(i\)个球被染黑的时间。这个东西并不好做，我们MIN-MAX容斥一下，问题就转化成了求被染黑时间的最小值，也就是这个集合第一次有点被染黑的时间的期望值。 然而我们发现求一个集合第一次有点被染黑时间的期望值也并不好做……注意到对于离散型期望有结论\(\mathrm{E}[X]=\sum_{i = 1}^{+\infty}P(X\geq i)\)，而\(P(X_i\geq x) = p_i^{x - 1}\)（这里\(p_i\)表示选中区间和我们的那个集合不相交的概率），也就是说最后的期望是一个无穷级数： \[ \sum_{k = 0}^{+\infty} p_i^k \] 利用等比数列求和公式可以得到这个东西就事\(\frac{1}{1 - p_i}\)（请注意这里的集合非空，所以\(p_i\in [0,1)\)，所以这个式子成立），那么我们接下来就要考虑怎么高消的处理所有集合的贡献。 注意到如果不考虑系数的话集合的贡献只和和该集合不相交的区间数有关。因此我们定义状态\(f_{i, j, 0/1}\)表示前\(i\)个点，不和我们选择集合相交的区间有\(j\)个，集合奇偶性为\(0/1\)的情况，转移很容易，然后就做完了…… 注意那个卡精有毒……所以需要高精小数，然后我现学现卖了一波Java操作（逃 Code 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758import java.util.Scanner;import java.io.*;import java.math.BigDecimal;public class Main &#123; public static long C2(long x) &#123; return x * (x - 1) / 2; &#125; public static long S2(long x) &#123; return x * (x + 1) / 2; &#125; public static void main(String[] args) &#123; Scanner in = new Scanner(System.in); long [][][]f = new long[55][1300][2]; BigDecimal []E = new BigDecimal[55]; for(int i = 0; i &lt; 55; i ++) &#123; for(int j = 0; j &lt; 1300; j ++) &#123; f[i][j][0] = f[i][j][1] = 0; &#125; &#125; f[0][0][0] = 1; for(int i = 1; i &lt;= 50; i ++) &#123; for(int j = 0; j &lt;= S2(i); j ++) &#123; for(int k = 0; k &lt; 2; k ++) &#123; // f[i][j][k] = 0; for(int t = i - 1; t &gt;= 0 &amp;&amp; S2(i - t - 1) &lt;= (long)j; t --) &#123; f[i][j][k] += f[t][j - (i - t) * (i - t - 1) / 2][k ^ 1]; &#125; &#125; &#125; &#125; for(int n = 1; n &lt;= 50; n ++) &#123; E[n] = new BigDecimal(0); long S = S2(n); for(int i = 0; i &lt;= n; i ++) &#123; for(int j = 0; (long)j &lt;= S2(i); j ++) &#123; for(int k = 0; k &lt; 2; k ++) &#123; if(f[i][j][k] == (long)0) continue; if(S - (long)j - S2(n - i) == (long)0) continue; BigDecimal delta = new BigDecimal(1); BigDecimal a = new BigDecimal((long)j + S2(n - i)); BigDecimal b = new BigDecimal(S); delta = delta.subtract(a.divide(b, 50, BigDecimal.ROUND_HALF_UP)); if(k == 0) delta = delta.multiply(new BigDecimal(-1)); BigDecimal temp = new BigDecimal(f[i][j][k]); E[n] = E[n].add(temp.divide(delta, 50, BigDecimal.ROUND_HALF_UP)); &#125; &#125; &#125; &#125; int T = in.nextInt(); for(int i = 1; i &lt;= T; i ++) &#123; int n = in.nextInt(); System.out.printf("%.15f\r\n",E[n]); &#125; &#125;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>容斥原理</tag>
+        <tag>HDU</tag>
+        <tag>DP</tag>
+        <tag>MIN-MAX容斥</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[CodeChef好（du）题（liu）选做]]></title>
     <url>%2F2018%2F08%2F10%2FCC%2F</url>
     <content type="text"><![CDATA[近期看了一些先辈的文章……柑橘要刷一些CC力，，， 怕不是有一半题都是毒瘤数据结构？ QTREE6 Query on a tree VI Description 有一棵\(n\)个点的有颜色的树，初始时每一个点都是白色。要求你支持以下两种操作（共\(m\)次）： 0 u：查询\(u\)所在的连通块有几个点。这里的话一条边当且仅当两边颜色一样才会生效。 1 u：翻转\(u\)的颜色。 \(1\leq n, m\leq 10^5\)。 Solution 记得大约一年前多听过一个挺毒瘤的树剖做法……然而柑橘还事动态树简单哎。 把每个点拆成白点和黑点，每个点如果是白色的那么他的白点向父亲连边，反之亦然，并且两者只能择其一。可以发现如果一个点所在的森林的根是同色的话那么就取根的子树大小就行了，其他情况特判一下取下面一个点。 然后还剩下一个问题就是在动态树上维护子树大小……这个的当然可以直接ETT，不过我从来没写过LCT维护子树信息所以就用了LCT。LCT维护子树信息倒也简单，就在每个Splay结点上额外开个域维护它的虚儿子信息就行了，access和link-cut的时候再修改一下这个信息，然后就做完了…… Code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;vector&gt;#include &lt;queue&gt;struct Node &#123; Node *fa, *ch[2]; int vs, s; int d() &#123; return (this == fa -&gt; ch[1]); &#125; void sc(Node *c, int dir) &#123; ch[dir] = c; c -&gt; fa = this; &#125; void maintain() &#123; s = ch[0] -&gt; s + ch[1] -&gt; s + vs; &#125;&#125;;const int maxn = 100005;Node pool[maxn &lt;&lt; 1];Node *nil, *cur;void init_pool() &#123; nil = cur = pool; nil -&gt; fa = nil -&gt; ch[0] = nil -&gt; ch[1] = nil; nil -&gt; vs = nil -&gt; s = 0;&#125;Node *T(int x, int col) &#123; return pool + (2 * x - col);&#125;int id(Node *x) &#123; return (x - pool + 1) / 2;&#125;void refresh(Node *x) &#123; x -&gt; vs = x -&gt; s = 1; x -&gt; fa = x -&gt; ch[0] = x -&gt; ch[1] = nil;&#125;bool is_root(Node *x) &#123; return (x -&gt; fa == nil || (x -&gt; fa -&gt; ch[0] != x &amp;&amp; x -&gt; fa -&gt; ch[1] != x));&#125;void zig(Node *x) &#123; int d = x -&gt; d(); Node *y = x -&gt; fa; y -&gt; sc(x -&gt; ch[d ^ 1], d); y -&gt; maintain(); if(is_root(y)) &#123; x -&gt; fa = y -&gt; fa; &#125; else &#123; y -&gt; fa -&gt; sc(x, y -&gt; d()); &#125; x -&gt; sc(y, d ^ 1); x -&gt; maintain();&#125;void splay(Node *x) &#123; while(!is_root(x)) &#123; Node *y = x -&gt; fa; if(!is_root(y)) &#123; if((x -&gt; d()) ^ (y -&gt; d())) &#123; zig(x); &#125; else &#123; zig(y); &#125; &#125; zig(x); &#125; x -&gt; maintain();&#125;Node *access(Node *x) &#123; Node *v = x, *y = nil; while(x != nil) &#123; splay(x); x -&gt; vs -= y -&gt; s - x -&gt; ch[1] -&gt; s; x -&gt; sc(y, 1); x -&gt; maintain(); y = x; x = x -&gt; fa; &#125; splay(v); return v;&#125;void link(Node *fa, Node *x) &#123; access(fa); access(x); x -&gt; fa = fa; fa -&gt; vs += x -&gt; s; fa -&gt; maintain();&#125;void cut(Node *x) &#123; access(x); x -&gt; ch[0] -&gt; fa = nil; x -&gt; ch[0] = nil; x -&gt; maintain();&#125;Node *get_root(Node *x) &#123; access(x); Node *ret = x; while(ret -&gt; ch[0] != nil) ret = ret -&gt; ch[0]; splay(ret); return ret;&#125;std::vector&lt;int&gt; G[maxn];int fa[maxn];void dfs(int x, int a = -1) &#123; fa[x] = a; for(auto v : G[x]) &#123; if(v != a) &#123; dfs(v, x); link(T(x, 0), T(v, 0)); &#125; &#125;&#125;bool col[maxn];void toogle(int x) &#123; col[x] = !col[x]; if(x == 1) return; int d = !col[x]; cut(T(x, d)); link(T(fa[x], 1 ^ d), T(x, 1 ^ d));&#125;int query(int x) &#123; int d = col[x]; Node *rt = get_root(T(x, d)); int ans = rt -&gt; s; if(col[id(rt)] != d) &#123; access(rt); splay(T(x, d)); ans = T(x, d) -&gt; s; &#125; return ans;&#125;int main() &#123; int n; scanf("%d", &amp;n); for(int i = 1; i &lt;= n - 1; i ++) &#123; int u, v; scanf("%d%d", &amp;u, &amp;v); G[u].push_back(v); G[v].push_back(u); &#125; init_pool(); for(int i = 1; i &lt;= n; i ++) &#123; refresh(T(i, 0)); refresh(T(i, 1)); &#125; dfs(1); int m; scanf("%d", &amp;m); while(m --) &#123; int op, u; scanf("%d%d", &amp;op, &amp;u); if(op == 0) &#123; printf("%d\n", query(u)); &#125; else &#123; toogle(u); &#125; &#125; return 0;&#125;]]></content>
@@ -50,15 +64,15 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>DP</tag>
         <tag>容斥原理</tag>
-        <tag>概率与期望</tag>
+        <tag>DP</tag>
+        <tag>MIN-MAX容斥</tag>
         <tag>期望DP</tag>
+        <tag>概率与期望</tag>
         <tag>LibreOJ</tag>
         <tag>PKUWC</tag>
         <tag>树上DP</tag>
         <tag>高斯消元</tag>
-        <tag>MIN-MAX容斥</tag>
       </tags>
   </entry>
   <entry>
@@ -70,12 +84,12 @@
       </categories>
       <tags>
         <tag>容斥原理</tag>
-        <tag>多项式卷积</tag>
         <tag>概率与期望</tag>
+        <tag>多项式卷积</tag>
         <tag>生成函数</tag>
         <tag>LibreOJ</tag>
-        <tag>分治FFT</tag>
         <tag>PKUWC</tag>
+        <tag>分治FFT</tag>
       </tags>
   </entry>
   <entry>
@@ -179,8 +193,8 @@
       </categories>
       <tags>
         <tag>BZOJ</tag>
-        <tag>NOI</tag>
         <tag>DP</tag>
+        <tag>NOI</tag>
       </tags>
   </entry>
   <entry>
@@ -337,9 +351,9 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>NOI</tag>
         <tag>洲阁筛</tag>
         <tag>UOJ</tag>
+        <tag>NOI</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
         <tag>杜教筛</tag>
@@ -368,8 +382,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>生成函数</tag>
         <tag>TJOI</tag>
+        <tag>生成函数</tag>
         <tag>广义二项式定理</tag>
       </tags>
   </entry>
@@ -409,8 +423,8 @@
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
         <tag>杜教筛</tag>
-        <tag>贝尔级数</tag>
         <tag>生成函数</tag>
+        <tag>贝尔级数</tag>
       </tags>
   </entry>
   <entry>
