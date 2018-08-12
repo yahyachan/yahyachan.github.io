@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[LibreOJ 2111 「JLOI2015」战争调度]]></title>
+    <url>%2F2018%2F08%2F12%2Floj2111%2F</url>
+    <content type="text"><![CDATA[Description 有一棵高\(n\)的完全二叉树，每个点可以染成黑色或者白色，黑叶子最多有\(m\)个。 如果一个叶子\(i\)和他的第\(j\)级别祖先都是黑的，那么会有一个\(w_{i, j}\)的收益。若都是白色，则有\(f_{i, j}\)的收益。求最大收益。 \(1\leq n\leq 10, m\leq 2^{n - 1}, 0\leq w_{i, j}, f_{i, j}\leq 2000\)。 Solution 如果说是在祖先上状压记录叶子的信息的话，那么状态会炸。那么我们反过来，去状压记录祖先的信息。 定义状态\(d_{i, j, s}\)表示子树\(i\)的祖宗的状态为\(s\)，子树内黑叶子有\(j\)个的最优解。转移的话在叶子上考虑\(s\)的贡献，非叶子结点背包即可。 那问题来了，这样的话时间空间不会炸吗？ 先说空间。注意到\(j\)一定是某个叶子给上面的点做了贡献而成，一个叶子的贡献是\(\sum_{i = 1}^{n - 1} 2^{i - 1}\)，也就是\(2^{n - 1}\)，叶子有\(2^{n - 1}\)个，所以总的来说空间复杂度是一个\(2^{2n - 2}=O(2^{2n})\)的。 再说时间。考虑对于一个第\(i\)层的点，所有\(j\)的背包的枚举的复杂度的和的上限为\((2^{n - i})^2 = 2^{2n - 2i}\)，然后这一层不考虑\(j\)的状态数为\(2^{i - 1}2^{i - 1}\)（还不到这个数……），因此可以认为这一层对时间复杂度的贡献为\(O(2^{2n})\)，总共\(n\)层所以总时间复杂度为\(O(n2^{2n})\)。 Code 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;cassert&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;unordered_map&gt;const int maxn = 15;const int maxno = 1030;int siz[maxno]; int n;void dfs(int x) &#123; if(x &gt;= (1 &lt;&lt; (n - 1))) &#123; siz[x] = 1; return; &#125; dfs(x &lt;&lt; 1); dfs(x &lt;&lt; 1 | 1); siz[x] += siz[x &lt;&lt; 1]; siz[x] += siz[x &lt;&lt; 1 | 1];&#125;int w[maxno][maxn], f[maxno][maxn];std::unordered_map&lt;int, int&gt; d[maxno][maxno];int dp(int i, int j, int s) &#123; if(d[i][j].count(s)) return d[i][j][s]; int ans = 0; if(i &gt;= (1 &lt;&lt; (n - 1))) &#123; assert(j == 1 || j == 0); int ns = s; for(int k = 1; k &lt;= n - 1; k ++) &#123; if(j == 1 &amp;&amp; (ns % 2 == 1)) &#123; ans += w[i][k]; &#125; else if(j == 0 &amp;&amp; (ns % 2 == 0)) &#123; ans += f[i][k]; &#125; ns /= 2; &#125; &#125; else &#123; int s1 = s &lt;&lt; 1, s2 = s &lt;&lt; 1 | 1; for(int k = std::max(0, j - siz[i &lt;&lt; 1 | 1]); k &lt;= std::min(j, siz[i &lt;&lt; 1]); k ++) &#123; ans = std::max(ans, dp(i &lt;&lt; 1, k, s1) + dp(i &lt;&lt; 1 | 1, j - k, s1)); ans = std::max(ans, dp(i &lt;&lt; 1, k, s2) + dp(i &lt;&lt; 1 | 1, j - k, s2)); &#125; &#125; d[i][j][s] = ans; return ans;&#125;int main() &#123; int m; scanf("%d%d", &amp;n, &amp;m); for(int i = (1 &lt;&lt; (n - 1)); i &lt; (1 &lt;&lt; n); i ++) &#123; for(int j = 1; j &lt;= n - 1; j ++) &#123; scanf("%d", &amp;w[i][j]); &#125; &#125; for(int i = (1 &lt;&lt; (n - 1)); i &lt; (1 &lt;&lt; n); i ++) &#123; for(int j = 1; j &lt;= n - 1; j ++) &#123; scanf("%d", &amp;f[i][j]); &#125; &#125; dfs(1); int ans = 0; for(int i = m; i &gt;= 0; i --) &#123; ans = std::max(ans, dp(1, i, 0)); &#125; printf("%d\n", ans); return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>DP</tag>
+        <tag>LibreOJ</tag>
+        <tag>JLOI</tag>
+        <tag>树形DP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[BZOJ 2839 集合计数]]></title>
     <url>%2F2018%2F08%2F12%2FBZOJ2839%2F</url>
     <content type="text"><![CDATA[Description 对于一个\(n\)个元素集合的所有子集，我们要从这些子集中取出至少一个，使得取出的集合的交的大小恰好为\(k\)。求方案数，答案对\(10^9+7\)取模。 \(1\leq n\leq 10^6, 0\leq k\leq n\)。 Solution 恰好\(k\)个元素并不好求，但是至少\(k\)个元素是可做的。答案显然是\(\binom{n}{k}(2^{2^{n - k}} - 1)\)（注意这个东西的话如果交集大小为\(s &gt; k\)的话一个集合集的贡献会算\(\binom{s}{k}\)次，也就是先规定交集再考虑方案数，下面还要用这个性质）。 假设恰好\(k\)个的方案数为\(a_k\)，上述至少\(k\)个的方案数为\(b_k\)。那么有： \[ b_k = \sum_{i = k}^n \binom{i}{k}a_i \] 这就是广义容斥原理的标准形式……反推一下可以得到： \[ a_k = \sum_{i = k}^n (-1)^{i - k}\binom{i}{k}b_i \] 然后就做完力，，， Code 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647#include &lt;cstdio&gt;typedef long long ll;const ll ha = 1000000007LL;ll pow_mod(ll a, ll b, ll p = ha) &#123; ll ans = 1, res = a; while(b) &#123; if(1LL &amp; b) ans = ans * res % p; res = res * res % p; b &gt;&gt;= 1; &#125; return ans;&#125;const int maxn = 1000005;ll fac[maxn], ifac[maxn];void process() &#123; int n = 1000000; fac[0] = 1; for(int i = 1; i &lt;= n; i ++) &#123; fac[i] = (ll)i * fac[i - 1] % ha; &#125; ifac[n] = pow_mod(fac[n], ha - 2LL); for(int i = n - 1; i &gt;= 0; i --) &#123; ifac[i] = (ll(i + 1)) * ifac[i + 1] % ha; &#125;&#125;ll C(int n, int m) &#123; ll ret = fac[n] * ifac[n - m] % ha; ret = ret * ifac[m] % ha; return ret;&#125;int main() &#123; process(); int n, k; scanf("%d%d", &amp;n, &amp;k); ll ans = 0; for(int i = k; i &lt;= n; i ++) &#123; ll delta = C(n, i); ll xi = (pow_mod(2, pow_mod(2, n - i, ha - 1LL)) - 1LL + ha) % ha; delta = delta * xi % ha; delta = delta * C(i, k) % ha; if(1 &amp; (i - k)) delta = (ha - delta); ans += delta; if(ans &gt;= ha) ans -= ha; &#125; printf("%lld\n", ans); return 0;&#125;]]></content>
@@ -72,9 +86,9 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>多项式卷积</tag>
-        <tag>生成函数</tag>
         <tag>LibreOJ</tag>
+        <tag>生成函数</tag>
+        <tag>多项式卷积</tag>
         <tag>清华集训</tag>
         <tag>Prufer序列</tag>
         <tag>斯特林数</tag>
@@ -92,8 +106,8 @@
       <tags>
         <tag>DP</tag>
         <tag>容斥原理</tag>
-        <tag>概率与期望</tag>
         <tag>期望DP</tag>
+        <tag>概率与期望</tag>
         <tag>MIN-MAX容斥</tag>
         <tag>LibreOJ</tag>
         <tag>PKUWC</tag>
@@ -111,11 +125,11 @@
       <tags>
         <tag>容斥原理</tag>
         <tag>概率与期望</tag>
-        <tag>多项式卷积</tag>
-        <tag>生成函数</tag>
         <tag>LibreOJ</tag>
-        <tag>PKUWC</tag>
+        <tag>生成函数</tag>
+        <tag>多项式卷积</tag>
         <tag>分治FFT</tag>
+        <tag>PKUWC</tag>
       </tags>
   </entry>
   <entry>
@@ -154,8 +168,8 @@
       <tags>
         <tag>DP</tag>
         <tag>wqs二分</tag>
-        <tag>多省联考</tag>
         <tag>树形DP</tag>
+        <tag>多省联考</tag>
       </tags>
   </entry>
   <entry>
@@ -301,8 +315,8 @@
         <category>比赛</category>
       </categories>
       <tags>
-        <tag>原根</tag>
         <tag>贪心</tag>
+        <tag>原根</tag>
         <tag>NowCoder</tag>
         <tag>子序列自动机</tag>
         <tag>位运算</tag>
