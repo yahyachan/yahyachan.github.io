@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="NOI,two pointers,线段树," />
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="danihao123&apos;s Blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="danihao123&#39;s Blog">
-<meta property="og:url" content="https://yahyachan.github.io/tags/狄利克雷卷积/index.html">
+<meta name="description" content="Description 给你\(n\)个闭区间（第\(i\)个为\([l_i, r_i]\)），要求你选出其中\(m\)个，使得他们的交集非空。 你的得分是选出区间中最长的和最短的的长度差。请求出最优解，无解输出\(-1\)。 \(m\leq 200000, 1\leq m\leq n\leq 500000, 0\leq l_i\leq r_i\leq 10^9\)。">
+<meta name="keywords" content="NOI,two pointers,线段树">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LibreOJ 2086 「NOI2016」区间">
+<meta property="og:url" content="https://yahyachan.github.io/2018/08/12/loj2086/index.html">
 <meta property="og:site_name" content="danihao123&#39;s Blog">
-<meta property="og:description" content="danihao123&apos;s Blog">
+<meta property="og:description" content="Description 给你\(n\)个闭区间（第\(i\)个为\([l_i, r_i]\)），要求你选出其中\(m\)个，使得他们的交集非空。 你的得分是选出区间中最长的和最短的的长度差。请求出最优解，无解输出\(-1\)。 \(m\leq 200000, 1\leq m\leq n\leq 500000, 0\leq l_i\leq r_i\leq 10^9\)。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-12T12:03:52.957Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="danihao123&#39;s Blog">
-<meta name="twitter:description" content="danihao123&apos;s Blog">
+<meta name="twitter:title" content="LibreOJ 2086 「NOI2016」区间">
+<meta name="twitter:description" content="Description 给你\(n\)个闭区间（第\(i\)个为\([l_i, r_i]\)），要求你选出其中\(m\)个，使得他们的交集非空。 你的得分是选出区间中最长的和最短的的长度差。请求出最优解，无解输出\(-1\)。 \(m\leq 200000, 1\leq m\leq n\leq 500000, 0\leq l_i\leq r_i\leq 10^9\)。">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yahyachan.github.io/tags/狄利克雷卷积/"/>
+  <link rel="canonical" href="https://yahyachan.github.io/2018/08/12/loj2086/"/>
 
 
 
 
 
-  <title>标签: 狄利克雷卷积 | danihao123's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>LibreOJ 2086 「NOI2016」区间 | danihao123's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -143,7 +145,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -281,110 +283,201 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>狄利克雷卷积<small>标签</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yahyachan.github.io/2018/08/12/loj2086/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="danihao123">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://danihao123.is-programmer.com/user_files/danihao123/config/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="danihao123's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/07/24/loj6052/" itemprop="url">
-              
-                <span itemprop="name">LibreOJ 6052 「雅礼集训 2017 Day11」DIV</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">LibreOJ 2086 「NOI2016」区间</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-24T20:51:25+08:00"
-              content="2018-07-24" >
-          07-24
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-12T19:56:07+08:00">
+                2018-08-12
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/题解/" itemprop="url" rel="index">
+                    <span itemprop="name">题解</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/21/NOI2016D1T3/" itemprop="url">
-              
-                <span itemprop="name">UOJ 221「NOI2016」循环之美</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-21T09:58:02+08:00"
-              content="2018-07-21" >
-          07-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/11/bell-series/" itemprop="url">
-              
-                <span itemprop="name">贝尔级数在积性函数毒瘤题中的应用</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-11T16:01:02+08:00"
-              content="2018-07-11" >
-          07-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <h2 id="description">Description</h2>
+<p>给你<span class="math inline">\(n\)</span>个闭区间（第<span class="math inline">\(i\)</span>个为<span class="math inline">\([l_i, r_i]\)</span>），要求你选出其中<span class="math inline">\(m\)</span>个，使得他们的交集非空。</p>
+<p>你的得分是选出区间中最长的和最短的的长度差。请求出最优解，无解输出<span class="math inline">\(-1\)</span>。</p>
+<p><span class="math inline">\(m\leq 200000, 1\leq m\leq n\leq 500000, 0\leq l_i\leq r_i\leq 10^9\)</span>。</p>
+<a id="more"></a>
+<h2 id="solution">Solution</h2>
+<p>我们首先先把区间按长度排个序再做吧……</p>
+<p>然后最大和最小的差，要素察觉（意味深）。two pointers，启动！</p>
+<p>我们直接开一棵线段树，来维护每个点在当前使用区间被覆盖了多少次。在全局最大值不小于<span class="math inline">\(m\)</span>时，开始一边更新答案一遍移动左端点。注意不合法的区间在这里一定比合法的区间答案更劣，所以直接在移动之前无脑更新答案即可。</p>
+<h2 id="code">Code</h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;climits&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utility&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">500005</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxno = maxn &lt;&lt; <span class="number">3</span>;</span><br><span class="line"><span class="keyword">int</span> maxv[maxno], addv[maxno];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">maintain</span><span class="params">(<span class="keyword">int</span> o)</span> </span>&#123;</span><br><span class="line">  maxv[o] = <span class="built_in">std</span>::max(maxv[o &lt;&lt; <span class="number">1</span>], maxv[o &lt;&lt; <span class="number">1</span> | <span class="number">1</span>]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">paint</span><span class="params">(<span class="keyword">int</span> o, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">  addv[o] += v;</span><br><span class="line">  maxv[o] += v;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pushdown</span><span class="params">(<span class="keyword">int</span> o)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(addv[o] != <span class="number">0</span>) &#123;</span><br><span class="line">    paint(o &lt;&lt; <span class="number">1</span>, addv[o]);</span><br><span class="line">    paint(o &lt;&lt; <span class="number">1</span> | <span class="number">1</span>, addv[o]);</span><br><span class="line">    addv[o] = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> o, <span class="keyword">int</span> L, <span class="keyword">int</span> R, <span class="keyword">int</span> ql, <span class="keyword">int</span> qr, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(ql &lt;= L &amp;&amp; R &lt;= qr) &#123;</span><br><span class="line">    paint(o, v);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">int</span> M = (L + R) / <span class="number">2</span>;</span><br><span class="line">    pushdown(o);</span><br><span class="line">    <span class="keyword">if</span>(ql &lt;= M) update(o &lt;&lt; <span class="number">1</span>, L, M, ql, qr, v);</span><br><span class="line">    <span class="keyword">if</span>(qr &gt; M) update(o &lt;&lt; <span class="number">1</span> |  <span class="number">1</span>, M + <span class="number">1</span>, R, ql, qr, v);</span><br><span class="line">    maintain(o);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Seg</span> &#123;</span></span><br><span class="line">  <span class="keyword">int</span> l, r, len;</span><br><span class="line">  <span class="keyword">bool</span> <span class="keyword">operator</span> &lt;(<span class="keyword">const</span> Seg &amp;res) <span class="keyword">const</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> len &lt; res.len;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, lsiz; <span class="keyword">int</span> A2[maxn &lt;&lt; <span class="number">2</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">desc</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">std</span>::sort(A2 + <span class="number">1</span>, A2 + <span class="number">1</span> + <span class="number">2</span> * n);</span><br><span class="line">  lsiz = <span class="built_in">std</span>::unique(A2 + <span class="number">1</span>, A2 + <span class="number">1</span> + <span class="number">2</span> * n) - A2 - <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (<span class="built_in">std</span>::lower_bound(A2 + <span class="number">1</span>, A2 + <span class="number">1</span> + lsiz, x) - A2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Seg s[maxn];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> m; <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;n, &amp;m);</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</span><br><span class="line">    <span class="keyword">int</span> l, r; <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;l, &amp;r);</span><br><span class="line">    s[i].l = l; s[i].r = r; s[i].len = r - l;</span><br><span class="line">    A2[<span class="number">2</span> * i - <span class="number">1</span>] = l; A2[<span class="number">2</span> * i] = r;</span><br><span class="line">  &#125;</span><br><span class="line">  desc();</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</span><br><span class="line">    s[i].l = query(s[i].l);</span><br><span class="line">    s[i].r = query(s[i].r);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">std</span>::sort(s + <span class="number">1</span>, s + <span class="number">1</span> + n);</span><br><span class="line">  <span class="keyword">int</span> l = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">int</span> ans = INT_MAX;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> r = <span class="number">1</span>; r &lt;= n; r ++) &#123;</span><br><span class="line">    <span class="keyword">int</span> lp = s[r].l, rp = s[r].r;</span><br><span class="line">    update(<span class="number">1</span>, <span class="number">1</span>, lsiz, lp, rp, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">while</span>(maxv[<span class="number">1</span>] &gt;= m) &#123;</span><br><span class="line">      ans = <span class="built_in">std</span>::min(ans, s[r].len - s[l].len);</span><br><span class="line">      update(<span class="number">1</span>, <span class="number">1</span>, lsiz, s[l].l, s[l].r, <span class="number">-1</span>);</span><br><span class="line">      l ++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(ans == INT_MAX) ans = <span class="number">-1</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    danihao123
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yahyachan.github.io/2018/08/12/loj2086/" title="LibreOJ 2086 「NOI2016」区间">https://yahyachan.github.io/2018/08/12/loj2086/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NOI/" rel="tag"># NOI</a>
+          
+            <a href="/tags/two-pointers/" rel="tag"># two pointers</a>
+          
+            <a href="/tags/线段树/" rel="tag"># 线段树</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/12/loj2111/" rel="next" title="LibreOJ 2111 「JLOI2015」战争调度">
+                <i class="fa fa-chevron-left"></i> LibreOJ 2111 「JLOI2015」战争调度
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -392,6 +485,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODYwMi8xNTEzMA"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -412,8 +514,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -513,6 +624,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#description"><span class="nav-number">1.</span> <span class="nav-text">Description</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solution"><span class="nav-number">2.</span> <span class="nav-text">Solution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#code"><span class="nav-number">3.</span> <span class="nav-text">Code</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -653,6 +780,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -681,6 +812,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 

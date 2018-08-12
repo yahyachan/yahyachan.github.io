@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[LibreOJ 2086 「NOI2016」区间]]></title>
+    <url>%2F2018%2F08%2F12%2Floj2086%2F</url>
+    <content type="text"><![CDATA[Description 给你\(n\)个闭区间（第\(i\)个为\([l_i, r_i]\)），要求你选出其中\(m\)个，使得他们的交集非空。 你的得分是选出区间中最长的和最短的的长度差。请求出最优解，无解输出\(-1\)。 \(m\leq 200000, 1\leq m\leq n\leq 500000, 0\leq l_i\leq r_i\leq 10^9\)。 Solution 我们首先先把区间按长度排个序再做吧…… 然后最大和最小的差，要素察觉（意味深）。two pointers，启动！ 我们直接开一棵线段树，来维护每个点在当前使用区间被覆盖了多少次。在全局最大值不小于\(m\)时，开始一边更新答案一遍移动左端点。注意不合法的区间在这里一定比合法的区间答案更劣，所以直接在移动之前无脑更新答案即可。 Code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;climits&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;const int maxn = 500005;const int maxno = maxn &lt;&lt; 3;int maxv[maxno], addv[maxno];void maintain(int o) &#123; maxv[o] = std::max(maxv[o &lt;&lt; 1], maxv[o &lt;&lt; 1 | 1]);&#125;void paint(int o, int v) &#123; addv[o] += v; maxv[o] += v;&#125;void pushdown(int o) &#123; if(addv[o] != 0) &#123; paint(o &lt;&lt; 1, addv[o]); paint(o &lt;&lt; 1 | 1, addv[o]); addv[o] = 0; &#125;&#125;void update(int o, int L, int R, int ql, int qr, int v) &#123; if(ql &lt;= L &amp;&amp; R &lt;= qr) &#123; paint(o, v); &#125; else &#123; int M = (L + R) / 2; pushdown(o); if(ql &lt;= M) update(o &lt;&lt; 1, L, M, ql, qr, v); if(qr &gt; M) update(o &lt;&lt; 1 | 1, M + 1, R, ql, qr, v); maintain(o); &#125;&#125;struct Seg &#123; int l, r, len; bool operator &lt;(const Seg &amp;res) const &#123; return len &lt; res.len; &#125;&#125;;int n, lsiz; int A2[maxn &lt;&lt; 2];void desc() &#123; std::sort(A2 + 1, A2 + 1 + 2 * n); lsiz = std::unique(A2 + 1, A2 + 1 + 2 * n) - A2 - 1;&#125;int query(int x) &#123; return (std::lower_bound(A2 + 1, A2 + 1 + lsiz, x) - A2);&#125;Seg s[maxn];int main() &#123; int m; scanf("%d%d", &amp;n, &amp;m); for(int i = 1; i &lt;= n; i ++) &#123; int l, r; scanf("%d%d", &amp;l, &amp;r); s[i].l = l; s[i].r = r; s[i].len = r - l; A2[2 * i - 1] = l; A2[2 * i] = r; &#125; desc(); for(int i = 1; i &lt;= n; i ++) &#123; s[i].l = query(s[i].l); s[i].r = query(s[i].r); &#125; std::sort(s + 1, s + 1 + n); int l = 1; int ans = INT_MAX; for(int r = 1; r &lt;= n; r ++) &#123; int lp = s[r].l, rp = s[r].r; update(1, 1, lsiz, lp, rp, 1); while(maxv[1] &gt;= m) &#123; ans = std::min(ans, s[r].len - s[l].len); update(1, 1, lsiz, s[l].l, s[l].r, -1); l ++; &#125; &#125; if(ans == INT_MAX) ans = -1; printf("%d\n", ans); return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>NOI</tag>
+        <tag>two pointers</tag>
+        <tag>线段树</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[LibreOJ 2111 「JLOI2015」战争调度]]></title>
     <url>%2F2018%2F08%2F12%2Floj2111%2F</url>
     <content type="text"><![CDATA[Description 有一棵高\(n\)的完全二叉树，每个点可以染成黑色或者白色，黑叶子最多有\(m\)个。 如果一个叶子\(i\)和他的第\(j\)级别祖先都是黑的，那么会有一个\(w_{i, j}\)的收益。若都是白色，则有\(f_{i, j}\)的收益。求最大收益。 \(1\leq n\leq 10, m\leq 2^{n - 1}, 0\leq w_{i, j}, f_{i, j}\leq 2000\)。 Solution 如果说是在祖先上状压记录叶子的信息的话，那么状态会炸。那么我们反过来，去状压记录祖先的信息。 定义状态\(d_{i, j, s}\)表示子树\(i\)的祖宗的状态为\(s\)，子树内黑叶子有\(j\)个的最优解。转移的话在叶子上考虑\(s\)的贡献，非叶子结点背包即可。 那问题来了，这样的话时间空间不会炸吗？ 先说空间。注意到\(j\)一定是某个叶子给上面的点做了贡献而成，一个叶子的贡献是\(\sum_{i = 1}^{n - 1} 2^{i - 1}\)，也就是\(2^{n - 1}\)，叶子有\(2^{n - 1}\)个，所以总的来说空间复杂度是一个\(2^{2n - 2}=O(2^{2n})\)的。 再说时间。考虑对于一个第\(i\)层的点，所有\(j\)的背包的枚举的复杂度的和的上限为\((2^{n - i})^2 = 2^{2n - 2i}\)，然后这一层不考虑\(j\)的状态数为\(2^{i - 1}2^{i - 1}\)（还不到这个数……），因此可以认为这一层对时间复杂度的贡献为\(O(2^{2n})\)，总共\(n\)层所以总时间复杂度为\(O(n2^{2n})\)。 Code 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;cassert&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;unordered_map&gt;const int maxn = 15;const int maxno = 1030;int siz[maxno]; int n;void dfs(int x) &#123; if(x &gt;= (1 &lt;&lt; (n - 1))) &#123; siz[x] = 1; return; &#125; dfs(x &lt;&lt; 1); dfs(x &lt;&lt; 1 | 1); siz[x] += siz[x &lt;&lt; 1]; siz[x] += siz[x &lt;&lt; 1 | 1];&#125;int w[maxno][maxn], f[maxno][maxn];std::unordered_map&lt;int, int&gt; d[maxno][maxno];int dp(int i, int j, int s) &#123; if(d[i][j].count(s)) return d[i][j][s]; int ans = 0; if(i &gt;= (1 &lt;&lt; (n - 1))) &#123; assert(j == 1 || j == 0); int ns = s; for(int k = 1; k &lt;= n - 1; k ++) &#123; if(j == 1 &amp;&amp; (ns % 2 == 1)) &#123; ans += w[i][k]; &#125; else if(j == 0 &amp;&amp; (ns % 2 == 0)) &#123; ans += f[i][k]; &#125; ns /= 2; &#125; &#125; else &#123; int s1 = s &lt;&lt; 1, s2 = s &lt;&lt; 1 | 1; for(int k = std::max(0, j - siz[i &lt;&lt; 1 | 1]); k &lt;= std::min(j, siz[i &lt;&lt; 1]); k ++) &#123; ans = std::max(ans, dp(i &lt;&lt; 1, k, s1) + dp(i &lt;&lt; 1 | 1, j - k, s1)); ans = std::max(ans, dp(i &lt;&lt; 1, k, s2) + dp(i &lt;&lt; 1 | 1, j - k, s2)); &#125; &#125; d[i][j][s] = ans; return ans;&#125;int main() &#123; int m; scanf("%d%d", &amp;n, &amp;m); for(int i = (1 &lt;&lt; (n - 1)); i &lt; (1 &lt;&lt; n); i ++) &#123; for(int j = 1; j &lt;= n - 1; j ++) &#123; scanf("%d", &amp;w[i][j]); &#125; &#125; for(int i = (1 &lt;&lt; (n - 1)); i &lt; (1 &lt;&lt; n); i ++) &#123; for(int j = 1; j &lt;= n - 1; j ++) &#123; scanf("%d", &amp;f[i][j]); &#125; &#125; dfs(1); int ans = 0; for(int i = m; i &gt;= 0; i --) &#123; ans = std::max(ans, dp(1, i, 0)); &#125; printf("%d\n", ans); return 0;&#125;]]></content>
@@ -47,8 +60,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>DP</tag>
         <tag>容斥原理</tag>
+        <tag>DP</tag>
         <tag>HDU</tag>
         <tag>MIN-MAX容斥</tag>
       </tags>
@@ -86,9 +99,9 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>LibreOJ</tag>
-        <tag>生成函数</tag>
         <tag>多项式卷积</tag>
+        <tag>生成函数</tag>
+        <tag>LibreOJ</tag>
         <tag>清华集训</tag>
         <tag>Prufer序列</tag>
         <tag>斯特林数</tag>
@@ -104,12 +117,12 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>DP</tag>
         <tag>容斥原理</tag>
-        <tag>期望DP</tag>
-        <tag>概率与期望</tag>
+        <tag>DP</tag>
         <tag>MIN-MAX容斥</tag>
+        <tag>概率与期望</tag>
         <tag>LibreOJ</tag>
+        <tag>期望DP</tag>
         <tag>PKUWC</tag>
         <tag>树上DP</tag>
         <tag>高斯消元</tag>
@@ -125,9 +138,9 @@
       <tags>
         <tag>容斥原理</tag>
         <tag>概率与期望</tag>
-        <tag>LibreOJ</tag>
-        <tag>生成函数</tag>
         <tag>多项式卷积</tag>
+        <tag>生成函数</tag>
+        <tag>LibreOJ</tag>
         <tag>分治FFT</tag>
         <tag>PKUWC</tag>
       </tags>
@@ -153,9 +166,9 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>期望DP</tag>
         <tag>LibreOJ</tag>
         <tag>HNOI</tag>
+        <tag>期望DP</tag>
       </tags>
   </entry>
   <entry>
@@ -182,8 +195,8 @@
       <tags>
         <tag>DP</tag>
         <tag>Codeforces</tag>
-        <tag>wqs二分</tag>
         <tag>期望DP</tag>
+        <tag>wqs二分</tag>
       </tags>
   </entry>
   <entry>
@@ -285,8 +298,8 @@
       </categories>
       <tags>
         <tag>BZOJ</tag>
-        <tag>BSGS</tag>
         <tag>原根</tag>
+        <tag>BSGS</tag>
         <tag>指标</tag>
         <tag>同余方程</tag>
       </tags>
@@ -316,10 +329,10 @@
       </categories>
       <tags>
         <tag>贪心</tag>
-        <tag>原根</tag>
         <tag>NowCoder</tag>
         <tag>子序列自动机</tag>
         <tag>位运算</tag>
+        <tag>原根</tag>
         <tag>概率与期望</tag>
       </tags>
   </entry>
