@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[AGC013E Placing Squares]]></title>
+    <url>%2F2018%2F08%2F13%2Fagc013E%2F</url>
+    <content type="text"><![CDATA[Description 对于\(1\ldots n\)，你需要将其划分为若干段。并且有\(m\)个限制，其中第\(i\)个\(X_i\)的含义是\(X_i\)和\(X_i+1\)不能划分在同一段里。 我们称一种方案的权值为所有段长度的平方的积，求所有合法划分方案的权值。 \(1\leq n\leq 10^9, 0\leq m\leq 10^5, 1\leq X_1&lt;X_2&lt;\ldots &lt; X_m &lt; n\)。 Solution 数数难，难于上青天！ 一个段长度的平方是一个很毒瘤的东西。但是注意到我们可以把这个东西转化为在该段放两个不一样的球（可以放到一块）的方案数，因此搞成了一个很通常的DP…… 接下来的话矩乘优化一下就好了。顺便注意一下在隔断的地方不能拆段，所以有两种转移方程。 Code 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;vector&gt;using ll = long long;const ll ha = 1000000007LL;typedef ll Mat[3][3];void mat_mul(Mat A, Mat B, int n, int m, int p, Mat &amp;res) &#123; static Mat C; memset(C, 0, sizeof(C)); for(int i = 0; i &lt; n; i ++) &#123; for(int j = 0; j &lt; p; j ++) &#123; for(int k = 0; k &lt; m; k ++) &#123; C[i][j] += A[i][k] * B[k][j] % ha; if(C[i][j] &gt;= ha) C[i][j] -= ha; &#125; &#125; &#125; memcpy(res, C, sizeof(C));&#125;void mat_pow(Mat A, int n, int c, Mat &amp;res) &#123; static Mat C, a; memset(C, 0, sizeof(C)); for(int i = 0; i &lt; n; i ++) C[i][i] = 1; memcpy(a, A, sizeof(a)); while(c) &#123; if(1 &amp; c) mat_mul(C, a, n, n, n, C); mat_mul(a, a, n, n, n, a); c &gt;&gt;= 1; &#125; memcpy(res, C, sizeof(C));&#125;Mat A, C, T, B;std::vector&lt;int&gt; V;int main() &#123; int n, m; scanf("%d%d", &amp;n, &amp;m); for(int i = 1; i &lt;= m; i ++) &#123; int x; scanf("%d", &amp;x); V.push_back(x); &#125; V.push_back(n); int las = 0; A[0][0] = 1; A[1][0] = 2; A[1][1] = 1; A[2][0] = A[2][1] = A[2][2] = 1; C[0][0] = C[0][2] = C[1][1] = C[2][2] = 1; mat_mul(C, A, 3, 3, 3, C); ll ans = 1LL; B[0][0] = 1; B[1][0] = B[2][0] = 0; for(int x : V) &#123; mat_pow(C, 3, x - las - 1, T); mat_mul(A, T, 3, 3, 3, T); mat_mul(T, B, 3, 3, 1, B); las = x; &#125; printf("%lld\n", B[2][0]); return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>DP</tag>
+        <tag>AtCoder</tag>
+        <tag>矩阵乘法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[LibreOJ 2086 「NOI2016」区间]]></title>
     <url>%2F2018%2F08%2F12%2Floj2086%2F</url>
     <content type="text"><![CDATA[Description 给你\(n\)个闭区间（第\(i\)个为\([l_i, r_i]\)），要求你选出其中\(m\)个，使得他们的交集非空。 你的得分是选出区间中最长的和最短的的长度差。请求出最优解，无解输出\(-1\)。 \(m\leq 200000, 1\leq m\leq n\leq 500000, 0\leq l_i\leq r_i\leq 10^9\)。 Solution 我们首先先把区间按长度排个序再做吧…… 然后最大和最小的差，要素察觉（意味深）。two pointers，启动！ 我们直接开一棵线段树，来维护每个点在当前使用区间被覆盖了多少次。在全局最大值不小于\(m\)时，开始一边更新答案一遍移动左端点。注意不合法的区间在这里一定比合法的区间答案更劣，所以直接在移动之前无脑更新答案即可。 Code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;climits&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;const int maxn = 500005;const int maxno = maxn &lt;&lt; 3;int maxv[maxno], addv[maxno];void maintain(int o) &#123; maxv[o] = std::max(maxv[o &lt;&lt; 1], maxv[o &lt;&lt; 1 | 1]);&#125;void paint(int o, int v) &#123; addv[o] += v; maxv[o] += v;&#125;void pushdown(int o) &#123; if(addv[o] != 0) &#123; paint(o &lt;&lt; 1, addv[o]); paint(o &lt;&lt; 1 | 1, addv[o]); addv[o] = 0; &#125;&#125;void update(int o, int L, int R, int ql, int qr, int v) &#123; if(ql &lt;= L &amp;&amp; R &lt;= qr) &#123; paint(o, v); &#125; else &#123; int M = (L + R) / 2; pushdown(o); if(ql &lt;= M) update(o &lt;&lt; 1, L, M, ql, qr, v); if(qr &gt; M) update(o &lt;&lt; 1 | 1, M + 1, R, ql, qr, v); maintain(o); &#125;&#125;struct Seg &#123; int l, r, len; bool operator &lt;(const Seg &amp;res) const &#123; return len &lt; res.len; &#125;&#125;;int n, lsiz; int A2[maxn &lt;&lt; 2];void desc() &#123; std::sort(A2 + 1, A2 + 1 + 2 * n); lsiz = std::unique(A2 + 1, A2 + 1 + 2 * n) - A2 - 1;&#125;int query(int x) &#123; return (std::lower_bound(A2 + 1, A2 + 1 + lsiz, x) - A2);&#125;Seg s[maxn];int main() &#123; int m; scanf("%d%d", &amp;n, &amp;m); for(int i = 1; i &lt;= n; i ++) &#123; int l, r; scanf("%d%d", &amp;l, &amp;r); s[i].l = l; s[i].r = r; s[i].len = r - l; A2[2 * i - 1] = l; A2[2 * i] = r; &#125; desc(); for(int i = 1; i &lt;= n; i ++) &#123; s[i].l = query(s[i].l); s[i].r = query(s[i].r); &#125; std::sort(s + 1, s + 1 + n); int l = 1; int ans = INT_MAX; for(int r = 1; r &lt;= n; r ++) &#123; int lp = s[r].l, rp = s[r].r; update(1, 1, lsiz, lp, rp, 1); while(maxv[1] &gt;= m) &#123; ans = std::min(ans, s[r].len - s[l].len); update(1, 1, lsiz, s[l].l, s[l].r, -1); l ++; &#125; &#125; if(ans == INT_MAX) ans = -1; printf("%d\n", ans); return 0;&#125;]]></content>
@@ -99,9 +112,9 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>多项式卷积</tag>
         <tag>生成函数</tag>
         <tag>LibreOJ</tag>
+        <tag>多项式卷积</tag>
         <tag>清华集训</tag>
         <tag>Prufer序列</tag>
         <tag>斯特林数</tag>
@@ -119,10 +132,10 @@
       <tags>
         <tag>容斥原理</tag>
         <tag>DP</tag>
-        <tag>MIN-MAX容斥</tag>
-        <tag>概率与期望</tag>
-        <tag>LibreOJ</tag>
         <tag>期望DP</tag>
+        <tag>概率与期望</tag>
+        <tag>MIN-MAX容斥</tag>
+        <tag>LibreOJ</tag>
         <tag>PKUWC</tag>
         <tag>树上DP</tag>
         <tag>高斯消元</tag>
@@ -138,9 +151,9 @@
       <tags>
         <tag>容斥原理</tag>
         <tag>概率与期望</tag>
-        <tag>多项式卷积</tag>
         <tag>生成函数</tag>
         <tag>LibreOJ</tag>
+        <tag>多项式卷积</tag>
         <tag>分治FFT</tag>
         <tag>PKUWC</tag>
       </tags>
@@ -166,9 +179,9 @@
       </categories>
       <tags>
         <tag>DP</tag>
+        <tag>期望DP</tag>
         <tag>LibreOJ</tag>
         <tag>HNOI</tag>
-        <tag>期望DP</tag>
       </tags>
   </entry>
   <entry>
@@ -195,8 +208,8 @@
       <tags>
         <tag>DP</tag>
         <tag>Codeforces</tag>
-        <tag>期望DP</tag>
         <tag>wqs二分</tag>
+        <tag>期望DP</tag>
       </tags>
   </entry>
   <entry>
@@ -271,8 +284,8 @@
       </categories>
       <tags>
         <tag>BZOJ</tag>
-        <tag>线性基</tag>
         <tag>容斥原理</tag>
+        <tag>线性基</tag>
       </tags>
   </entry>
   <entry>
@@ -283,8 +296,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>Min_25筛</tag>
         <tag>洲阁筛</tag>
+        <tag>Min_25筛</tag>
         <tag>LibreOJ</tag>
         <tag>山东省队集训</tag>
       </tags>
@@ -298,8 +311,8 @@
       </categories>
       <tags>
         <tag>BZOJ</tag>
-        <tag>原根</tag>
         <tag>BSGS</tag>
+        <tag>原根</tag>
         <tag>指标</tag>
         <tag>同余方程</tag>
       </tags>
@@ -328,11 +341,11 @@
         <category>比赛</category>
       </categories>
       <tags>
+        <tag>原根</tag>
         <tag>贪心</tag>
         <tag>NowCoder</tag>
         <tag>子序列自动机</tag>
         <tag>位运算</tag>
-        <tag>原根</tag>
         <tag>概率与期望</tag>
       </tags>
   </entry>
@@ -405,10 +418,10 @@
       </categories>
       <tags>
         <tag>NOI</tag>
-        <tag>洲阁筛</tag>
         <tag>UOJ</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
+        <tag>洲阁筛</tag>
         <tag>杜教筛</tag>
       </tags>
   </entry>
@@ -448,8 +461,8 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>Min_25筛</tag>
         <tag>洲阁筛</tag>
+        <tag>Min_25筛</tag>
         <tag>SPOJ</tag>
       </tags>
   </entry>

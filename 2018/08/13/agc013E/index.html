@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="DP,AtCoder,矩阵乘法," />
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="danihao123&apos;s Blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="danihao123&#39;s Blog">
-<meta property="og:url" content="https://yahyachan.github.io/tags/斯特林数/index.html">
+<meta name="description" content="Description 对于\(1\ldots n\)，你需要将其划分为若干段。并且有\(m\)个限制，其中第\(i\)个\(X_i\)的含义是\(X_i\)和\(X_i+1\)不能划分在同一段里。 我们称一种方案的权值为所有段长度的平方的积，求所有合法划分方案的权值。 \(1\leq n\leq 10^9, 0\leq m\leq 10^5, 1\leq X_1&amp;lt;X_2&amp;lt;\ld">
+<meta name="keywords" content="DP,AtCoder,矩阵乘法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AGC013E Placing Squares">
+<meta property="og:url" content="https://yahyachan.github.io/2018/08/13/agc013E/index.html">
 <meta property="og:site_name" content="danihao123&#39;s Blog">
-<meta property="og:description" content="danihao123&apos;s Blog">
+<meta property="og:description" content="Description 对于\(1\ldots n\)，你需要将其划分为若干段。并且有\(m\)个限制，其中第\(i\)个\(X_i\)的含义是\(X_i\)和\(X_i+1\)不能划分在同一段里。 我们称一种方案的权值为所有段长度的平方的积，求所有合法划分方案的权值。 \(1\leq n\leq 10^9, 0\leq m\leq 10^5, 1\leq X_1&amp;lt;X_2&amp;lt;\ld">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-13T09:55:32.808Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="danihao123&#39;s Blog">
-<meta name="twitter:description" content="danihao123&apos;s Blog">
+<meta name="twitter:title" content="AGC013E Placing Squares">
+<meta name="twitter:description" content="Description 对于\(1\ldots n\)，你需要将其划分为若干段。并且有\(m\)个限制，其中第\(i\)个\(X_i\)的含义是\(X_i\)和\(X_i+1\)不能划分在同一段里。 我们称一种方案的权值为所有段长度的平方的积，求所有合法划分方案的权值。 \(1\leq n\leq 10^9, 0\leq m\leq 10^5, 1\leq X_1&amp;lt;X_2&amp;lt;\ld">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yahyachan.github.io/tags/斯特林数/"/>
+  <link rel="canonical" href="https://yahyachan.github.io/2018/08/13/agc013E/"/>
 
 
 
 
 
-  <title>标签: 斯特林数 | danihao123's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>AGC013E Placing Squares | danihao123's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -143,7 +145,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -281,54 +283,201 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>斯特林数<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yahyachan.github.io/2018/08/13/agc013E/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="danihao123">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://danihao123.is-programmer.com/user_files/danihao123/config/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="danihao123's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/08/10/loj2320/" itemprop="url">
-              
-                <span itemprop="name">LibreOJ 2320 「清华集训 2017」生成树计数</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">AGC013E Placing Squares</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-10T10:26:26+08:00"
-              content="2018-08-10" >
-          08-10
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-13T17:46:59+08:00">
+                2018-08-13
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/题解/" itemprop="url" rel="index">
+                    <span itemprop="name">题解</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="description">Description</h2>
+<p>对于<span class="math inline">\(1\ldots n\)</span>，你需要将其划分为若干段。并且有<span class="math inline">\(m\)</span>个限制，其中第<span class="math inline">\(i\)</span>个<span class="math inline">\(X_i\)</span>的含义是<span class="math inline">\(X_i\)</span>和<span class="math inline">\(X_i+1\)</span>不能划分在同一段里。</p>
+<p>我们称一种方案的权值为所有段长度的平方的积，求所有合法划分方案的权值。</p>
+<p><span class="math inline">\(1\leq n\leq 10^9, 0\leq m\leq 10^5, 1\leq X_1&lt;X_2&lt;\ldots &lt; X_m &lt; n\)</span>。</p>
+<a id="more"></a>
+<h2 id="solution">Solution</h2>
+<p>数数难，难于上青天！</p>
+<p>一个段长度的平方是一个很毒瘤的东西。但是注意到我们可以把这个东西转化为在该段放两个不一样的球（可以放到一块）的方案数，因此搞成了一个很通常的DP……</p>
+<p>接下来的话矩乘优化一下就好了。顺便注意一下在隔断的地方不能拆段，所以有两种转移方程。</p>
+<h2 id="code">Code</h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utility&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"><span class="keyword">const</span> ll ha = <span class="number">1000000007L</span>L;</span><br><span class="line"><span class="keyword">typedef</span> ll Mat[<span class="number">3</span>][<span class="number">3</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mat_mul</span><span class="params">(Mat A, Mat B, <span class="keyword">int</span> n, <span class="keyword">int</span> m, <span class="keyword">int</span> p, Mat &amp;res)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> Mat C; <span class="built_in">memset</span>(C, <span class="number">0</span>, <span class="keyword">sizeof</span>(C));</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; p; j ++) &#123;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; m; k ++) &#123;</span><br><span class="line">        C[i][j] += A[i][k] * B[k][j] % ha;</span><br><span class="line">        <span class="keyword">if</span>(C[i][j] &gt;= ha) C[i][j] -= ha;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">memcpy</span>(res, C, <span class="keyword">sizeof</span>(C));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mat_pow</span><span class="params">(Mat A, <span class="keyword">int</span> n, <span class="keyword">int</span> c, Mat &amp;res)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> Mat C, a; <span class="built_in">memset</span>(C, <span class="number">0</span>, <span class="keyword">sizeof</span>(C));</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++) C[i][i] = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">memcpy</span>(a, A, <span class="keyword">sizeof</span>(a));</span><br><span class="line">  <span class="keyword">while</span>(c) &#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="number">1</span> &amp; c) mat_mul(C, a, n, n, n, C);</span><br><span class="line">    mat_mul(a, a, n, n, n, a); c &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">memcpy</span>(res, C, <span class="keyword">sizeof</span>(C));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Mat A, C, T, B;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; V;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> n, m; <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;n, &amp;m);</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i ++) &#123;</span><br><span class="line">    <span class="keyword">int</span> x; <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;x);</span><br><span class="line">    V.push_back(x);</span><br><span class="line">  &#125;</span><br><span class="line">  V.push_back(n);</span><br><span class="line">  <span class="keyword">int</span> las = <span class="number">0</span>;</span><br><span class="line">  A[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">  A[<span class="number">1</span>][<span class="number">0</span>] = <span class="number">2</span>; A[<span class="number">1</span>][<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">  A[<span class="number">2</span>][<span class="number">0</span>] = A[<span class="number">2</span>][<span class="number">1</span>] = A[<span class="number">2</span>][<span class="number">2</span>] = <span class="number">1</span>;</span><br><span class="line">  C[<span class="number">0</span>][<span class="number">0</span>] = C[<span class="number">0</span>][<span class="number">2</span>] = C[<span class="number">1</span>][<span class="number">1</span>] = C[<span class="number">2</span>][<span class="number">2</span>] = <span class="number">1</span>;</span><br><span class="line">  mat_mul(C, A, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, C);</span><br><span class="line">  ll ans = <span class="number">1L</span>L;</span><br><span class="line">  B[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>; B[<span class="number">1</span>][<span class="number">0</span>] = B[<span class="number">2</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> x : V) &#123;</span><br><span class="line">    mat_pow(C, <span class="number">3</span>, x - las - <span class="number">1</span>, T);</span><br><span class="line">    mat_mul(A, T, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, T);</span><br><span class="line">    mat_mul(T, B, <span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>, B);</span><br><span class="line">    las = x;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, B[<span class="number">2</span>][<span class="number">0</span>]);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    danihao123
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yahyachan.github.io/2018/08/13/agc013E/" title="AGC013E Placing Squares">https://yahyachan.github.io/2018/08/13/agc013E/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DP/" rel="tag"># DP</a>
+          
+            <a href="/tags/AtCoder/" rel="tag"># AtCoder</a>
+          
+            <a href="/tags/矩阵乘法/" rel="tag"># 矩阵乘法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/12/loj2086/" rel="next" title="LibreOJ 2086 「NOI2016」区间">
+                <i class="fa fa-chevron-left"></i> LibreOJ 2086 「NOI2016」区间
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -336,6 +485,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODYwMi8xNTEzMA"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -356,8 +514,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -457,6 +624,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#description"><span class="nav-number">1.</span> <span class="nav-text">Description</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solution"><span class="nav-number">2.</span> <span class="nav-text">Solution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#code"><span class="nav-number">3.</span> <span class="nav-text">Code</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -597,6 +780,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -625,6 +812,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
