@@ -112,14 +112,14 @@
         <category>题解</category>
       </categories>
       <tags>
+        <tag>多项式卷积</tag>
         <tag>生成函数</tag>
         <tag>LibreOJ</tag>
-        <tag>多项式卷积</tag>
+        <tag>分治FFT</tag>
         <tag>清华集训</tag>
         <tag>Prufer序列</tag>
         <tag>斯特林数</tag>
         <tag>指数型生成函数</tag>
-        <tag>分治FFT</tag>
       </tags>
   </entry>
   <entry>
@@ -133,8 +133,8 @@
         <tag>容斥原理</tag>
         <tag>DP</tag>
         <tag>期望DP</tag>
-        <tag>概率与期望</tag>
         <tag>MIN-MAX容斥</tag>
+        <tag>概率与期望</tag>
         <tag>LibreOJ</tag>
         <tag>PKUWC</tag>
         <tag>树上DP</tag>
@@ -151,11 +151,11 @@
       <tags>
         <tag>容斥原理</tag>
         <tag>概率与期望</tag>
+        <tag>多项式卷积</tag>
         <tag>生成函数</tag>
         <tag>LibreOJ</tag>
-        <tag>多项式卷积</tag>
-        <tag>分治FFT</tag>
         <tag>PKUWC</tag>
+        <tag>分治FFT</tag>
       </tags>
   </entry>
   <entry>
