@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[SRM686 Div1 600 CyclesNumber]]></title>
+    <url>%2F2018%2F08%2F20%2FTC14199%2F</url>
+    <content type="text"><![CDATA[Description 求出所有长度为\(n\)的置换的轮换数之和的\(m\)次方，对\(1000000007\)取模。 多组（\(1\ldots 300\)）询问，\(1\leq n\leq 10^5, 0\leq m\leq 300\)。 Solution 我们设\(x_i\)为置换\(i\)是否出现，那么答案就是\((\sum x_i)^m\)。 我们用第二类斯特林数把这个式子展开成下降幂，就得到了：\(\sum_{k = 0}^m\begin{Bmatrix}m\\k\end{Bmatrix}k!\binom{\sum x_i}{k}\)。换言之所有有某\(k\)个轮换同时出现的方案数会对答案做出\(\begin{Bmatrix}m\\k\end{Bmatrix}k!\)的贡献。 那么考虑怎么计算所有有某\(k\)个轮换同时出现的方案数。我们考虑怎么去去除不需要的轮换，注意到我们可以加上一个虚点\(n + 1\)，然后把不需要的环顺次从右边断开，然后再顺次连上，最后和\(n + 1\)连上，这样的话我们就把这个方案数转化成了\(\begin{bmatrix}n + 1\\ k + 1\end{bmatrix}\)。 Code 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667#include &lt;vector&gt;#include &lt;list&gt;#include &lt;map&gt;#include &lt;set&gt;#include &lt;deque&gt;#include &lt;stack&gt;#include &lt;bitset&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;numeric&gt;#include &lt;utility&gt;#include &lt;sstream&gt;#include &lt;iostream&gt;#include &lt;iomanip&gt;#include &lt;cstdio&gt;#include &lt;cmath&gt;#include &lt;cstdlib&gt;#include &lt;ctime&gt;typedef long long ll;const ll ha = 1000000007LL;using namespace std;int s[100002][302], S[301][301], fac[302];void process() &#123; fac[0] = 1; for(int i = 1; i &lt;= 301; i ++) &#123; fac[i] = (ll)fac[i - 1] * (ll)i % ha; &#125; s[0][0] = 1; for(int i = 1; i &lt;= 100001; i ++) &#123; s[i][0] = 0; if(i &lt; 302) s[i][i] = 1; for(int j = 1; j &lt; min(i, 302); j ++) &#123; s[i][j] = s[i - 1][j - 1]; s[i][j] += (ll)s[i - 1][j] * (ll(i - 1)) % ha; if(s[i][j] &gt;= ha) s[i][j] -= ha; &#125; &#125; S[0][0] = 1; for(int i = 1; i &lt;= 300; i ++) &#123; S[i][1] = 1; if(i &lt; 301) S[i][i] = 1; for(int j = 2; j &lt; min(i, 301); j ++) &#123; S[i][j] = S[i - 1][j - 1]; S[i][j] += (ll(S[i - 1][j])) * (ll(j)) % ha; if(S[i][j] &gt;= ha) S[i][j] -= ha; &#125; &#125;&#125;class CyclesNumber &#123;public: vector &lt;int&gt; getExpectation(vector &lt;int&gt;, vector &lt;int&gt;);&#125;;vector &lt;int&gt; CyclesNumber::getExpectation(vector &lt;int&gt; n, vector &lt;int&gt; m) &#123; process(); vector&lt;int&gt; ret; for(int i = 0; i &lt; n.size(); i ++) &#123; int a = n[i], b = m[i]; ll ans = 0; for(int j = 0; j &lt;= b; j ++) &#123; ll delta = (ll)fac[j] * (ll)S[b][j] % ha; delta = delta * (ll)s[a + 1][j + 1] % ha; ans = (ans + delta) % ha; &#125; ret.push_back((int)ans); &#125; return ret;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>斯特林数</tag>
+        <tag>TopCoder</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[HDU 4372 Count the Buildings]]></title>
     <url>%2F2018%2F08%2F18%2FHDU4372%2F</url>
     <content type="text"><![CDATA[Description 有一条有\(n\)栋建筑物的大街，每栋建筑物高度两两不同且都是\([1, n]\)中的正整数。 我们知道从最左侧向右看，能看到\(x\)栋大楼，反过来能看到\(y\)座大楼，求可能的高度方案数。 \(T\)组询问，\(T\leq 10^5, 0&lt;n,x,y\leq 2000\)。 Solution 我们不妨将街道从最高那栋楼（即高为\(n\)的楼）拆开，左右两边分别考虑。 我们不妨将一个点往右延伸直到出现到大于它的点的时候的区间称为一个块，那么我们发现\(n\)左侧有\(x - 1\)个块，反过来看的话\(n\)右侧有\(y - 1\)个块，各个块的最大值在块的最左侧。因此一旦我们确定了一个大小为\(s\)的块的高度组成，那么块的方案数就是\((s - 1)!\)，注意到这个东西就是\(s\)个点的环的数量，因此给两边分块的方案数就等价于将\(n - 1\)分成\(x + y - 2\)个圆排列，换言之方案数就是\(\begin{bmatrix}n - 1\\ x+ y - 2\end{bmatrix}\)。 然后还有一点就是这若干个块一定有\(x - 1\)个分布在左边，剩下的分布在右边，并且分布一定是按照块里最大的元素单调排列的，因此方案数还要乘上\(\binom{x + y - 2}{x - 1}\)。 Code 123456789101112131415161718192021222324252627282930313233343536373839404142#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;typedef long long ll;const ll ha = 1000000007LL;ll C[2005][2005], s[2005][2005];void process() &#123; int n = 2004; C[0][0] = 1; for(int i = 1; i &lt;= n; i ++) &#123; C[i][0] = C[i][i] = 1; for(int j = 1; j &lt; i; j ++) &#123; C[i][j] = (C[i - 1][j] + C[i - 1][j - 1]) % ha; &#125; &#125; s[0][0] = 1; for(int i = 1; i &lt;= n; i ++) &#123; s[i][0] = 0; s[i][i] = 1; for(int j = 1; j &lt; i; j ++) &#123; s[i][j] = (s[i - 1][j - 1] + (ll(i - 1)) * s[i - 1][j] % ha) % ha; &#125; &#125;&#125;int main() &#123; process(); int T; scanf("%d", &amp;T); while(T --) &#123; int n, x, y; scanf("%d%d%d", &amp;n, &amp;x, &amp;y); if(x + y - 1 &gt; n) &#123; puts("0"); &#125; else &#123; ll ret = s[n - 1][x + y - 2]; ret = ret * C[x + y - 2][x - 1] % ha; printf("%lld\n", ret); &#125; &#125; return 0;&#125;]]></content>
@@ -48,8 +60,8 @@
       </categories>
       <tags>
         <tag>多项式卷积</tag>
-        <tag>LibreOJ</tag>
         <tag>生成函数</tag>
+        <tag>LibreOJ</tag>
         <tag>广义二项式定理</tag>
       </tags>
   </entry>
@@ -61,8 +73,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>CS Academy</tag>
         <tag>DP</tag>
+        <tag>CS Academy</tag>
         <tag>wqs二分</tag>
       </tags>
   </entry>
@@ -139,8 +151,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>容斥原理</tag>
         <tag>DP</tag>
+        <tag>容斥原理</tag>
         <tag>HDU</tag>
         <tag>MIN-MAX容斥</tag>
       </tags>
@@ -180,8 +192,8 @@
       <tags>
         <tag>斯特林数</tag>
         <tag>多项式卷积</tag>
-        <tag>LibreOJ</tag>
         <tag>生成函数</tag>
+        <tag>LibreOJ</tag>
         <tag>清华集训</tag>
         <tag>Prufer序列</tag>
         <tag>指数型生成函数</tag>
@@ -196,8 +208,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>容斥原理</tag>
         <tag>DP</tag>
+        <tag>容斥原理</tag>
         <tag>期望DP</tag>
         <tag>MIN-MAX容斥</tag>
         <tag>概率与期望</tag>
@@ -216,10 +228,10 @@
       </categories>
       <tags>
         <tag>容斥原理</tag>
-        <tag>概率与期望</tag>
         <tag>多项式卷积</tag>
-        <tag>LibreOJ</tag>
+        <tag>概率与期望</tag>
         <tag>生成函数</tag>
+        <tag>LibreOJ</tag>
         <tag>分治FFT</tag>
         <tag>PKUWC</tag>
       </tags>
@@ -350,8 +362,8 @@
       </categories>
       <tags>
         <tag>BZOJ</tag>
-        <tag>容斥原理</tag>
         <tag>线性基</tag>
+        <tag>容斥原理</tag>
       </tags>
   </entry>
   <entry>
