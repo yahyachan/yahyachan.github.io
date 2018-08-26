@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[LibreOJ 2091 「ZJOI2016」小星星]]></title>
+    <url>%2F2018%2F08%2F26%2Floj2091%2F</url>
+    <content type="text"><![CDATA[Description 给定一棵\(n\)个点的树\(T\)，以及一个\(n\)个点\(m\)条边的简单无向图\(G\)，要求你将\(T\)“镶嵌”在\(G\)中（即求一个两者点集的双射，使得\(T\)中的边能对应成\(G\)中的边），求方案数。 \(n\leq 17\)。 Solution 先考虑一个树形DP……\(f_{i, j}\)表示树中的\(i\)对应图中的\(j\)时，\(i\)所在子树的对应方案数，转移的话就枚举每个儿子对应哪个点就行了。很显然这是一个时间复杂度\(O(n^3)\)的DP，但是很不幸这个算法是可能搞出来多个点对应到一个点的情况…… 那么我们考虑容斥，注意到发生重复等价于有图内的点没法被对应，因此问题就转化为图内的任何点都要被对应。我们考虑当对应到的图的点集事全集的时候，至少有零个图内的点无法被对应；如果说对应的图的点集大小为\(n - 1\)时，至少有一个图内的点无法被对应；大小为\(n - 2\)时，至少有两个无法被对应……以此类推。我们最后想要求的是恰好零个点没被对应，这就是一个经典容斥了…… Code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;cassert&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;vector&gt;#include &lt;forward_list&gt;const int maxn = 20;bool G[maxn][maxn];std::vector&lt;int&gt; T[maxn];void ins_edge(int u, int v) &#123; T[u].push_back(v); T[v].push_back(u);&#125;using ll = long long;ll f[maxn][maxn]; int n;bool rec[maxn];void dp(int u, int fa) &#123; for(const int &amp;v : T[u]) &#123; if(v != fa) dp(v, u); &#125; for(int i = 1; i &lt;= n; i ++) &#123; if(rec[i]) &#123; f[u][i] = 1; &#125; else &#123; f[u][i] = 0; &#125; &#125; for(int i = 1; i &lt;= n; i ++) &#123; if(!rec[i]) continue; for(const int &amp;v : T[u]) &#123; if(v != fa) &#123; ll s = 0; for(int j = 1; j &lt;= n; j ++) &#123; if(G[i][j]) s += f[v][j]; &#125; f[u][i] *= s; &#125; &#125; &#125;&#125;ll calc() &#123; ll ans = 0; for(int s = 2; s &lt; (1 &lt;&lt; n); s ++) &#123; if((s &amp; (s - 1)) == 0) continue; memset(rec, 0, sizeof(rec)); int sz = 0; for(int i = 1; i &lt;= n; i ++) &#123; if((1 &lt;&lt; (i - 1)) &amp; s) &#123; sz ++; rec[i] = true; &#125; &#125; dp(1, -1); ll th = 0; for(int i = 1; i &lt;= n; i ++) &#123; th += f[1][i]; &#125; if(1 &amp; (n - sz)) th = -th; ans += th; &#125; return ans;&#125;int main() &#123; int m; scanf("%d%d", &amp;n, &amp;m); if(n == 1) &#123; puts("1"); return 0; &#125; for(int i = 1; i &lt;= m; i ++) &#123; int u, v; scanf("%d%d", &amp;u, &amp;v); G[u][v] = G[v][u] = true; &#125; for(int i = 1; i &lt;= n - 1; i ++) &#123; int u, v; scanf("%d%d", &amp;u, &amp;v); ins_edge(u, v); &#125; printf("%lld\n", calc()); return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>容斥原理</tag>
+        <tag>DP</tag>
+        <tag>ZJOI</tag>
+        <tag>树形DP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[ARC076F Exhausted?]]></title>
     <url>%2F2018%2F08%2F21%2Farc076F%2F</url>
     <content type="text"><![CDATA[Description 有\(n\)个人和\(m\)张椅子，第\(i\)个人想要坐编号在\([1, L_i]\cup [R_i, m]\)中的椅子。请合理安排，使得坐不上椅子的人尽可能少（你可以让一个人不坐椅子）。 \(1\leq n, m\leq 200000, 0\leq L_i&lt;R_i\leq m + 1\)。 Solution Hall定理有这么一个拓展：对于二分图\((S\cup T, E)\)，其最大匹配数为\(|S| - \max\{|S&#39;| - |\Gamma(S&#39;)|(S&#39;\subseteq S)\}\)，其中\(\Gamma(A)\)表示\(T\)中有多少点和\(A\)中的点有边相连。 那么考虑应用到这个题上……最后\(\Gamma(S&#39;)\)的形态肯定是\([1, l]\cup [r, m]\)这样，\(\Gamma(S&#39;)\)确定之后\(S&#39;\)中所有的\(i\)都要满足\(L_i\leq l\land R_i\geq r\)。因此我们考虑从大到小枚举\(r\)，那么可以用的点就能确定了。然后再去考虑\(l\)的贡献，很显然可以用线段树维护一下…… Code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;iterator&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;vector&gt;const int maxn = 200005;const int maxno = maxn &lt;&lt; 2;int maxv[maxno], addv[maxno];void maintain(int o) &#123; maxv[o] = std::max(maxv[o &lt;&lt; 1], maxv[o &lt;&lt; 1 | 1]);&#125;void paint(int o, int v) &#123; maxv[o] += v; addv[o] += v;&#125;void pushdown(int o) &#123; if(addv[o] != 0) &#123; paint(o &lt;&lt; 1, addv[o]); paint(o &lt;&lt; 1 | 1, addv[o]); addv[o] = 0; &#125;&#125;void build_tree(int o, int L, int R) &#123; addv[o] = 0; if(L == R) &#123; maxv[o] = -L + 1; &#125; else &#123; int M = (L + R) / 2; build_tree(o &lt;&lt; 1, L, M); build_tree(o &lt;&lt; 1 | 1, M + 1, R); maintain(o); &#125;&#125;void update(int o, int L, int R, const int &amp;ql, const int &amp;qr, const int &amp;v) &#123; if(ql &lt;= L &amp;&amp; R &lt;= qr) &#123; paint(o, v); &#125; else &#123; int M = (L + R) / 2; pushdown(o); if(ql &lt;= M) update(o &lt;&lt; 1, L, M, ql, qr, v); if(qr &gt; M) update(o &lt;&lt; 1 | 1, M + 1, R, ql, qr, v); maintain(o); &#125;&#125;int query(int o, int L, int R, const int &amp;ql, const int &amp;qr) &#123; if(ql &lt;= L &amp;&amp; R &lt;= qr) &#123; return maxv[o]; &#125; else &#123; pushdown(o); int M = (L + R) / 2, ans = -0x7fffffff; if(ql &lt;= M) ans = std::max(ans, query(o &lt;&lt; 1, L, M, ql, qr)); if(qr &gt; M) ans = std::max(ans, query(o &lt;&lt; 1 | 1, M + 1, R, ql, qr)); return ans; &#125;&#125;std::vector&lt;int&gt; V[maxn];int main() &#123; int n, m; scanf("%d%d", &amp;n, &amp;m); build_tree(1, 1, m + 1); for(int i = 1; i &lt;= n; i ++) &#123; int L, R; scanf("%d%d", &amp;L, &amp;R); V[R].push_back(L); &#125; int ans = n - m; for(int i = m + 1; i &gt;= 1; i --) &#123; int bs = -(m - i + 1); for(int p : V[i]) &#123; update(1, 1, m + 1, p + 1, m + 1, 1); &#125; bs += query(1, 1, m + 1, 1, i - 1 + 1); ans = std::max(ans, bs); &#125; printf("%d\n", ans); return 0;&#125;]]></content>
@@ -9,8 +23,8 @@
       </categories>
       <tags>
         <tag>AtCoder</tag>
-        <tag>Hall定理</tag>
         <tag>线段树</tag>
+        <tag>Hall定理</tag>
       </tags>
   </entry>
   <entry>
@@ -58,10 +72,10 @@
         <category>题解</category>
       </categories>
       <tags>
+        <tag>原根</tag>
         <tag>单位根反演</tag>
         <tag>CS Academy</tag>
         <tag>行列式</tag>
-        <tag>原根</tag>
       </tags>
   </entry>
   <entry>
@@ -72,8 +86,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>多项式卷积</tag>
         <tag>LibreOJ</tag>
+        <tag>多项式卷积</tag>
         <tag>生成函数</tag>
         <tag>广义二项式定理</tag>
       </tags>
@@ -113,8 +127,8 @@
       </categories>
       <tags>
         <tag>NOI</tag>
-        <tag>线段树</tag>
         <tag>two pointers</tag>
+        <tag>线段树</tag>
       </tags>
   </entry>
   <entry>
@@ -127,8 +141,8 @@
       <tags>
         <tag>DP</tag>
         <tag>LibreOJ</tag>
-        <tag>JLOI</tag>
         <tag>树形DP</tag>
+        <tag>JLOI</tag>
       </tags>
   </entry>
   <entry>
@@ -164,8 +178,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>DP</tag>
         <tag>容斥原理</tag>
+        <tag>DP</tag>
         <tag>HDU</tag>
         <tag>MIN-MAX容斥</tag>
       </tags>
@@ -204,8 +218,8 @@
       </categories>
       <tags>
         <tag>斯特林数</tag>
-        <tag>多项式卷积</tag>
         <tag>LibreOJ</tag>
+        <tag>多项式卷积</tag>
         <tag>生成函数</tag>
         <tag>清华集训</tag>
         <tag>Prufer序列</tag>
@@ -221,8 +235,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>DP</tag>
         <tag>容斥原理</tag>
+        <tag>DP</tag>
         <tag>期望DP</tag>
         <tag>MIN-MAX容斥</tag>
         <tag>概率与期望</tag>
@@ -242,8 +256,8 @@
       <tags>
         <tag>容斥原理</tag>
         <tag>概率与期望</tag>
-        <tag>多项式卷积</tag>
         <tag>LibreOJ</tag>
+        <tag>多项式卷积</tag>
         <tag>生成函数</tag>
         <tag>分治FFT</tag>
         <tag>PKUWC</tag>
@@ -402,8 +416,8 @@
       </categories>
       <tags>
         <tag>BZOJ</tag>
-        <tag>原根</tag>
         <tag>BSGS</tag>
+        <tag>原根</tag>
         <tag>指标</tag>
         <tag>同余方程</tag>
       </tags>
@@ -450,6 +464,7 @@
       <tags>
         <tag>SPOJ</tag>
         <tag>LibreOJ</tag>
+        <tag>ZJOI</tag>
         <tag>TJOI</tag>
         <tag>后缀自动机</tag>
         <tag>后缀数组</tag>
@@ -458,7 +473,6 @@
         <tag>POJ</tag>
         <tag>SDOI</tag>
         <tag>HEOI</tag>
-        <tag>ZJOI</tag>
       </tags>
   </entry>
   <entry>
