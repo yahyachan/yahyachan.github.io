@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[AGC002F Leftmost Ball]]></title>
+    <url>%2F2018%2F08%2F28%2Fagc002F%2F</url>
+    <content type="text"><![CDATA[Description 有\(n\)种颜色（不包括白色）的球各\(k\)个，要求你将它们排成一列，然后将每种颜色最靠左的球染白。求最终序列的方案数。 \(1\leq n, k\leq 2000\)。 Solution 数数难，难如屑食汉（意味不明） 我们不妨将白球当做一种颜色来处理。那么我们发现只要满足最后恰有\(n\)个白球（这样其他球各有\(k - 1\)个），并且第\(i\)个白球之前出现了至多\(i - 1\)种非白颜色，那么序列就是合法的。 然后这样如果直接顺次DP的话，由于需要记所有球还有多少没用所以复杂度上天……我们考虑转换一下思路，在考虑一个颜色的时候就把该颜色所有球全安排上。那么设计状态\(f_{i, j}\)表示已经放了\(i\)个白球，然后用了\(j\)种颜色的情况（显然要求\(i\leq j\)）。那么转移的时候，我们限制不管放白球还是放非白球一定要放置在最靠左的空位（否则会记重），那么显然可以直接放一个白球，也可以放非白球，非白球的转移就是考虑放哪种球然后除了最靠左的球以外的\(k - 2\)个放哪就行了。转移方程如下： \[ f_{i, j}=f_{i - 1, j} + (n - j + 1)\binom{nk - i - (j - 1) * (k - 1) - 1}{k - 2}f_{i, j - 1} \] Description 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;const int maxn = 2005;using ll = long long;const ll ha = 1000000007LL;ll pow_mod(ll a, ll b) &#123; ll ans = 1, res = a; while(b) &#123; if(1LL &amp; b) ans = ans * res % ha; res = res * res % ha; b &gt;&gt;= 1; &#125; return ans;&#125;ll inv(ll x) &#123; return pow_mod(x, ha - 2LL);&#125;ll fac[maxn * maxn], ifac[maxn * maxn];void process() &#123; fac[0] = 1; const int n = 4000005; for(int i = 1; i &lt;= n; i ++) &#123; fac[i] = fac[i - 1] * (ll)i % ha; &#125; ifac[n] = inv(fac[n]); for(int i = n - 1; i &gt;= 0; i --) &#123; ifac[i] = ifac[i + 1] * (ll(i + 1)) % ha; &#125;&#125;ll C(int n, int m) &#123; if(n &lt; m) return 0; ll ret = fac[n] * ifac[n - m] % ha; ret = ret * ifac[m] % ha; return ret;&#125;int main() &#123; process(); int n, k; scanf("%d%d", &amp;n, &amp;k); if(k == 1) &#123; puts("1"); return 0; &#125; static ll f[maxn]; f[0] = 1; for(int i = 1; i &lt;= n; i ++) &#123; for(int j = 1; j &lt;= i; j ++) &#123; ll delta = n - j + 1; delta = delta * C(n * k - i - (j - 1) * (k - 1) - 1, k - 2) % ha; delta = delta * f[j - 1] % ha; f[j] += delta; if(f[j] &gt;= ha) f[j] -= ha; &#125; &#125; printf("%lld\n", f[n]); return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>DP</tag>
+        <tag>AtCoder</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[LibreOJ 2091 「ZJOI2016」小星星]]></title>
     <url>%2F2018%2F08%2F26%2Floj2091%2F</url>
     <content type="text"><![CDATA[Description 给定一棵\(n\)个点的树\(T\)，以及一个\(n\)个点\(m\)条边的简单无向图\(G\)，要求你将\(T\)“镶嵌”在\(G\)中（即求一个两者点集的双射，使得\(T\)中的边能对应成\(G\)中的边），求方案数。 \(n\leq 17\)。 Solution 先考虑一个树形DP……\(f_{i, j}\)表示树中的\(i\)对应图中的\(j\)时，\(i\)所在子树的对应方案数，转移的话就枚举每个儿子对应哪个点就行了。很显然这是一个时间复杂度\(O(n^3)\)的DP，但是很不幸这个算法是可能搞出来多个点对应到一个点的情况…… 那么我们考虑容斥，注意到发生重复等价于有图内的点没法被对应，因此问题就转化为图内的任何点都要被对应。我们考虑当对应到的图的点集事全集的时候，至少有零个图内的点无法被对应；如果说对应的图的点集大小为\(n - 1\)时，至少有一个图内的点无法被对应；大小为\(n - 2\)时，至少有两个无法被对应……以此类推。我们最后想要求的是恰好零个点没被对应，这就是一个经典容斥了…… Code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;cassert&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;vector&gt;#include &lt;forward_list&gt;const int maxn = 20;bool G[maxn][maxn];std::vector&lt;int&gt; T[maxn];void ins_edge(int u, int v) &#123; T[u].push_back(v); T[v].push_back(u);&#125;using ll = long long;ll f[maxn][maxn]; int n;bool rec[maxn];void dp(int u, int fa) &#123; for(const int &amp;v : T[u]) &#123; if(v != fa) dp(v, u); &#125; for(int i = 1; i &lt;= n; i ++) &#123; if(rec[i]) &#123; f[u][i] = 1; &#125; else &#123; f[u][i] = 0; &#125; &#125; for(int i = 1; i &lt;= n; i ++) &#123; if(!rec[i]) continue; for(const int &amp;v : T[u]) &#123; if(v != fa) &#123; ll s = 0; for(int j = 1; j &lt;= n; j ++) &#123; if(G[i][j]) s += f[v][j]; &#125; f[u][i] *= s; &#125; &#125; &#125;&#125;ll calc() &#123; ll ans = 0; for(int s = 2; s &lt; (1 &lt;&lt; n); s ++) &#123; if((s &amp; (s - 1)) == 0) continue; memset(rec, 0, sizeof(rec)); int sz = 0; for(int i = 1; i &lt;= n; i ++) &#123; if((1 &lt;&lt; (i - 1)) &amp; s) &#123; sz ++; rec[i] = true; &#125; &#125; dp(1, -1); ll th = 0; for(int i = 1; i &lt;= n; i ++) &#123; th += f[1][i]; &#125; if(1 &amp; (n - sz)) th = -th; ans += th; &#125; return ans;&#125;int main() &#123; int m; scanf("%d%d", &amp;n, &amp;m); if(n == 1) &#123; puts("1"); return 0; &#125; for(int i = 1; i &lt;= m; i ++) &#123; int u, v; scanf("%d%d", &amp;u, &amp;v); G[u][v] = G[v][u] = true; &#125; for(int i = 1; i &lt;= n - 1; i ++) &#123; int u, v; scanf("%d%d", &amp;u, &amp;v); ins_edge(u, v); &#125; printf("%lld\n", calc()); return 0;&#125;]]></content>
@@ -8,10 +20,10 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>容斥原理</tag>
         <tag>DP</tag>
-        <tag>ZJOI</tag>
+        <tag>容斥原理</tag>
         <tag>树形DP</tag>
+        <tag>ZJOI</tag>
       </tags>
   </entry>
   <entry>
@@ -23,8 +35,8 @@
       </categories>
       <tags>
         <tag>AtCoder</tag>
-        <tag>线段树</tag>
         <tag>Hall定理</tag>
+        <tag>线段树</tag>
       </tags>
   </entry>
   <entry>
@@ -86,8 +98,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>LibreOJ</tag>
         <tag>多项式卷积</tag>
+        <tag>LibreOJ</tag>
         <tag>生成函数</tag>
         <tag>广义二项式定理</tag>
       </tags>
@@ -101,8 +113,8 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>wqs二分</tag>
         <tag>CS Academy</tag>
+        <tag>wqs二分</tag>
       </tags>
   </entry>
   <entry>
@@ -127,8 +139,8 @@
       </categories>
       <tags>
         <tag>NOI</tag>
-        <tag>two pointers</tag>
         <tag>线段树</tag>
+        <tag>two pointers</tag>
       </tags>
   </entry>
   <entry>
@@ -141,8 +153,8 @@
       <tags>
         <tag>DP</tag>
         <tag>LibreOJ</tag>
-        <tag>树形DP</tag>
         <tag>JLOI</tag>
+        <tag>树形DP</tag>
       </tags>
   </entry>
   <entry>
@@ -178,8 +190,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>容斥原理</tag>
         <tag>DP</tag>
+        <tag>容斥原理</tag>
         <tag>HDU</tag>
         <tag>MIN-MAX容斥</tag>
       </tags>
@@ -218,8 +230,8 @@
       </categories>
       <tags>
         <tag>斯特林数</tag>
-        <tag>LibreOJ</tag>
         <tag>多项式卷积</tag>
+        <tag>LibreOJ</tag>
         <tag>生成函数</tag>
         <tag>清华集训</tag>
         <tag>Prufer序列</tag>
@@ -235,8 +247,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>容斥原理</tag>
         <tag>DP</tag>
+        <tag>容斥原理</tag>
         <tag>期望DP</tag>
         <tag>MIN-MAX容斥</tag>
         <tag>概率与期望</tag>
@@ -256,11 +268,11 @@
       <tags>
         <tag>容斥原理</tag>
         <tag>概率与期望</tag>
-        <tag>LibreOJ</tag>
         <tag>多项式卷积</tag>
+        <tag>LibreOJ</tag>
         <tag>生成函数</tag>
-        <tag>分治FFT</tag>
         <tag>PKUWC</tag>
+        <tag>分治FFT</tag>
       </tags>
   </entry>
   <entry>
@@ -312,8 +324,8 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>Codeforces</tag>
         <tag>wqs二分</tag>
+        <tag>Codeforces</tag>
         <tag>期望DP</tag>
       </tags>
   </entry>
@@ -464,8 +476,8 @@
       <tags>
         <tag>SPOJ</tag>
         <tag>LibreOJ</tag>
-        <tag>ZJOI</tag>
         <tag>TJOI</tag>
+        <tag>ZJOI</tag>
         <tag>后缀自动机</tag>
         <tag>后缀数组</tag>
         <tag>后缀树</tag>
