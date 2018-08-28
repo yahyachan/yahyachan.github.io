@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ARC093F Dark Horse]]></title>
+    <url>%2F2018%2F08%2F28%2Farc093F%2F</url>
+    <content type="text"><![CDATA[Description 有\(2^n\)个用\(1\ldots 2^n\)编号的的人，你需要将他们排成一排，然后两两对战，胜出者再按照在原序列中的顺序排成一排，再用上述方法淘汰，直到只剩下一个人。 至于两人比赛的规则，假设比赛的两个人的编号为\(x\)和\(y\)，那么编号小者胜出。但是特别的，有\(m\)个人，他们一定可以击败\(1\)（但是他们在和其他人作战时按照上述规则）。 求问有多少种安排排列的方法，使得\(1\)最终胜出。 \(1\leq n\leq 16, 0\leq m &lt; \min(2^n, 17)\)。 Solution 你事，一个，一个，一个数数题，，，（池沼） 我们队序列建一个满二叉树，那么很显然一个节点就代表了所在子树的最终胜出者。那么我们不妨固定\(1\)在头上（接下来我们会发现其他情况都是一样的，所以最终乘一个\(2^n\)就行），倘使有\([2, 2], [3, 4],\ldots,[2^{n - 1} + 1, 2^n]\)这\(n\)个区间所代表的节点不能为给定的\(m\)个人，那么\(1\)就能胜出。 但这样直接计数还是要飞，那么就容斥吧！ 注意到我们只需要去限制\(n\)个节点，所以看起来状压DP是一个不错的决定。我们不妨将\(A\)从小到大排序，然后定义状态\(f_{i, s}\)表示考虑\(A_{i\ldots m}\)这些人，目前确定了至少集合\(s\)中的线段树节点的胜出点在考虑的人当中。转移的话就考虑\(A_i\)是否对\(s\)造成了贡献即可。最后对所有至少的集合容斥，然后就能得到恰好空集的情况，这也算是传统艺能力，，， Code 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;const int maxn = 22;using ll = long long;const ll ha = 1000000007LL;ll pow_mod(ll a, ll b) &#123; ll ans = 1, res = a; while(b) &#123; if(1LL &amp; b) ans = ans * res % ha; res = res * res % ha; b &gt;&gt;= 1; &#125; return ans;&#125;ll inv(ll x) &#123; return pow_mod(x, ha - 2LL);&#125;ll fac[1 &lt;&lt; 20], ifac[1 &lt;&lt; 20];void process() &#123; fac[0] = 1; const int n = (1 &lt;&lt; 20) - 1; for(int i = 1; i &lt;= n; i ++) &#123; fac[i] = fac[i - 1] * (ll)i % ha; &#125; ifac[n] = inv(fac[n]); for(int i = n - 1; i &gt;= 0; i --) &#123; ifac[i] = ifac[i + 1] * (ll(i + 1)) % ha; &#125;&#125;ll C(int n, int m) &#123; if(n &lt; m) return 0; ll ret = fac[n] * ifac[n - m] % ha; ret = ret * ifac[m] % ha; return ret;&#125;int A[maxn]; ll f[1 &lt;&lt; 20];int main() &#123; process(); int n, m; scanf("%d%d", &amp;n, &amp;m); for(int i = 1; i &lt;= m; i ++) &#123; scanf("%d", &amp;A[i]); &#125; std::sort(A + 1, A + 1 + m); f[0] = 1; for(int i = m; i &gt;= 1; i --) &#123; for(int s = (1 &lt;&lt; n) - 1; s &gt;= 0; s --) &#123; int sum = 0; for(int j = 0; j &lt; n; j ++) &#123; if((1 &lt;&lt; j) &amp; s) sum += (1 &lt;&lt; j); &#125; ll res = (1 &lt;&lt; n) - sum - A[i]; for(int j = 0; j &lt; n; j ++) &#123; if(((1 &lt;&lt; j) &amp; s) == 0) &#123; ll delta = f[s] * C(res, (1 &lt;&lt; j) - 1) % ha; delta = delta * fac[1 &lt;&lt; j] % ha; int v = s | (1 &lt;&lt; j); f[v] += delta; if(f[v] &gt;= ha) f[v] -= ha; &#125; &#125; &#125; &#125; ll ans = 0; for(int s = 0; s &lt; (1 &lt;&lt; n); s ++) &#123; int cnt = 0, sum = 0; for(int i = 0; i &lt; n; i ++) &#123; if((1 &lt;&lt; i) &amp; s) &#123; cnt ++; sum += (1 &lt;&lt; i); &#125; &#125; ll delta = f[s] * fac[(1 &lt;&lt; n) - sum - 1] % ha; if(1 &amp; cnt) delta = (ha - delta) % ha; ans = (ans + delta) % ha; &#125; ans = ans * (ll(1LL &lt;&lt; n)) % ha; printf("%lld\n", ans); return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>DP</tag>
+        <tag>容斥原理</tag>
+        <tag>AtCoder</tag>
+        <tag>状压DP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[AGC002F Leftmost Ball]]></title>
     <url>%2F2018%2F08%2F28%2Fagc002F%2F</url>
     <content type="text"><![CDATA[Description 有\(n\)种颜色（不包括白色）的球各\(k\)个，要求你将它们排成一列，然后将每种颜色最靠左的球染白。求最终序列的方案数。 \(1\leq n, k\leq 2000\)。 Solution 数数难，难如屑食汉（意味不明） 我们不妨将白球当做一种颜色来处理。那么我们发现只要满足最后恰有\(n\)个白球（这样其他球各有\(k - 1\)个），并且第\(i\)个白球之前出现了至多\(i - 1\)种非白颜色，那么序列就是合法的。 然后这样如果直接顺次DP的话，由于需要记所有球还有多少没用所以复杂度上天……我们考虑转换一下思路，在考虑一个颜色的时候就把该颜色所有球全安排上。那么设计状态\(f_{i, j}\)表示已经放了\(i\)个白球，然后用了\(j\)种颜色的情况（显然要求\(i\leq j\)）。那么转移的时候，我们限制不管放白球还是放非白球一定要放置在最靠左的空位（否则会记重），那么显然可以直接放一个白球，也可以放非白球，非白球的转移就是考虑放哪种球然后除了最靠左的球以外的\(k - 2\)个放哪就行了。转移方程如下： \[ f_{i, j}=f_{i - 1, j} + (n - j + 1)\binom{nk - i - (j - 1) * (k - 1) - 1}{k - 2}f_{i, j - 1} \] Description 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;const int maxn = 2005;using ll = long long;const ll ha = 1000000007LL;ll pow_mod(ll a, ll b) &#123; ll ans = 1, res = a; while(b) &#123; if(1LL &amp; b) ans = ans * res % ha; res = res * res % ha; b &gt;&gt;= 1; &#125; return ans;&#125;ll inv(ll x) &#123; return pow_mod(x, ha - 2LL);&#125;ll fac[maxn * maxn], ifac[maxn * maxn];void process() &#123; fac[0] = 1; const int n = 4000005; for(int i = 1; i &lt;= n; i ++) &#123; fac[i] = fac[i - 1] * (ll)i % ha; &#125; ifac[n] = inv(fac[n]); for(int i = n - 1; i &gt;= 0; i --) &#123; ifac[i] = ifac[i + 1] * (ll(i + 1)) % ha; &#125;&#125;ll C(int n, int m) &#123; if(n &lt; m) return 0; ll ret = fac[n] * ifac[n - m] % ha; ret = ret * ifac[m] % ha; return ret;&#125;int main() &#123; process(); int n, k; scanf("%d%d", &amp;n, &amp;k); if(k == 1) &#123; puts("1"); return 0; &#125; static ll f[maxn]; f[0] = 1; for(int i = 1; i &lt;= n; i ++) &#123; for(int j = 1; j &lt;= i; j ++) &#123; ll delta = n - j + 1; delta = delta * C(n * k - i - (j - 1) * (k - 1) - 1, k - 2) % ha; delta = delta * f[j - 1] % ha; f[j] += delta; if(f[j] &gt;= ha) f[j] -= ha; &#125; &#125; printf("%lld\n", f[n]); return 0;&#125;]]></content>
@@ -22,8 +36,8 @@
       <tags>
         <tag>DP</tag>
         <tag>容斥原理</tag>
-        <tag>树形DP</tag>
         <tag>ZJOI</tag>
+        <tag>树形DP</tag>
       </tags>
   </entry>
   <entry>
@@ -99,8 +113,8 @@
       </categories>
       <tags>
         <tag>多项式卷积</tag>
-        <tag>LibreOJ</tag>
         <tag>生成函数</tag>
+        <tag>LibreOJ</tag>
         <tag>广义二项式定理</tag>
       </tags>
   </entry>
@@ -113,8 +127,8 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>CS Academy</tag>
         <tag>wqs二分</tag>
+        <tag>CS Academy</tag>
       </tags>
   </entry>
   <entry>
@@ -152,9 +166,9 @@
       </categories>
       <tags>
         <tag>DP</tag>
+        <tag>树形DP</tag>
         <tag>LibreOJ</tag>
         <tag>JLOI</tag>
-        <tag>树形DP</tag>
       </tags>
   </entry>
   <entry>
@@ -231,8 +245,8 @@
       <tags>
         <tag>斯特林数</tag>
         <tag>多项式卷积</tag>
-        <tag>LibreOJ</tag>
         <tag>生成函数</tag>
+        <tag>LibreOJ</tag>
         <tag>清华集训</tag>
         <tag>Prufer序列</tag>
         <tag>指数型生成函数</tag>
@@ -269,10 +283,10 @@
         <tag>容斥原理</tag>
         <tag>概率与期望</tag>
         <tag>多项式卷积</tag>
-        <tag>LibreOJ</tag>
         <tag>生成函数</tag>
-        <tag>PKUWC</tag>
+        <tag>LibreOJ</tag>
         <tag>分治FFT</tag>
+        <tag>PKUWC</tag>
       </tags>
   </entry>
   <entry>
@@ -324,8 +338,8 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>wqs二分</tag>
         <tag>Codeforces</tag>
+        <tag>wqs二分</tag>
         <tag>期望DP</tag>
       </tags>
   </entry>
@@ -413,8 +427,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>洲阁筛</tag>
         <tag>Min_25筛</tag>
+        <tag>洲阁筛</tag>
         <tag>LibreOJ</tag>
         <tag>山东省队集训</tag>
       </tags>
@@ -475,9 +489,9 @@
       </categories>
       <tags>
         <tag>SPOJ</tag>
+        <tag>ZJOI</tag>
         <tag>LibreOJ</tag>
         <tag>TJOI</tag>
-        <tag>ZJOI</tag>
         <tag>后缀自动机</tag>
         <tag>后缀数组</tag>
         <tag>后缀树</tag>
@@ -535,10 +549,10 @@
       </categories>
       <tags>
         <tag>NOI</tag>
+        <tag>洲阁筛</tag>
         <tag>UOJ</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
-        <tag>洲阁筛</tag>
         <tag>杜教筛</tag>
       </tags>
   </entry>
@@ -578,8 +592,8 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>洲阁筛</tag>
         <tag>Min_25筛</tag>
+        <tag>洲阁筛</tag>
         <tag>SPOJ</tag>
       </tags>
   </entry>
