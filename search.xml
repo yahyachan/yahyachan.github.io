@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[HDU 6315 Naive Operations]]></title>
+    <url>%2F2018%2F10%2F01%2FHDU6315%2F</url>
+    <content type="text"><![CDATA[Description 给你一个\(1\ldots n\)的排列\(b_i\)和一个长为\(n\)的序列\(a_i\)，\(a_i\)初始全为\(0\)。然后要求支持以下两种操作： add l r：将\(a_i\)中区间\([l, r]\)的每一个位置都加一。 query l r：查询\(\sum_{i = l}^r\lfloor\frac{a_i}{b_i}\rfloor\)。 多组数据（一个点最多五组）。\(1\leq n\leq 10^5\)。 Solution 设\(c_i = \lfloor\frac{a_i}{b_i}\rfloor\)。首先一次加操作可能会导致一些\(c_i\)的变动，也可能不造成。那么假设我们在每次变动的时候都进行单点修改，那么对于位置\(i\)其被修改次数最多为\(\lfloor\frac{q}{b_i}\rfloor\)，因此即使在极限情况下修改次数也不过是\(O(n\log n)\)级别的，用树状数组维护\(c_i\)即可。 接下来考虑怎样才能知道\(c_i\)是否在这次操作后需要改动。不妨记\(d_i\)表示\(i\)这个位置还要加多少才能迎来下一次\(c_i\)变动，那么我们每次add就是对一个区间的\(d_i\)减，如果\(d_i = 0\)的话就需要修改。注意到此时\(d_i\)一定是该区间内最小的，因此不断取最小值变动相应\(c_i\)，然后再修改\(d_i\)即可。 Code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;const int maxn = 100005;const int maxno = maxn &lt;&lt; 2;typedef std::pair&lt;int, int&gt; pii;pii minv[maxno]; int addv[maxno];void maintain(int o) &#123; minv[o] = std::min(minv[o &lt;&lt; 1], minv[o &lt;&lt; 1 | 1]);&#125;void paint(int o, int v) &#123; addv[o] += v; minv[o].first += v;&#125;void pushdown(int o) &#123; if(addv[o] != 0) &#123; paint(o &lt;&lt; 1, addv[o]); paint(o &lt;&lt; 1 | 1, addv[o]); addv[o] = 0; &#125;&#125;int b[maxn];void build_tree(int o, int L, int R) &#123; addv[o] = 0; if(L == R) &#123; minv[o] = std::make_pair(b[L], L); &#125; else &#123; int M = (L + R) / 2; build_tree(o &lt;&lt; 1, L, M); build_tree(o &lt;&lt; 1 | 1, M + 1, R); maintain(o); &#125;&#125;void modify(int o, int L, int R, int p, int v) &#123; if(L == R) &#123; minv[o].first = v; &#125; else &#123; pushdown(o); int M = (L + R) / 2; if(p &lt;= M) &#123; modify(o &lt;&lt; 1, L, M, p, v); &#125; else &#123; modify(o &lt;&lt; 1 | 1, M + 1, R, p, v); &#125; maintain(o); &#125;&#125;void modify(int o, int L, int R, int ql, int qr, int v) &#123; if(ql &lt;= L &amp;&amp; R &lt;= qr) &#123; paint(o, v); &#125; else &#123; pushdown(o); int M = (L + R) / 2; if(ql &lt;= M) modify(o &lt;&lt; 1, L, M, ql, qr, v); if(qr &gt; M) modify(o &lt;&lt; 1 | 1, M + 1, R, ql, qr, v); maintain(o); &#125;&#125;pii query(int o, int L, int R, int ql, int qr) &#123; if(ql &lt;= L &amp;&amp; R &lt;= qr) &#123; return minv[o]; &#125; else &#123; pushdown(o); int M = (L + R) / 2; pii ret = std::make_pair(0x7f7f7f7f, 0); if(ql &lt;= M) ret = std::min(ret, query(o &lt;&lt; 1, L, M, ql, qr)); if(qr &gt; M) ret = std::min(ret, query(o &lt;&lt; 1 | 1, M + 1, R, ql, qr)); return ret; &#125;&#125;int C[maxn]; int n;inline int lowbit(int x) &#123; return x &amp; (-x);&#125;void add(int p, int v) &#123; while(p &lt;= n) &#123; C[p] += v; p += lowbit(p); &#125;&#125;int sum(int p) &#123; int ans = 0; while(p &gt; 0) &#123; ans += C[p]; p -= lowbit(p); &#125; return ans;&#125;int query(int l, int r) &#123; return sum(r) - sum(l - 1);&#125;int main() &#123; int q; while(scanf("%d%d", &amp;n, &amp;q) == 2) &#123; for(int i = 1; i &lt;= n; i ++) &#123; scanf("%d", &amp;b[i]); &#125; build_tree(1, 1, n); memset(C, 0, sizeof(C)); char buf[10]; while(q --) &#123; int l, r; scanf("%s%d%d", buf, &amp;l, &amp;r); if(buf[0] == 'a') &#123; modify(1, 1, n, l, r, -1); pii t; while((t = query(1, 1, n, l, r)).first == 0) &#123; add(t.second, 1); modify(1, 1, n, t.second, b[t.second]); &#125; &#125; else &#123; printf("%d\n", query(l, r)); &#125; &#125; &#125; return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>HDU</tag>
+        <tag>线段树</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[ARC093F Dark Horse]]></title>
     <url>%2F2018%2F08%2F28%2Farc093F%2F</url>
     <content type="text"><![CDATA[Description 有\(2^n\)个用\(1\ldots 2^n\)编号的的人，你需要将他们排成一排，然后两两对战，胜出者再按照在原序列中的顺序排成一排，再用上述方法淘汰，直到只剩下一个人。 至于两人比赛的规则，假设比赛的两个人的编号为\(x\)和\(y\)，那么编号小者胜出。但是特别的，有\(m\)个人，他们一定可以击败\(1\)（但是他们在和其他人作战时按照上述规则）。 求问有多少种安排排列的方法，使得\(1\)最终胜出。 \(1\leq n\leq 16, 0\leq m &lt; \min(2^n, 17)\)。 Solution 你事，一个，一个，一个数数题，，，（池沼） 我们队序列建一个满二叉树，那么很显然一个节点就代表了所在子树的最终胜出者。那么我们不妨固定\(1\)在头上（接下来我们会发现其他情况都是一样的，所以最终乘一个\(2^n\)就行），倘使有\([2, 2], [3, 4],\ldots,[2^{n - 1} + 1, 2^n]\)这\(n\)个区间所代表的节点不能为给定的\(m\)个人，那么\(1\)就能胜出。 但这样直接计数还是要飞，那么就容斥吧！ 注意到我们只需要去限制\(n\)个节点，所以看起来状压DP是一个不错的决定。我们不妨将\(A\)从小到大排序，然后定义状态\(f_{i, s}\)表示考虑\(A_{i\ldots m}\)这些人，目前确定了至少集合\(s\)中的线段树节点的胜出点在考虑的人当中。转移的话就考虑\(A_i\)是否对\(s\)造成了贡献即可。最后对所有至少的集合容斥，然后就能得到恰好空集的情况，这也算是传统艺能力，，， Code 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;const int maxn = 22;using ll = long long;const ll ha = 1000000007LL;ll pow_mod(ll a, ll b) &#123; ll ans = 1, res = a; while(b) &#123; if(1LL &amp; b) ans = ans * res % ha; res = res * res % ha; b &gt;&gt;= 1; &#125; return ans;&#125;ll inv(ll x) &#123; return pow_mod(x, ha - 2LL);&#125;ll fac[1 &lt;&lt; 20], ifac[1 &lt;&lt; 20];void process() &#123; fac[0] = 1; const int n = (1 &lt;&lt; 20) - 1; for(int i = 1; i &lt;= n; i ++) &#123; fac[i] = fac[i - 1] * (ll)i % ha; &#125; ifac[n] = inv(fac[n]); for(int i = n - 1; i &gt;= 0; i --) &#123; ifac[i] = ifac[i + 1] * (ll(i + 1)) % ha; &#125;&#125;ll C(int n, int m) &#123; if(n &lt; m) return 0; ll ret = fac[n] * ifac[n - m] % ha; ret = ret * ifac[m] % ha; return ret;&#125;int A[maxn]; ll f[1 &lt;&lt; 20];int main() &#123; process(); int n, m; scanf("%d%d", &amp;n, &amp;m); for(int i = 1; i &lt;= m; i ++) &#123; scanf("%d", &amp;A[i]); &#125; std::sort(A + 1, A + 1 + m); f[0] = 1; for(int i = m; i &gt;= 1; i --) &#123; for(int s = (1 &lt;&lt; n) - 1; s &gt;= 0; s --) &#123; int sum = 0; for(int j = 0; j &lt; n; j ++) &#123; if((1 &lt;&lt; j) &amp; s) sum += (1 &lt;&lt; j); &#125; ll res = (1 &lt;&lt; n) - sum - A[i]; for(int j = 0; j &lt; n; j ++) &#123; if(((1 &lt;&lt; j) &amp; s) == 0) &#123; ll delta = f[s] * C(res, (1 &lt;&lt; j) - 1) % ha; delta = delta * fac[1 &lt;&lt; j] % ha; int v = s | (1 &lt;&lt; j); f[v] += delta; if(f[v] &gt;= ha) f[v] -= ha; &#125; &#125; &#125; &#125; ll ans = 0; for(int s = 0; s &lt; (1 &lt;&lt; n); s ++) &#123; int cnt = 0, sum = 0; for(int i = 0; i &lt; n; i ++) &#123; if((1 &lt;&lt; i) &amp; s) &#123; cnt ++; sum += (1 &lt;&lt; i); &#125; &#125; ll delta = f[s] * fac[(1 &lt;&lt; n) - sum - 1] % ha; if(1 &amp; cnt) delta = (ha - delta) % ha; ans = (ans + delta) % ha; &#125; ans = ans * (ll(1LL &lt;&lt; n)) % ha; printf("%lld\n", ans); return 0;&#125;]]></content>
@@ -8,8 +20,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>DP</tag>
         <tag>容斥原理</tag>
+        <tag>DP</tag>
         <tag>AtCoder</tag>
         <tag>状压DP</tag>
       </tags>
@@ -34,10 +46,10 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>DP</tag>
         <tag>容斥原理</tag>
-        <tag>ZJOI</tag>
+        <tag>DP</tag>
         <tag>树形DP</tag>
+        <tag>ZJOI</tag>
       </tags>
   </entry>
   <entry>
@@ -48,9 +60,9 @@
         <category>题解</category>
       </categories>
       <tags>
+        <tag>线段树</tag>
         <tag>AtCoder</tag>
         <tag>Hall定理</tag>
-        <tag>线段树</tag>
       </tags>
   </entry>
   <entry>
@@ -113,8 +125,8 @@
       </categories>
       <tags>
         <tag>多项式卷积</tag>
-        <tag>生成函数</tag>
         <tag>LibreOJ</tag>
+        <tag>生成函数</tag>
         <tag>广义二项式定理</tag>
       </tags>
   </entry>
@@ -127,8 +139,8 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>wqs二分</tag>
         <tag>CS Academy</tag>
+        <tag>wqs二分</tag>
       </tags>
   </entry>
   <entry>
@@ -166,9 +178,9 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>树形DP</tag>
         <tag>LibreOJ</tag>
         <tag>JLOI</tag>
+        <tag>树形DP</tag>
       </tags>
   </entry>
   <entry>
@@ -204,8 +216,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>DP</tag>
         <tag>容斥原理</tag>
+        <tag>DP</tag>
         <tag>HDU</tag>
         <tag>MIN-MAX容斥</tag>
       </tags>
@@ -245,8 +257,8 @@
       <tags>
         <tag>斯特林数</tag>
         <tag>多项式卷积</tag>
-        <tag>生成函数</tag>
         <tag>LibreOJ</tag>
+        <tag>生成函数</tag>
         <tag>清华集训</tag>
         <tag>Prufer序列</tag>
         <tag>指数型生成函数</tag>
@@ -261,8 +273,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>DP</tag>
         <tag>容斥原理</tag>
+        <tag>DP</tag>
         <tag>期望DP</tag>
         <tag>MIN-MAX容斥</tag>
         <tag>概率与期望</tag>
@@ -283,8 +295,8 @@
         <tag>容斥原理</tag>
         <tag>概率与期望</tag>
         <tag>多项式卷积</tag>
-        <tag>生成函数</tag>
         <tag>LibreOJ</tag>
+        <tag>生成函数</tag>
         <tag>分治FFT</tag>
         <tag>PKUWC</tag>
       </tags>
@@ -489,9 +501,9 @@
       </categories>
       <tags>
         <tag>SPOJ</tag>
-        <tag>ZJOI</tag>
         <tag>LibreOJ</tag>
         <tag>TJOI</tag>
+        <tag>ZJOI</tag>
         <tag>后缀自动机</tag>
         <tag>后缀数组</tag>
         <tag>后缀树</tag>

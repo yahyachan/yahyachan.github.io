@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Codeforces,贪心," />
+  <meta name="keywords" content="HDU,线段树," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Description 有一个\(n\)个无色点的树，小红和小蓝二人在上面玩游戏。 游戏有很多轮，小红先手，然后两人轮替操作。每一轮操作者都必须将一个无色点染成自己的颜色，最后操作者的得分就是他自己染色的点的导出子图的连通块数量。 双方都想最大化自己和对方的得分差距，并且双方都一定采取最优策略。求最后小红和小蓝得分之差。 \(1\leq n\leq 2\times 10^5\)。">
-<meta name="keywords" content="Codeforces,贪心">
+<meta name="description" content="Description 给你一个\(1\ldots n\)的排列\(b_i\)和一个长为\(n\)的序列\(a_i\)，\(a_i\)初始全为\(0\)。然后要求支持以下两种操作：  add l r：将\(a_i\)中区间\([l, r]\)的每一个位置都加一。 query l r：查询\(\sum_{i = l}^r\lfloor\frac{a_i}{b_i}\rfloor\)。">
+<meta name="keywords" content="HDU,线段树">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CF Gym101438F Tree Game">
-<meta property="og:url" content="https://yahyachan.github.io/2018/08/10/G101438F/index.html">
+<meta property="og:title" content="HDU 6315 Naive Operations">
+<meta property="og:url" content="https://yahyachan.github.io/2018/10/01/HDU6315/index.html">
 <meta property="og:site_name" content="danihao123&#39;s Blog">
-<meta property="og:description" content="Description 有一个\(n\)个无色点的树，小红和小蓝二人在上面玩游戏。 游戏有很多轮，小红先手，然后两人轮替操作。每一轮操作者都必须将一个无色点染成自己的颜色，最后操作者的得分就是他自己染色的点的导出子图的连通块数量。 双方都想最大化自己和对方的得分差距，并且双方都一定采取最优策略。求最后小红和小蓝得分之差。 \(1\leq n\leq 2\times 10^5\)。">
+<meta property="og:description" content="Description 给你一个\(1\ldots n\)的排列\(b_i\)和一个长为\(n\)的序列\(a_i\)，\(a_i\)初始全为\(0\)。然后要求支持以下两种操作：  add l r：将\(a_i\)中区间\([l, r]\)的每一个位置都加一。 query l r：查询\(\sum_{i = l}^r\lfloor\frac{a_i}{b_i}\rfloor\)。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-10T06:40:04.989Z">
+<meta property="og:updated_time" content="2018-10-01T12:57:51.678Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CF Gym101438F Tree Game">
-<meta name="twitter:description" content="Description 有一个\(n\)个无色点的树，小红和小蓝二人在上面玩游戏。 游戏有很多轮，小红先手，然后两人轮替操作。每一轮操作者都必须将一个无色点染成自己的颜色，最后操作者的得分就是他自己染色的点的导出子图的连通块数量。 双方都想最大化自己和对方的得分差距，并且双方都一定采取最优策略。求最后小红和小蓝得分之差。 \(1\leq n\leq 2\times 10^5\)。">
+<meta name="twitter:title" content="HDU 6315 Naive Operations">
+<meta name="twitter:description" content="Description 给你一个\(1\ldots n\)的排列\(b_i\)和一个长为\(n\)的序列\(a_i\)，\(a_i\)初始全为\(0\)。然后要求支持以下两种操作：  add l r：将\(a_i\)中区间\([l, r]\)的每一个位置都加一。 query l r：查询\(\sum_{i = l}^r\lfloor\frac{a_i}{b_i}\rfloor\)。">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yahyachan.github.io/2018/08/10/G101438F/"/>
+  <link rel="canonical" href="https://yahyachan.github.io/2018/10/01/HDU6315/"/>
 
 
 
 
 
-  <title>CF Gym101438F Tree Game | danihao123's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>HDU 6315 Naive Operations | danihao123's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yahyachan.github.io/2018/08/10/G101438F/">
+    <link itemprop="mainEntityOfPage" href="https://yahyachan.github.io/2018/10/01/HDU6315/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="danihao123">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">CF Gym101438F Tree Game</h1>
+          <h1 class="post-title" itemprop="name headline">HDU 6315 Naive Operations</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-10T14:30:27+08:00">
-                2018-08-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-01T20:47:32+08:00">
+                2018-10-01
               </time>
             
 
@@ -387,17 +387,18 @@
 
       
         <h2 id="description">Description</h2>
-<p>有一个<span class="math inline">\(n\)</span>个无色点的树，小红和小蓝二人在上面玩游戏。</p>
-<p>游戏有很多轮，小红先手，然后两人轮替操作。每一轮操作者都必须将一个无色点染成自己的颜色，最后操作者的得分就是他自己染色的点的导出子图的连通块数量。</p>
-<p>双方都想最大化自己和对方的得分差距，并且双方都一定采取最优策略。求最后小红和小蓝得分之差。</p>
-<p><span class="math inline">\(1\leq n\leq 2\times 10^5\)</span>。</p>
+<p>给你一个<span class="math inline">\(1\ldots n\)</span>的排列<span class="math inline">\(b_i\)</span>和一个长为<span class="math inline">\(n\)</span>的序列<span class="math inline">\(a_i\)</span>，<span class="math inline">\(a_i\)</span>初始全为<span class="math inline">\(0\)</span>。然后要求支持以下两种操作：</p>
+<ul>
+<li><code>add l r</code>：将<span class="math inline">\(a_i\)</span>中区间<span class="math inline">\([l, r]\)</span>的每一个位置都加一。</li>
+<li><code>query l r</code>：查询<span class="math inline">\(\sum_{i = l}^r\lfloor\frac{a_i}{b_i}\rfloor\)</span>。</li>
+</ul>
+<p>多组数据（一个点最多五组）。<span class="math inline">\(1\leq n\leq 10^5\)</span>。</p>
 <a id="more"></a>
 <h2 id="solution">Solution</h2>
-<p>感觉算是套路题……？</p>
-<p>考虑转化一下那个连通块的数量。我们考虑一个人，注意到我们可以先假设所有边都不存在，这样连通块数量为<span class="math inline">\(c_A\)</span>（即<span class="math inline">\(A\)</span>选的点数）。然后考虑把边加回来，注意到这个过程中那个导出子图始终是一个森林，所以最终的连通块数为<span class="math inline">\(c_A - e_A\)</span>（<span class="math inline">\(e_A\)</span>即两侧都被<span class="math inline">\(A\)</span>选了的边）。</p>
-<p>那么做一下差就知道最终的答案应该是<span class="math inline">\(c_A - c_B - e_A + e_B\)</span>。由于每个人在自己的回合必须操作，所以<span class="math inline">\(c_A - c_B\)</span>是一个定死的值。那么考虑<span class="math inline">\(-e_A + e_B\)</span>，注意到我们可以把一条边对答案的影响<span class="math inline">\(1\)</span>拆成两半放到点上，然后这样的话只有两边点都被一个人选了这个边才会被归成一个人的，反之则这条边不对答案产生影响。因此我们可以对点权排序，然后小红和小蓝轮流选点即可。</p>
+<p>设<span class="math inline">\(c_i = \lfloor\frac{a_i}{b_i}\rfloor\)</span>。首先一次加操作可能会导致一些<span class="math inline">\(c_i\)</span>的变动，也可能不造成。那么假设我们在每次变动的时候都进行单点修改，那么对于位置<span class="math inline">\(i\)</span>其被修改次数最多为<span class="math inline">\(\lfloor\frac{q}{b_i}\rfloor\)</span>，因此即使在极限情况下修改次数也不过是<span class="math inline">\(O(n\log n)\)</span>级别的，用树状数组维护<span class="math inline">\(c_i\)</span>即可。</p>
+<p>接下来考虑怎样才能知道<span class="math inline">\(c_i\)</span>是否在这次操作后需要改动。不妨记<span class="math inline">\(d_i\)</span>表示<span class="math inline">\(i\)</span>这个位置还要加多少才能迎来下一次<span class="math inline">\(c_i\)</span>变动，那么我们每次<code>add</code>就是对一个区间的<span class="math inline">\(d_i\)</span>减，如果<span class="math inline">\(d_i = 0\)</span>的话就需要修改。注意到此时<span class="math inline">\(d_i\)</span>一定是该区间内最小的，因此不断取最小值变动相应<span class="math inline">\(c_i\)</span>，然后再修改<span class="math inline">\(d_i\)</span>即可。</p>
 <h2 id="code">Code</h2>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utility&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">200005</span>;</span><br><span class="line"><span class="keyword">int</span> deg[maxn];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> n; <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n - <span class="number">1</span>; i ++) &#123;</span><br><span class="line">    <span class="keyword">int</span> u, v; <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;u, &amp;v);</span><br><span class="line">    deg[u] ++; deg[v] ++;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">std</span>::sort(deg + <span class="number">1</span>, deg + <span class="number">1</span> + n);</span><br><span class="line">  <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="number">1</span> &amp; i) &#123;</span><br><span class="line">      ans += deg[i];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      ans -= deg[i];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  ans *= <span class="number">-1</span>; ans /= <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">if</span>(<span class="number">1</span> &amp; n) ans ++;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utility&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">100005</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxno = maxn &lt;&lt; <span class="number">2</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">std</span>::pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; pii;</span><br><span class="line">pii minv[maxno]; <span class="keyword">int</span> addv[maxno];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">maintain</span><span class="params">(<span class="keyword">int</span> o)</span> </span>&#123;</span><br><span class="line">  minv[o] = <span class="built_in">std</span>::min(minv[o &lt;&lt; <span class="number">1</span>], minv[o &lt;&lt; <span class="number">1</span> | <span class="number">1</span>]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">paint</span><span class="params">(<span class="keyword">int</span> o, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">  addv[o] += v; minv[o].first += v;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pushdown</span><span class="params">(<span class="keyword">int</span> o)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(addv[o] != <span class="number">0</span>) &#123;</span><br><span class="line">    paint(o &lt;&lt; <span class="number">1</span>, addv[o]);</span><br><span class="line">    paint(o &lt;&lt; <span class="number">1</span> | <span class="number">1</span>, addv[o]);</span><br><span class="line">    addv[o] = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> b[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build_tree</span><span class="params">(<span class="keyword">int</span> o, <span class="keyword">int</span> L, <span class="keyword">int</span> R)</span> </span>&#123;</span><br><span class="line">  addv[o] = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span>(L == R) &#123;</span><br><span class="line">    minv[o] = <span class="built_in">std</span>::make_pair(b[L], L);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">int</span> M = (L + R) / <span class="number">2</span>;</span><br><span class="line">    build_tree(o &lt;&lt; <span class="number">1</span>, L, M);</span><br><span class="line">    build_tree(o &lt;&lt; <span class="number">1</span> | <span class="number">1</span>, M + <span class="number">1</span>, R);</span><br><span class="line">    maintain(o);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">modify</span><span class="params">(<span class="keyword">int</span> o, <span class="keyword">int</span> L, <span class="keyword">int</span> R, <span class="keyword">int</span> p, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(L == R) &#123;</span><br><span class="line">    minv[o].first = v;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    pushdown(o);</span><br><span class="line">    <span class="keyword">int</span> M = (L + R) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span>(p &lt;= M) &#123;</span><br><span class="line">      modify(o &lt;&lt; <span class="number">1</span>, L, M, p, v);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      modify(o &lt;&lt; <span class="number">1</span> | <span class="number">1</span>, M + <span class="number">1</span>, R, p, v);</span><br><span class="line">    &#125;</span><br><span class="line">    maintain(o);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">modify</span><span class="params">(<span class="keyword">int</span> o, <span class="keyword">int</span> L, <span class="keyword">int</span> R, <span class="keyword">int</span> ql, <span class="keyword">int</span> qr, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(ql &lt;= L &amp;&amp; R &lt;= qr) &#123;</span><br><span class="line">    paint(o, v);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    pushdown(o);</span><br><span class="line">    <span class="keyword">int</span> M = (L + R) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span>(ql &lt;= M) modify(o &lt;&lt; <span class="number">1</span>, L, M, ql, qr, v);</span><br><span class="line">    <span class="keyword">if</span>(qr &gt; M) modify(o &lt;&lt; <span class="number">1</span> | <span class="number">1</span>, M + <span class="number">1</span>, R, ql, qr, v);</span><br><span class="line">    maintain(o);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">pii <span class="title">query</span><span class="params">(<span class="keyword">int</span> o, <span class="keyword">int</span> L, <span class="keyword">int</span> R, <span class="keyword">int</span> ql, <span class="keyword">int</span> qr)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(ql &lt;= L &amp;&amp; R &lt;= qr) &#123;</span><br><span class="line">    <span class="keyword">return</span> minv[o];</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    pushdown(o);</span><br><span class="line">    <span class="keyword">int</span> M = (L + R) / <span class="number">2</span>;</span><br><span class="line">    pii ret = <span class="built_in">std</span>::make_pair(<span class="number">0x7f7f7f7f</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span>(ql &lt;= M) ret = <span class="built_in">std</span>::min(ret, query(o &lt;&lt; <span class="number">1</span>, L, M, ql, qr));</span><br><span class="line">    <span class="keyword">if</span>(qr &gt; M) ret = <span class="built_in">std</span>::min(ret, query(o &lt;&lt; <span class="number">1</span> | <span class="number">1</span>, M + <span class="number">1</span>, R, ql, qr));</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> C[maxn]; <span class="keyword">int</span> n;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">lowbit</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x &amp; (-x);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> p, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">while</span>(p &lt;= n) &#123;</span><br><span class="line">    C[p] += v;</span><br><span class="line">    p += lowbit(p);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> p)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span>(p &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    ans += C[p];</span><br><span class="line">    p -= lowbit(p);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> sum(r) - sum(l - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> q;</span><br><span class="line">  <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;n, &amp;q) == <span class="number">2</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</span><br><span class="line">      <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;b[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    build_tree(<span class="number">1</span>, <span class="number">1</span>, n); <span class="built_in">memset</span>(C, <span class="number">0</span>, <span class="keyword">sizeof</span>(C));</span><br><span class="line">    <span class="keyword">char</span> buf[<span class="number">10</span>];</span><br><span class="line">    <span class="keyword">while</span>(q --) &#123;</span><br><span class="line">      <span class="keyword">int</span> l, r; <span class="built_in">scanf</span>(<span class="string">"%s%d%d"</span>, buf, &amp;l, &amp;r);</span><br><span class="line">      <span class="keyword">if</span>(buf[<span class="number">0</span>] == <span class="string">'a'</span>) &#123;</span><br><span class="line">        modify(<span class="number">1</span>, <span class="number">1</span>, n, l, r, <span class="number">-1</span>);</span><br><span class="line">        pii t;</span><br><span class="line">        <span class="keyword">while</span>((t = query(<span class="number">1</span>, <span class="number">1</span>, n, l, r)).first == <span class="number">0</span>) &#123;</span><br><span class="line">          add(t.second, <span class="number">1</span>);</span><br><span class="line">          modify(<span class="number">1</span>, <span class="number">1</span>, n, t.second, b[t.second]);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, query(l, r));</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -418,7 +419,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://yahyachan.github.io/2018/08/10/G101438F/" title="CF Gym101438F Tree Game">https://yahyachan.github.io/2018/08/10/G101438F/</a>
+    <a href="https://yahyachan.github.io/2018/10/01/HDU6315/" title="HDU 6315 Naive Operations">https://yahyachan.github.io/2018/10/01/HDU6315/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -433,9 +434,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Codeforces/" rel="tag"># Codeforces</a>
+            <a href="/tags/HDU/" rel="tag"># HDU</a>
           
-            <a href="/tags/贪心/" rel="tag"># 贪心</a>
+            <a href="/tags/线段树/" rel="tag"># 线段树</a>
           
         </div>
       
@@ -448,8 +449,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/10/loj2320/" rel="next" title="LibreOJ 2320 「清华集训 2017」生成树计数">
-                <i class="fa fa-chevron-left"></i> LibreOJ 2320 「清华集训 2017」生成树计数
+              <a href="/2018/08/28/arc093F/" rel="next" title="ARC093F Dark Horse">
+                <i class="fa fa-chevron-left"></i> ARC093F Dark Horse
               </a>
             
           </div>
@@ -457,10 +458,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/10/CC/" rel="prev" title="CodeChef好（du）题（liu）选做">
-                CodeChef好（du）题（liu）选做 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
