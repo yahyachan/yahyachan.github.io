@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="LibreOJ,SCOI,倍增,倍增优化建图,并查集," />
+  <meta name="keywords" content="神必题,数论," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Description 有一个长度为\(n\)的无前导零数字串。 现在给你\(m\)组信息，形如\((a,b,c,d)\)（保证\(a\leq b, c\leq d,b - a = d - c\)），表示数字串\(a\ldots b\)这一段子串和\(c\ldots d\)这一段子串是一样的。 求最后的数字串有多少种可能。 \(1\leq n, m\leq 10^5, 1\leq a,b,">
-<meta name="keywords" content="LibreOJ,SCOI,倍增,倍增优化建图,并查集">
+<meta name="description" content="Description 给定正整数\(n\)，求有多少有序数对\((a, b)\)满足：  \(a + b\leq n\)。 \(a + b\mid b\)。  \(n\leq 10^{14}\)。">
+<meta name="keywords" content="神必题,数论">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LibreOJ 2014 「SCOI2016」萌萌哒">
-<meta property="og:url" content="https://yahyachan.github.io/2018/08/02/loj2014/index.html">
+<meta property="og:title" content="神必题 uria">
+<meta property="og:url" content="https://yahyachan.github.io/2018/10/02/uria/index.html">
 <meta property="og:site_name" content="danihao123&#39;s Blog">
-<meta property="og:description" content="Description 有一个长度为\(n\)的无前导零数字串。 现在给你\(m\)组信息，形如\((a,b,c,d)\)（保证\(a\leq b, c\leq d,b - a = d - c\)），表示数字串\(a\ldots b\)这一段子串和\(c\ldots d\)这一段子串是一样的。 求最后的数字串有多少种可能。 \(1\leq n, m\leq 10^5, 1\leq a,b,">
+<meta property="og:description" content="Description 给定正整数\(n\)，求有多少有序数对\((a, b)\)满足：  \(a + b\leq n\)。 \(a + b\mid b\)。  \(n\leq 10^{14}\)。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-02T12:54:01.048Z">
+<meta property="og:updated_time" content="2018-10-02T11:24:32.753Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LibreOJ 2014 「SCOI2016」萌萌哒">
-<meta name="twitter:description" content="Description 有一个长度为\(n\)的无前导零数字串。 现在给你\(m\)组信息，形如\((a,b,c,d)\)（保证\(a\leq b, c\leq d,b - a = d - c\)），表示数字串\(a\ldots b\)这一段子串和\(c\ldots d\)这一段子串是一样的。 求最后的数字串有多少种可能。 \(1\leq n, m\leq 10^5, 1\leq a,b,">
+<meta name="twitter:title" content="神必题 uria">
+<meta name="twitter:description" content="Description 给定正整数\(n\)，求有多少有序数对\((a, b)\)满足：  \(a + b\leq n\)。 \(a + b\mid b\)。  \(n\leq 10^{14}\)。">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yahyachan.github.io/2018/08/02/loj2014/"/>
+  <link rel="canonical" href="https://yahyachan.github.io/2018/10/02/uria/"/>
 
 
 
 
 
-  <title>LibreOJ 2014 「SCOI2016」萌萌哒 | danihao123's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>神必题 uria | danihao123's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yahyachan.github.io/2018/08/02/loj2014/">
+    <link itemprop="mainEntityOfPage" href="https://yahyachan.github.io/2018/10/02/uria/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="danihao123">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">LibreOJ 2014 「SCOI2016」萌萌哒</h1>
+          <h1 class="post-title" itemprop="name headline">神必题 uria</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-02T20:43:52+08:00">
-                2018-08-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-02T19:12:33+08:00">
+                2018-10-02
               </time>
             
 
@@ -387,18 +387,25 @@
 
       
         <h2 id="description">Description</h2>
-<p>有一个长度为<span class="math inline">\(n\)</span>的无前导零数字串。</p>
-<p>现在给你<span class="math inline">\(m\)</span>组信息，形如<span class="math inline">\((a,b,c,d)\)</span>（保证<span class="math inline">\(a\leq b, c\leq d,b - a = d - c\)</span>），表示数字串<span class="math inline">\(a\ldots b\)</span>这一段子串和<span class="math inline">\(c\ldots d\)</span>这一段子串是一样的。</p>
-<p>求最后的数字串有多少种可能。</p>
-<p><span class="math inline">\(1\leq n, m\leq 10^5, 1\leq a,b,c,d\leq n\)</span>。</p>
+<p>给定正整数<span class="math inline">\(n\)</span>，求有多少有序数对<span class="math inline">\((a, b)\)</span>满足：</p>
+<ul>
+<li><span class="math inline">\(a + b\leq n\)</span>。</li>
+<li><span class="math inline">\(a + b\mid b\)</span>。</li>
+</ul>
+<p><span class="math inline">\(n\leq 10^{14}\)</span>。</p>
 <a id="more"></a>
 <h2 id="solution">Solution</h2>
-<p>ao劲啊这种题，，，</p>
-<p>肯定要上并查集辣……但是暴力建图一定会炸，线段树优化建图在这也不好用（两边子树的形态可能差异巨大）。那么考虑用倍增优化建图。</p>
-<p>建出形如<span class="math inline">\(v(i, j)\)</span>的点表示从<span class="math inline">\(i\)</span>开始长度为<span class="math inline">\(2^j\)</span>的子串。然后这样用类似于ST表的方式就可以处理所有信息了，具体方式就是把对应的两组点在并查集上连一下。</p>
-<p>然后考虑最后如何统计答案。这个也不难，你把并查集的关系逐层往下推就行。</p>
+<p>考虑不互质的数对可能很麻烦……因此我们提取<span class="math inline">\(d = \gcd(a, b)\)</span>，将数对表示为<span class="math inline">\((a&#39;b, b&#39;d)\)</span>，此时必有<span class="math inline">\(a&#39;\perp b’\)</span>。</p>
+<p>然后化一下式子得到： <span class="math display">\[
+\begin{aligned}
+d(a&#39; + b&#39;)&amp;\mid a&#39;b&#39;d^2\\
+a&#39;+b&#39;&amp;\mid a&#39;b&#39;d
+\end{aligned}
+\]</span> 注意到<span class="math inline">\(\gcd(a&#39; + b&#39;, a&#39;) = \gcd(b&#39;, a&#39;) = 1\)</span>，同理<span class="math inline">\(\gcd(a&#39; + b&#39;, b&#39;) = 1\)</span>，因此<span class="math inline">\(a&#39; + b&#39;\)</span>只能是<span class="math inline">\(d\)</span>的约数了。</p>
+<p>据此我们可以设<span class="math inline">\(d = k(a&#39; + b&#39;)\)</span>，带入<span class="math inline">\(a + b\leq n\)</span>得<span class="math inline">\(k(a&#39; + b&#39;)^2\leq n\)</span>，因此有<span class="math inline">\(a&#39; + b&#39;\leq\sqrt{n}\)</span>。我们枚举<span class="math inline">\(i = a&#39; + b&#39;\)</span>，那么<span class="math inline">\(d\)</span>的数量就和<span class="math inline">\(k\)</span>一样都是<span class="math inline">\(\lfloor\frac{n}{i^2}\rfloor\)</span>种。</p>
+<p>然后考虑知道了<span class="math inline">\(i\)</span>之后怎么知道分解为互质有序数对的方案数。注意到确定了<span class="math inline">\(a&#39;\)</span>就确定了整个数对，而且我们知道<span class="math inline">\(\gcd(a&#39; + b&#39;, a&#39;) = \gcd(b&#39;, a&#39;) = 1\)</span>，因此必有<span class="math inline">\(a&#39;\perp i, a&lt; i\)</span>，所以数对的方案数为<span class="math inline">\(\varphi(i)\)</span>。</p>
 <h2 id="code">Code</h2>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utility&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">100005</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxs = maxn * <span class="number">17</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"><span class="keyword">const</span> ll ha = <span class="number">1000000007L</span>L;</span><br><span class="line"><span class="function">ll <span class="title">pow_mod</span><span class="params">(ll a, ll b)</span> </span>&#123;</span><br><span class="line">  ll ans = <span class="number">1L</span>L, res = a;</span><br><span class="line">  <span class="keyword">while</span>(b) &#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="number">1L</span>L &amp; b) ans = ans * res % ha;</span><br><span class="line">    res = res * res % ha; b &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> p[maxs], rk[maxs];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init_set</span><span class="params">(<span class="keyword">int</span> s)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= s; i ++) &#123;</span><br><span class="line">    p[i] = i; rk[i] = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_fa</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(p[x] == x) &#123;</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (p[x] = get_fa(p[x]));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">link_set</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(rk[x] &gt; rk[y]) <span class="built_in">std</span>::swap(x, y);</span><br><span class="line">  p[x] = y; <span class="keyword">if</span>(rk[x] == rk[y]) rk[y] ++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge_set</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">  x = get_fa(x); y = get_fa(y);</span><br><span class="line">  <span class="keyword">if</span>(x != y) link_set(x, y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, cnt;</span><br><span class="line"><span class="keyword">int</span> lst[maxn];</span><br><span class="line"><span class="keyword">int</span> num[maxn][<span class="number">17</span>], lc[maxs], rc[maxs];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">process</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  lst[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i ++) &#123;</span><br><span class="line">    lst[i] = lst[i - <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">while</span>((<span class="number">1</span> &lt;&lt; (lst[i] + <span class="number">1</span>)) &lt;= i) lst[i] ++;</span><br><span class="line">  &#125;</span><br><span class="line">  cnt = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; (<span class="number">1</span> &lt;&lt; j) &lt;= n; j ++) &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i + (<span class="number">1</span> &lt;&lt; j) - <span class="number">1</span> &lt;= n; i ++) &#123;</span><br><span class="line">      num[i][j] = ++ cnt;</span><br><span class="line">      <span class="keyword">if</span>(j &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        lc[cnt] = num[i][j - <span class="number">1</span>];</span><br><span class="line">        rc[cnt] = num[i + (<span class="number">1</span> &lt;&lt; (j - <span class="number">1</span>))][j - <span class="number">1</span>];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  init_set(cnt);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c, <span class="keyword">int</span> d)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> g = lst[b - a + <span class="number">1</span>];</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> LOCAL</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Operation (%d, %d, %d, %d) %d\n"</span>, a, b, c, d, g);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  merge_set(num[a][g], num[c][g]);</span><br><span class="line">  merge_set(num[b - (<span class="number">1</span> &lt;&lt; g) + <span class="number">1</span>][g], num[d - (<span class="number">1</span> &lt;&lt; g) + <span class="number">1</span>][g]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> m; <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;n, &amp;m);</span><br><span class="line">  process();</span><br><span class="line">  <span class="keyword">while</span>(m --) &#123;</span><br><span class="line">    <span class="keyword">int</span> a, b, c, d;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d%d%d"</span>, &amp;a, &amp;b, &amp;c, &amp;d);</span><br><span class="line">    update(a, b, c, d);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = cnt; i &gt; n; i --) &#123;</span><br><span class="line">    <span class="keyword">int</span> fa = get_fa(i);</span><br><span class="line">    merge_set(lc[i], lc[fa]);</span><br><span class="line">    merge_set(rc[i], rc[fa]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">int</span> blk = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</span><br><span class="line">    <span class="keyword">if</span>(get_fa(i) == i) blk ++;</span><br><span class="line">  &#125;</span><br><span class="line">  ll ans = <span class="number">9L</span>L * pow_mod(<span class="number">10L</span>L, blk - <span class="number">1</span>) % ha;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">10000000</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"></span><br><span class="line"><span class="keyword">bool</span> vis[N + <span class="number">5</span>]; <span class="keyword">int</span> prm[N + <span class="number">5</span>];</span><br><span class="line">ll phi[N + <span class="number">5</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">process</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  phi[<span class="number">1</span>] = <span class="number">1</span>; vis[<span class="number">1</span>] = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= N; i ++) &#123;</span><br><span class="line">    <span class="keyword">if</span>(!vis[i]) &#123;</span><br><span class="line">      phi[i] = i - <span class="number">1</span>;</span><br><span class="line">      prm[cnt ++] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; cnt; j ++) &#123;</span><br><span class="line">      <span class="keyword">int</span> v = i * prm[j];</span><br><span class="line">      <span class="keyword">if</span>(v &gt; N) <span class="keyword">break</span>;</span><br><span class="line">      vis[v] = <span class="literal">true</span>;</span><br><span class="line">      <span class="keyword">if</span>(i % prm[j] == <span class="number">0</span>) &#123;</span><br><span class="line">        phi[v] = phi[i] * (ll)prm[j]; <span class="keyword">break</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        phi[v] = phi[i] * phi[prm[j]];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  process();</span><br><span class="line">  ll n; <span class="built_in">scanf</span>(<span class="string">"%lld"</span>, &amp;n);</span><br><span class="line">  ll ans = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(ll i = <span class="number">2</span>; (i * i) &lt;= n; i ++) &#123;</span><br><span class="line">    ll xi = n / (i * i);</span><br><span class="line">    ans += phi[i] * xi;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -419,7 +426,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://yahyachan.github.io/2018/08/02/loj2014/" title="LibreOJ 2014 「SCOI2016」萌萌哒">https://yahyachan.github.io/2018/08/02/loj2014/</a>
+    <a href="https://yahyachan.github.io/2018/10/02/uria/" title="神必题 uria">https://yahyachan.github.io/2018/10/02/uria/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -434,15 +441,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/LibreOJ/" rel="tag"># LibreOJ</a>
+            <a href="/tags/神必题/" rel="tag"># 神必题</a>
           
-            <a href="/tags/SCOI/" rel="tag"># SCOI</a>
-          
-            <a href="/tags/倍增/" rel="tag"># 倍增</a>
-          
-            <a href="/tags/倍增优化建图/" rel="tag"># 倍增优化建图</a>
-          
-            <a href="/tags/并查集/" rel="tag"># 并查集</a>
+            <a href="/tags/数论/" rel="tag"># 数论</a>
           
         </div>
       
@@ -455,8 +456,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/28/NCTraining25/" rel="next" title="牛客练习赛23">
-                <i class="fa fa-chevron-left"></i> 牛客练习赛23
+              <a href="/2018/10/02/CF914D/" rel="next" title="CF914D Bash and a Tough Math Puzzle">
+                <i class="fa fa-chevron-left"></i> CF914D Bash and a Tough Math Puzzle
               </a>
             
           </div>
@@ -464,10 +465,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/04/BZOJ2219/" rel="prev" title="BZOJ 2219 数论之神">
-                BZOJ 2219 数论之神 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>

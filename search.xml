@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[神必题 uria]]></title>
+    <url>%2F2018%2F10%2F02%2Furia%2F</url>
+    <content type="text"><![CDATA[Description 给定正整数\(n\)，求有多少有序数对\((a, b)\)满足： \(a + b\leq n\)。 \(a + b\mid b\)。 \(n\leq 10^{14}\)。 Solution 考虑不互质的数对可能很麻烦……因此我们提取\(d = \gcd(a, b)\)，将数对表示为\((a&#39;b, b&#39;d)\)，此时必有\(a&#39;\perp b’\)。 然后化一下式子得到： \[ \begin{aligned} d(a&#39; + b&#39;)&amp;\mid a&#39;b&#39;d^2\\ a&#39;+b&#39;&amp;\mid a&#39;b&#39;d \end{aligned} \] 注意到\(\gcd(a&#39; + b&#39;, a&#39;) = \gcd(b&#39;, a&#39;) = 1\)，同理\(\gcd(a&#39; + b&#39;, b&#39;) = 1\)，因此\(a&#39; + b&#39;\)只能是\(d\)的约数了。 据此我们可以设\(d = k(a&#39; + b&#39;)\)，带入\(a + b\leq n\)得\(k(a&#39; + b&#39;)^2\leq n\)，因此有\(a&#39; + b&#39;\leq\sqrt{n}\)。我们枚举\(i = a&#39; + b&#39;\)，那么\(d\)的数量就和\(k\)一样都是\(\lfloor\frac{n}{i^2}\rfloor\)种。 然后考虑知道了\(i\)之后怎么知道分解为互质有序数对的方案数。注意到确定了\(a&#39;\)就确定了整个数对，而且我们知道\(\gcd(a&#39; + b&#39;, a&#39;) = \gcd(b&#39;, a&#39;) = 1\)，因此必有\(a&#39;\perp i, a&lt; i\)，所以数对的方案数为\(\varphi(i)\)。 Code 1234567891011121314151617181920212223242526272829303132333435363738#include &lt;cstdio&gt;const int N = 10000000;typedef long long ll;bool vis[N + 5]; int prm[N + 5];ll phi[N + 5];void process() &#123; phi[1] = 1; vis[1] = true; int cnt = 0; for(int i = 2; i &lt;= N; i ++) &#123; if(!vis[i]) &#123; phi[i] = i - 1; prm[cnt ++] = i; &#125; for(int j = 0; j &lt; cnt; j ++) &#123; int v = i * prm[j]; if(v &gt; N) break; vis[v] = true; if(i % prm[j] == 0) &#123; phi[v] = phi[i] * (ll)prm[j]; break; &#125; else &#123; phi[v] = phi[i] * phi[prm[j]]; &#125; &#125; &#125;&#125;int main() &#123; process(); ll n; scanf("%lld", &amp;n); ll ans = 0; for(ll i = 2; (i * i) &lt;= n; i ++) &#123; ll xi = n / (i * i); ans += phi[i] * xi; &#125; printf("%lld\n", ans); return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>神必题</tag>
+        <tag>数论</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[CF914D Bash and a Tough Math Puzzle]]></title>
     <url>%2F2018%2F10%2F02%2FCF914D%2F</url>
     <content type="text"><![CDATA[Description 你有一个长为\(n\)的正整数序列\(A\)，要求滋磁如下操作（\(q\)次）： 1 l r x：对于区间\([l, r]\)，询问是否可以修改其中的至多一个数，使得这段区间内数的最大公约数为\(x\)。 2 i x：将\(A_i\)修改为\(x\)。 \(1\leq n, q\leq 500000, A_i, x\leq 10^9\)。 Solution 考虑询问那个条件的本质…… 首先如果区间内恰有一个数不是\(x\)的倍数，那么改掉那个数就行；如果没有一个不是\(x\)的倍数，那么随便改一个就完事了；对于其他情况，就玩不动了。因此，条件等价于区间内不是\(x\)的倍数的数至少有一个。 那么我们考虑从\(l\)开始向右，构造一个极长的为\(x\)倍数的段，再从\(r\)向左构造这么一个，那么如果区间内全是\(x\)的倍数的话这两个段就重了，只有一个不是的话那么这两个段会在一个地方断开。 然后考虑怎么去求这两个段……首先显然可以维护区间\(\gcd\)，然后二分答案求出这个段长度，但是这样的话复杂度是\(O(n\log^3 n)\)的，很吃不消。因此我们把那个普通的二分，改成线段树上二分，就跑的匪快了（单次求复杂度只有\(O(\log n)\)）。 Code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;vector&gt;const int maxn = 500005;const int maxno = maxn &lt;&lt; 2;int gcd(int a, int b) &#123; if(!b) return a; else return gcd(b, a % b);&#125;struct rec &#123; int o, L, R; rec(int a = 0, int b = 0, int c = 0) &#123; o = a; L = b; R = c; &#125;&#125;;int A[maxn]; int val[maxno];void maintain(int o) &#123; val[o] = gcd(val[o &lt;&lt; 1], val[o &lt;&lt; 1 | 1]);&#125;void build_tree(int o, int L, int R) &#123; if(L == R) &#123; val[o] = A[L]; &#125; else &#123; int M = (L + R) / 2; build_tree(o &lt;&lt; 1, L, M); build_tree(o &lt;&lt; 1 | 1, M + 1, R); maintain(o); &#125;&#125;void modify(int o, int L, int R, const int &amp;p, const int &amp;v) &#123; if(L == R) &#123; val[o] = A[L] = v; &#125; else &#123; int M = (L + R) / 2; if(p &lt;= M) modify(o &lt;&lt; 1, L, M, p, v); else modify(o &lt;&lt; 1 | 1, M + 1, R, p, v); maintain(o); &#125;&#125;void obtain(int o, int L, int R, int ql, int qr, std::vector&lt;rec&gt; &amp;V) &#123; if(ql &lt;= L &amp;&amp; R &lt;= qr) &#123; V.push_back(rec(o, L, R)); &#125; else &#123; int M = (L + R) / 2; if(ql &lt;= M) obtain(o &lt;&lt; 1, L, M, ql, qr, V); if(qr &gt; M) obtain(o &lt;&lt; 1 | 1, M + 1, R, ql, qr, V); &#125;&#125;int n;int query_l(int p, int x) &#123; if(A[p] % x) return p - 1; std::vector&lt;rec&gt; V; obtain(1, 1, n, p, n, V); rec rb; for(int i = 0; i &lt; V.size(); i ++) &#123; const rec &amp;th = V[i]; if(val[th.o] % x) &#123; rb = th; break; &#125; &#125; if(rb.o == 0) return n; int o = rb.o, L = rb.L, R = rb.R; if(A[L] % x) return L - 1; while(L &lt; R) &#123; int lc = o &lt;&lt; 1, rc = o &lt;&lt; 1 | 1; int M = (L + R) / 2; if(val[lc] % x == 0 &amp;&amp; A[M + 1] % x == 0) o = rc, L = M + 1; else o = lc, R = M; &#125; return L;&#125;int query_r(int p, int x) &#123; if(A[p] % x) return p + 1; std::vector&lt;rec&gt; V; obtain(1, 1, n, 1, p, V); rec rb; for(int i = V.size() - 1; i &gt;= 0; i --) &#123; const rec &amp;th = V[i]; if(val[th.o] % x) &#123; rb = th; break; &#125; &#125; if(rb.o == 0) return 1; int o = rb.o, L = rb.L, R = rb.R; if(A[R] % x) return R + 1; while(L &lt; R) &#123; int lc = o &lt;&lt; 1, rc = o &lt;&lt; 1 | 1; int M = (L + R) / 2; if(val[rc] % x == 0 &amp;&amp; A[M] % x == 0) o = lc, R = M; else o = rc, L = M + 1; &#125; return L;&#125;int main() &#123; scanf("%d", &amp;n); for(int i = 1; i &lt;= n; i ++) scanf("%d", &amp;A[i]); build_tree(1, 1, n); int q; scanf("%d", &amp;q); while(q --) &#123; int op; scanf("%d", &amp;op); if(op == 1) &#123; int l, r, x; scanf("%d%d%d", &amp;l, &amp;r, &amp;x); int rv = query_l(l, x), lv = query_r(r, x);#ifdef LOCAL printf("Block : (%d, %d) and (%d, %d)\n", l, rv, lv, r);#endif if(rv + 2 &gt;= lv) puts("YES"); else puts("NO"); // fflush(stdout); &#125; else &#123; int p, v; scanf("%d%d", &amp;p, &amp;v); modify(1, 1, n, p, v); &#125; &#125; return 0;&#125;]]></content>
@@ -21,8 +33,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>线段树</tag>
         <tag>HDU</tag>
+        <tag>线段树</tag>
       </tags>
   </entry>
   <entry>
@@ -138,8 +150,8 @@
       </categories>
       <tags>
         <tag>多项式卷积</tag>
-        <tag>生成函数</tag>
         <tag>LibreOJ</tag>
+        <tag>生成函数</tag>
         <tag>广义二项式定理</tag>
       </tags>
   </entry>
@@ -270,12 +282,12 @@
       <tags>
         <tag>斯特林数</tag>
         <tag>多项式卷积</tag>
-        <tag>生成函数</tag>
         <tag>LibreOJ</tag>
+        <tag>生成函数</tag>
+        <tag>分治FFT</tag>
         <tag>清华集训</tag>
         <tag>Prufer序列</tag>
         <tag>指数型生成函数</tag>
-        <tag>分治FFT</tag>
       </tags>
   </entry>
   <entry>
@@ -290,11 +302,11 @@
         <tag>容斥原理</tag>
         <tag>期望DP</tag>
         <tag>概率与期望</tag>
-        <tag>MIN-MAX容斥</tag>
         <tag>LibreOJ</tag>
         <tag>PKUWC</tag>
         <tag>树上DP</tag>
         <tag>高斯消元</tag>
+        <tag>MIN-MAX容斥</tag>
       </tags>
   </entry>
   <entry>
@@ -308,8 +320,8 @@
         <tag>容斥原理</tag>
         <tag>概率与期望</tag>
         <tag>多项式卷积</tag>
-        <tag>生成函数</tag>
         <tag>LibreOJ</tag>
+        <tag>生成函数</tag>
         <tag>PKUWC</tag>
         <tag>分治FFT</tag>
       </tags>
@@ -440,8 +452,8 @@
       </categories>
       <tags>
         <tag>BZOJ</tag>
-        <tag>容斥原理</tag>
         <tag>线性基</tag>
+        <tag>容斥原理</tag>
       </tags>
   </entry>
   <entry>
@@ -452,8 +464,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>洲阁筛</tag>
         <tag>Min_25筛</tag>
+        <tag>洲阁筛</tag>
         <tag>LibreOJ</tag>
         <tag>山东省队集训</tag>
       </tags>
@@ -574,10 +586,10 @@
       </categories>
       <tags>
         <tag>NOI</tag>
+        <tag>洲阁筛</tag>
         <tag>UOJ</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
-        <tag>洲阁筛</tag>
         <tag>杜教筛</tag>
       </tags>
   </entry>
@@ -617,8 +629,8 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>洲阁筛</tag>
         <tag>Min_25筛</tag>
+        <tag>洲阁筛</tag>
         <tag>SPOJ</tag>
       </tags>
   </entry>
