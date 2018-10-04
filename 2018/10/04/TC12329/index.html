@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="DP,TopCoder,背包DP," />
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="danihao123&apos;s Blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="danihao123&#39;s Blog">
-<meta property="og:url" content="https://yahyachan.github.io/categories/题解/page/4/index.html">
+<meta name="description" content="Description 有\(n\)张符卡组成的队列，第\(i\)张有权值\(l_i\)和伤害\(d_i\)。每次你可以把队首的卡扔到队尾，也可以发动队首的卡，发动后会对对方造成\(d_i\)点伤害，但是要将从这张卡开始的\(l_i\)张除外（因此如果队列中卡不足\(l_i\)张就不能发动此卡）。最大化伤害。 \(1\leq n,l_i\leq 50\)。">
+<meta name="keywords" content="DP,TopCoder,背包DP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SRM563 Div1 500 SpellCards">
+<meta property="og:url" content="https://yahyachan.github.io/2018/10/04/TC12329/index.html">
 <meta property="og:site_name" content="danihao123&#39;s Blog">
-<meta property="og:description" content="danihao123&apos;s Blog">
+<meta property="og:description" content="Description 有\(n\)张符卡组成的队列，第\(i\)张有权值\(l_i\)和伤害\(d_i\)。每次你可以把队首的卡扔到队尾，也可以发动队首的卡，发动后会对对方造成\(d_i\)点伤害，但是要将从这张卡开始的\(l_i\)张除外（因此如果队列中卡不足\(l_i\)张就不能发动此卡）。最大化伤害。 \(1\leq n,l_i\leq 50\)。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-10-04T08:49:46.716Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="danihao123&#39;s Blog">
-<meta name="twitter:description" content="danihao123&apos;s Blog">
+<meta name="twitter:title" content="SRM563 Div1 500 SpellCards">
+<meta name="twitter:description" content="Description 有\(n\)张符卡组成的队列，第\(i\)张有权值\(l_i\)和伤害\(d_i\)。每次你可以把队首的卡扔到队尾，也可以发动队首的卡，发动后会对对方造成\(d_i\)点伤害，但是要将从这张卡开始的\(l_i\)张除外（因此如果队列中卡不足\(l_i\)张就不能发动此卡）。最大化伤害。 \(1\leq n,l_i\leq 50\)。">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yahyachan.github.io/categories/题解/page/4/"/>
+  <link rel="canonical" href="https://yahyachan.github.io/2018/10/04/TC12329/"/>
 
 
 
 
 
-  <title>分类: 题解 | danihao123's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>SRM563 Div1 500 SpellCards | danihao123's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -143,7 +145,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -281,311 +283,204 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block category">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>题解<small>分类</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yahyachan.github.io/2018/10/04/TC12329/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="danihao123">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://danihao123.is-programmer.com/user_files/danihao123/config/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="danihao123's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/08/07/agc005F/" itemprop="url">
-              
-                <span itemprop="name">AGC005F Many Easy Problems</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">SRM563 Div1 500 SpellCards</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-07T12:49:24+08:00"
-              content="2018-08-07" >
-          08-07
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-04T16:32:11+08:00">
+                2018-10-04
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/题解/" itemprop="url" rel="index">
+                    <span itemprop="name">题解</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/07/BZOJ1566/" itemprop="url">
-              
-                <span itemprop="name">BZOJ 1566 「NOI2009」管道取珠</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-07T11:12:12+08:00"
-              content="2018-08-07" >
-          08-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/06/agc001E/" itemprop="url">
-              
-                <span itemprop="name">AGC001E BBQ Hard</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-06T20:45:05+08:00"
-              content="2018-08-06" >
-          08-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/06/BZOJ4671/" itemprop="url">
-              
-                <span itemprop="name">BZOJ 4671 异或图</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-06T18:51:35+08:00"
-              content="2018-08-06" >
-          08-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/04/loj6076/" itemprop="url">
-              
-                <span itemprop="name">LibreOJ 6076 「2017 山东一轮集训 Day6」三元组</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-04T18:43:22+08:00"
-              content="2018-08-04" >
-          08-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/04/BZOJ2219/" itemprop="url">
-              
-                <span itemprop="name">BZOJ 2219 数论之神</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-04T15:52:02+08:00"
-              content="2018-08-04" >
-          08-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/02/loj2014/" itemprop="url">
-              
-                <span itemprop="name">LibreOJ 2014 「SCOI2016」萌萌哒</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-02T20:43:52+08:00"
-              content="2018-08-02" >
-          08-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/28/NCTraining25/" itemprop="url">
-              
-                <span itemprop="name">牛客练习赛23</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-28T14:15:58+08:00"
-              content="2018-07-28" >
-          07-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/24/loj6052/" itemprop="url">
-              
-                <span itemprop="name">LibreOJ 6052 「雅礼集训 2017 Day11」DIV</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-24T20:51:25+08:00"
-              content="2018-07-24" >
-          07-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/24/loj6053/" itemprop="url">
-              
-                <span itemprop="name">LibreOJ 6053 简单的函数</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-24T13:34:20+08:00"
-              content="2018-07-24" >
-          07-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <h2 id="description">Description</h2>
+<p>有<span class="math inline">\(n\)</span>张符卡组成的队列，第<span class="math inline">\(i\)</span>张有权值<span class="math inline">\(l_i\)</span>和伤害<span class="math inline">\(d_i\)</span>。每次你可以把队首的卡扔到队尾，也可以发动队首的卡，发动后会对对方造成<span class="math inline">\(d_i\)</span>点伤害，但是要将从这张卡开始的<span class="math inline">\(l_i\)</span>张除外（因此如果队列中卡不足<span class="math inline">\(l_i\)</span>张就不能发动此卡）。最大化伤害。</p>
+<p><span class="math inline">\(1\leq n,l_i\leq 50\)</span>。</p>
+<a id="more"></a>
+<h2 id="solution">Solution</h2>
+<p>各位兄贵可能一看就觉得事环上DP罢（正论）</p>
+<p>但这题只需要背包（一转）</p>
+<p>如果有一个卡组子集，满足<span class="math inline">\(l_i\)</span>之和不大于<span class="math inline">\(n\)</span>，那么这个集合一定可以打出来。然后很显然的是<span class="math inline">\(l_i\)</span>和大于<span class="math inline">\(n\)</span>的话肯定没法全发动，因此背包就行辣……</p>
+<p>觉得这个很玄学？那可以考虑证明一下呢……</p>
+<p>我们不妨记在集合中的卡为黑卡，不在集合中的卡为白卡。在经过一定的移动之后，序列一定会变成若干段一张黑卡跟几张白卡的序列。首先我们注意到，如果有一个黑卡<span class="math inline">\(i\)</span>之后跟的白卡数量不小于<span class="math inline">\(l_i - 1\)</span>的话，一定可以经过一定移动后发动这张卡。</p>
+<p>那么问题来了，对于当前局面，是否可能会出现一张卡都发动不了的情况？</p>
+<p>答案是否定的，因为这样就意味着每个黑卡及其后面跟的白卡加起来小于<span class="math inline">\(l_i\)</span>，也就是说这若干段的总卡数竟然小于<span class="math inline">\(n\)</span>！我们在发动一张卡之后，<span class="math inline">\(l_i\)</span>的和下降的值和<span class="math inline">\(n\)</span>下降的值是一样的，因此一定可以接着往下发动，将所有黑卡发动完。</p>
+<h2 id="code">Code</h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utility&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">int</span> f[<span class="number">50</span>];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">SpellCards</span> &#123;</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">pack</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> l, <span class="keyword">int</span> d)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = n; i &gt;= l; i --) &#123;</span><br><span class="line">      f[i] = <span class="built_in">std</span>::max(f[i], f[i - l] + d);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">maxDamage</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; level, <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; damage)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(f, <span class="number">0</span>, <span class="keyword">sizeof</span>(f));</span><br><span class="line">    <span class="keyword">int</span> s = level.size();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s; i ++) &#123;</span><br><span class="line">      pack(s, level[i], damage[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> *<span class="built_in">std</span>::max_element(f, f + <span class="number">1</span> + s);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> LOCAL</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> n; <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; A, B;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">    <span class="keyword">int</span> x; <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;x);</span><br><span class="line">    A.push_back(x);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">    <span class="keyword">int</span> x; <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;x);</span><br><span class="line">    B.push_back(x);</span><br><span class="line">  &#125;</span><br><span class="line">  SpellCards solver;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, solver.maxDamage(A, B));</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    danihao123
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yahyachan.github.io/2018/10/04/TC12329/" title="SRM563 Div1 500 SpellCards">https://yahyachan.github.io/2018/10/04/TC12329/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DP/" rel="tag"># DP</a>
+          
+            <a href="/tags/TopCoder/" rel="tag"># TopCoder</a>
+          
+            <a href="/tags/背包DP/" rel="tag"># 背包DP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/02/uria/" rel="next" title="神必题 uria">
+                <i class="fa fa-chevron-left"></i> 神必题 uria
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/categories/题解/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/categories/题解/">1</a><span class="space">&hellip;</span><a class="page-number" href="/categories/题解/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/categories/题解/page/5/">5</a><a class="extend next" rel="next" href="/categories/题解/page/5/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -593,6 +488,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODYwMi8xNTEzMA"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -613,8 +517,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -714,6 +627,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#description"><span class="nav-number">1.</span> <span class="nav-text">Description</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solution"><span class="nav-number">2.</span> <span class="nav-text">Solution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#code"><span class="nav-number">3.</span> <span class="nav-text">Code</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -854,6 +783,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -882,6 +815,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
