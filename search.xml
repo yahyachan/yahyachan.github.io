@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[BZOJ 3687 简单题]]></title>
+    <url>%2F2018%2F10%2F05%2FBZOJ3687%2F</url>
+    <content type="text"><![CDATA[Description 给定一个\(n\)个元素的可重集，求其中所有子集的元素算数和异或起来的结果。 \(n\leq 1000\)，保证集合中元素是正整数，且所有数的和不超过\(2\times 10^6\)。 Solution 被……安排上了 所有可能的自己算术和只有\(2\times 10^6\)种（不考虑\(0\)），每种会不会在答案中出现只取决于这一类和出现的子集是奇数个还是偶数个。因此我们要做一个求模\(2\)意义下方案数的0/1背包，注意到模\(2\)加法其实就是异或了，因此用bitset维护状态数组，每次读进来一个数左移再异或即可完成转移。 Code 1234567891011121314151617181920212223#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;bitset&gt;const int maxs = 2000001;std::bitset&lt;maxs&gt; S;int main() &#123; S[0] = 1; int n; scanf("%d", &amp;n); for(int i = 1; i &lt;= n; i ++) &#123; int x; scanf("%d", &amp;x); S ^= (S &lt;&lt; x); &#125; int ans = 0; for(int i = 1; i &lt; maxs; i ++) &#123; if(S[i]) ans ^= i; &#125; printf("%d\n", ans); return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>BZOJ</tag>
+        <tag>位运算</tag>
+        <tag>bitset</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[SRM563 Div1 500 SpellCards]]></title>
     <url>%2F2018%2F10%2F04%2FTC12329%2F</url>
     <content type="text"><![CDATA[Description 有\(n\)张符卡组成的队列，第\(i\)张有权值\(l_i\)和伤害\(d_i\)。每次你可以把队首的卡扔到队尾，也可以发动队首的卡，发动后会对对方造成\(d_i\)点伤害，但是要将从这张卡开始的\(l_i\)张除外（因此如果队列中卡不足\(l_i\)张就不能发动此卡）。最大化伤害。 \(1\leq n,l_i\leq 50\)。 Solution 各位兄贵可能一看就觉得事环上DP罢（正论） 但这题只需要背包（一转） 如果有一个卡组子集，满足\(l_i\)之和不大于\(n\)，那么这个集合一定可以打出来。然后很显然的是\(l_i\)和大于\(n\)的话肯定没法全发动，因此背包就行辣…… 觉得这个很玄学？那可以考虑证明一下呢…… 我们不妨记在集合中的卡为黑卡，不在集合中的卡为白卡。在经过一定的移动之后，序列一定会变成若干段一张黑卡跟几张白卡的序列（并且满足开头没有白卡）。首先我们注意到，如果有一个黑卡\(i\)之后跟的白卡数量不小于\(l_i - 1\)的话，一定可以经过一定移动后发动这张卡。 那么问题来了，对于当前局面，是否可能会出现一张卡都发动不了的情况？ 答案是否定的，因为这样就意味着每个黑卡及其后面跟的白卡加起来小于\(l_i\)，也就是说这若干段的总卡数竟然小于\(n\)！我们在发动一张卡之后，\(l_i\)的和下降的值和\(n\)下降的值是一样的，因此一定可以接着往下发动，将所有黑卡发动完。 Code 123456789101112131415161718192021222324252627282930313233343536373839404142#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;vector&gt;int f[50];struct SpellCards &#123; void pack(int n, int l, int d) &#123; for(int i = n; i &gt;= l; i --) &#123; f[i] = std::max(f[i], f[i - l] + d); &#125; &#125;public: int maxDamage(std::vector&lt;int&gt; level, std::vector&lt;int&gt; damage) &#123; memset(f, 0, sizeof(f)); int s = level.size(); for(int i = 0; i &lt; s; i ++) &#123; pack(s, level[i], damage[i]); &#125; return *std::max_element(f, f + 1 + s); &#125;&#125;;#ifdef LOCALint main() &#123; int n; scanf("%d", &amp;n); std::vector&lt;int&gt; A, B; for(int i = 0; i &lt; n; i ++) &#123; int x; scanf("%d", &amp;x); A.push_back(x); &#125; for(int i = 0; i &lt; n; i ++) &#123; int x; scanf("%d", &amp;x); B.push_back(x); &#125; SpellCards solver; printf("%d\n", solver.maxDamage(A, B)); return 0;&#125;#endif]]></content>
@@ -58,8 +71,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>容斥原理</tag>
         <tag>DP</tag>
+        <tag>容斥原理</tag>
         <tag>AtCoder</tag>
         <tag>状压DP</tag>
       </tags>
@@ -84,8 +97,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>容斥原理</tag>
         <tag>DP</tag>
+        <tag>容斥原理</tag>
         <tag>ZJOI</tag>
         <tag>树形DP</tag>
       </tags>
@@ -148,8 +161,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>原根</tag>
         <tag>单位根反演</tag>
+        <tag>原根</tag>
         <tag>CS Academy</tag>
         <tag>行列式</tag>
       </tags>
@@ -163,8 +176,8 @@
       </categories>
       <tags>
         <tag>多项式卷积</tag>
-        <tag>生成函数</tag>
         <tag>LibreOJ</tag>
+        <tag>生成函数</tag>
         <tag>广义二项式定理</tag>
       </tags>
   </entry>
@@ -177,8 +190,8 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>wqs二分</tag>
         <tag>CS Academy</tag>
+        <tag>wqs二分</tag>
       </tags>
   </entry>
   <entry>
@@ -254,8 +267,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>容斥原理</tag>
         <tag>DP</tag>
+        <tag>容斥原理</tag>
         <tag>HDU</tag>
         <tag>MIN-MAX容斥</tag>
       </tags>
@@ -295,8 +308,8 @@
       <tags>
         <tag>斯特林数</tag>
         <tag>多项式卷积</tag>
-        <tag>生成函数</tag>
         <tag>LibreOJ</tag>
+        <tag>生成函数</tag>
         <tag>清华集训</tag>
         <tag>Prufer序列</tag>
         <tag>指数型生成函数</tag>
@@ -311,11 +324,11 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>容斥原理</tag>
         <tag>DP</tag>
+        <tag>容斥原理</tag>
         <tag>期望DP</tag>
-        <tag>MIN-MAX容斥</tag>
         <tag>概率与期望</tag>
+        <tag>MIN-MAX容斥</tag>
         <tag>LibreOJ</tag>
         <tag>PKUWC</tag>
         <tag>树上DP</tag>
@@ -333,8 +346,8 @@
         <tag>容斥原理</tag>
         <tag>概率与期望</tag>
         <tag>多项式卷积</tag>
-        <tag>生成函数</tag>
         <tag>LibreOJ</tag>
+        <tag>生成函数</tag>
         <tag>分治FFT</tag>
         <tag>PKUWC</tag>
       </tags>
@@ -465,8 +478,8 @@
       </categories>
       <tags>
         <tag>BZOJ</tag>
-        <tag>线性基</tag>
         <tag>容斥原理</tag>
+        <tag>线性基</tag>
       </tags>
   </entry>
   <entry>
@@ -477,8 +490,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>Min_25筛</tag>
         <tag>洲阁筛</tag>
+        <tag>Min_25筛</tag>
         <tag>LibreOJ</tag>
         <tag>山东省队集训</tag>
       </tags>
@@ -522,11 +535,11 @@
         <category>比赛</category>
       </categories>
       <tags>
+        <tag>位运算</tag>
         <tag>原根</tag>
         <tag>贪心</tag>
         <tag>NowCoder</tag>
         <tag>子序列自动机</tag>
-        <tag>位运算</tag>
         <tag>概率与期望</tag>
       </tags>
   </entry>
@@ -599,10 +612,10 @@
       </categories>
       <tags>
         <tag>NOI</tag>
-        <tag>洲阁筛</tag>
         <tag>UOJ</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
+        <tag>洲阁筛</tag>
         <tag>杜教筛</tag>
       </tags>
   </entry>
@@ -642,8 +655,8 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>Min_25筛</tag>
         <tag>洲阁筛</tag>
+        <tag>Min_25筛</tag>
         <tag>SPOJ</tag>
       </tags>
   </entry>
