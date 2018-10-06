@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[AGC027C ABland Yard]]></title>
+    <url>%2F2018%2F10%2F06%2Fagc027C%2F</url>
+    <content type="text"><![CDATA[Description 有一个\(n\)点\(m\)边的点权为\(0/1\)的无向图，对于每条路径（可以是非简单路径），我们称它生成的字符串为把经过点的点权按经过顺序排列所得的序列。 请问，这个图是否可以生成所有01串？ \(1\leq n\leq 2\times 10^5, 2\leq m\leq 2\times 10^5\)。 Solution 不难发现，如果要搞出所有序列的话，图中必然有这种构造： 这里面a和b只是为了区分不同的点，数字才是点权。其中同权点间加一条边可以改成自环辣~ 然后接下来的问题在于怎样判定这个图是否包含这个构造……我们可以尝试每次在图中删除相邻点颜色都相同的点（或者零度点），如此下去如果图最后还是有点的话很显然就会有这种构造了。 Code 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;vector&gt;#include &lt;queue&gt;const int maxn = 200005;std::vector&lt;int&gt; G[maxn];int typ[maxn]; int deg[maxn][2];inline void add_edge(int u, int v) &#123; G[u].push_back(v);&#125;inline void ins_edge(int u, int v) &#123; add_edge(u, v); add_edge(v, u); deg[u][typ[v]] ++; deg[v][typ[u]] ++;&#125; bool can_del(int x) &#123; return (deg[x][0] == 0 || deg[x][1] == 0);&#125;bool vis[maxn]; int n;bool check() &#123; std::queue&lt;int&gt; Q; for(int i = 1; i &lt;= n; i ++) &#123; if(can_del(i)) &#123; Q.push(i); vis[i] = true; &#125; &#125; int cnt = 0; while(!Q.empty()) &#123; int u = Q.front(); Q.pop(); cnt ++; for(int v : G[u]) &#123; deg[v][typ[u]] --; if(!vis[v] &amp;&amp; can_del(v)) &#123; Q.push(v); vis[v] = true; &#125; &#125; &#125; return (cnt &lt; n);&#125; char buf[maxn];int main() &#123; int m; scanf("%d%d", &amp;n, &amp;m); scanf("%s", buf + 1); for(int i = 1; i &lt;= n; i ++) typ[i] = buf[i] - 'A'; for(int i = 1; i &lt;= m; i ++) &#123; int u, v; scanf("%d%d", &amp;u, &amp;v); ins_edge(u, v); &#125; if(check()) &#123; puts("Yes"); &#125; else &#123; puts("No"); &#125; return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>AtCoder</tag>
+        <tag>图论</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[BZOJ 4300 绝世好题]]></title>
     <url>%2F2018%2F10%2F06%2FBZOJ4300%2F</url>
     <content type="text"><![CDATA[Description 给定一个长为\(n\)的自然数序列\(a_i\)，求一个最长的子序列使得其相邻两项的按位与都不为\(0\)。 \(1\leq n\leq 10^5,a_i\leq 2\times 10^9\)。 Solution 终于有我会做的题力，，， 按位与不为零，就要满足有至少一个共同位。这样的话，我们直接在状态里额外开一维记录这个共同位是啥不就行了…… Code 1234567891011121314151617181920212223242526#include &lt;cstdio&gt;#include &lt;cstdlib&gt;#include &lt;cstring&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;const int maxn = 100005;const int maxc = 31;int d[maxn][maxc], rec[maxc];int A[maxn];int main() &#123; int n; scanf("%d", &amp;n); for(int i = 1; i &lt;= n; i ++) scanf("%d", &amp;A[i]); for(int i = 1; i &lt;= n; i ++) &#123; for(int j = 0; j &lt; maxc; j ++) &#123; if(!((1 &lt;&lt; j) &amp; A[i])) continue; d[i][j] = rec[j] + 1; &#125; int th = *std::max_element(d[i], d[i] + maxc); for(int j = 0; j &lt; maxc; j ++) &#123; if((1 &lt;&lt; j) &amp; A[i]) rec[j] = std::max(rec[j], th); &#125; &#125; printf("%d\n", std::max(1, *std::max_element(rec, rec + maxc))); return 0;&#125;]]></content>
@@ -84,8 +96,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>DP</tag>
         <tag>容斥原理</tag>
+        <tag>DP</tag>
         <tag>AtCoder</tag>
         <tag>状压DP</tag>
       </tags>
@@ -110,8 +122,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>DP</tag>
         <tag>容斥原理</tag>
+        <tag>DP</tag>
         <tag>ZJOI</tag>
         <tag>树形DP</tag>
       </tags>
@@ -280,8 +292,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>DP</tag>
         <tag>容斥原理</tag>
+        <tag>DP</tag>
         <tag>HDU</tag>
         <tag>MIN-MAX容斥</tag>
       </tags>
@@ -337,11 +349,11 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>DP</tag>
         <tag>容斥原理</tag>
+        <tag>DP</tag>
         <tag>期望DP</tag>
-        <tag>概率与期望</tag>
         <tag>MIN-MAX容斥</tag>
+        <tag>概率与期望</tag>
         <tag>LibreOJ</tag>
         <tag>PKUWC</tag>
         <tag>树上DP</tag>
@@ -361,8 +373,8 @@
         <tag>多项式卷积</tag>
         <tag>生成函数</tag>
         <tag>LibreOJ</tag>
-        <tag>PKUWC</tag>
         <tag>分治FFT</tag>
+        <tag>PKUWC</tag>
       </tags>
   </entry>
   <entry>
@@ -414,8 +426,8 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>Codeforces</tag>
         <tag>wqs二分</tag>
+        <tag>Codeforces</tag>
         <tag>期望DP</tag>
       </tags>
   </entry>
@@ -491,8 +503,8 @@
       </categories>
       <tags>
         <tag>BZOJ</tag>
-        <tag>线性基</tag>
         <tag>容斥原理</tag>
+        <tag>线性基</tag>
       </tags>
   </entry>
   <entry>
@@ -566,8 +578,8 @@
       <tags>
         <tag>SPOJ</tag>
         <tag>LibreOJ</tag>
-        <tag>TJOI</tag>
         <tag>ZJOI</tag>
+        <tag>TJOI</tag>
         <tag>后缀自动机</tag>
         <tag>后缀数组</tag>
         <tag>后缀树</tag>
