@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[BZOJ 4245 「ONTAK2010」OR-XOR]]></title>
+    <url>%2F2018%2F10%2F06%2FBZOJ4245%2F</url>
+    <content type="text"><![CDATA[Description 给你一个长为\(n\)的自然数序列\(a_i\)，将其分为恰好\(m\)段，设第\(i\)段异或和为\(c_i\)，请最小化\(c_1\or c_2\or\ldots\or c_m\)。 \(1\leq n\leq 500000, a_i\leq 10^{18}\)。 Solution 考虑求\(a_i\)的异或前缀和\(b_i\)，那么每一段的异或和就可以用两个\(b_i\)异或起来的结果来表示。 因为是要求答案最小，那么我们就从高位往低位考虑，尽可能让高位不要填\(1\)。考虑某一位如果不能是\(1\)，并且你的第一段为\(1\ldots p\)的话，那么\(b_p\)在这一位必不为\(1\)，根据异或的结果可以知道下一个剖分点的\(b_i\)的这一位也不是\(1\)……最终\(b_n\)的这一位也不是\(1\)。换言之存在\(m\)个位置在这一位不为\(1\)，并且\(b_n\)在这一位也不是\(1\)。 最后要注意的一点是如果有一个剖分点在这一位是\(1\)的话，那么之后的位不能使用该剖分点，否则就错力。 Code 1234567891011121314151617181920212223242526272829303132333435363738394041#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;cctype&gt;#include &lt;algorithm&gt;#include &lt;utility&gt;#include &lt;queue&gt;typedef long long ll;const int maxn = 500005;int n, m;ll a[maxn], b[maxn];bool disable[maxn];bool check(int c) &#123; ll th = 1LL &lt;&lt; c; if(th &amp; b[n]) return false; int cnt = 1; for(int i = 1; i &lt; n; i ++) &#123; if(disable[i]) continue; if(!(th &amp; b[i])) cnt ++; &#125; if(cnt &gt;= m) &#123; for(int i = 1; i &lt; n; i ++) &#123; if(th &amp; b[i]) disable[i] = true; &#125; return true; &#125; else &#123; return false; &#125;&#125;int main() &#123; scanf("%d%d", &amp;n, &amp;m); for(int i = 1; i &lt;= n; i ++) scanf("%lld", &amp;a[i]); for(int i = 1; i &lt;= n; i ++) b[i] = b[i - 1] ^ a[i]; ll ans = 0; for(int c = 59; c &gt;= 0; c --) &#123; if(!check(c)) ans += (1LL &lt;&lt; c); &#125; printf("%lld\n", ans); return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>BZOJ</tag>
+        <tag>ONTAK</tag>
+        <tag>位运算</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[AGC027C ABland Yard]]></title>
     <url>%2F2018%2F10%2F06%2Fagc027C%2F</url>
     <content type="text"><![CDATA[Description 有一个\(n\)点\(m\)边的点权为\(0/1\)的无向图，对于每条路径（可以是非简单路径），我们称它生成的字符串为把经过点的点权按经过顺序排列所得的序列。 请问，这个图是否可以生成所有01串？ \(1\leq n\leq 2\times 10^5, 2\leq m\leq 2\times 10^5\)。 Solution 不难发现，如果要搞出所有序列的话，图中必然有这种构造： 这里面a和b只是为了区分不同的点，数字才是点权。其中同权点间加一条边可以改成自环辣~ 然后接下来的问题在于怎样判定这个图是否包含这个构造……我们可以尝试每次在图中删除相邻点颜色都相同的点（或者零度点），如此下去如果图最后还是有点的话很显然就会有这种构造了。 Code 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;vector&gt;#include &lt;queue&gt;const int maxn = 200005;std::vector&lt;int&gt; G[maxn];int typ[maxn]; int deg[maxn][2];inline void add_edge(int u, int v) &#123; G[u].push_back(v);&#125;inline void ins_edge(int u, int v) &#123; add_edge(u, v); add_edge(v, u); deg[u][typ[v]] ++; deg[v][typ[u]] ++;&#125; bool can_del(int x) &#123; return (deg[x][0] == 0 || deg[x][1] == 0);&#125;bool vis[maxn]; int n;bool check() &#123; std::queue&lt;int&gt; Q; for(int i = 1; i &lt;= n; i ++) &#123; if(can_del(i)) &#123; Q.push(i); vis[i] = true; &#125; &#125; int cnt = 0; while(!Q.empty()) &#123; int u = Q.front(); Q.pop(); cnt ++; for(int v : G[u]) &#123; deg[v][typ[u]] --; if(!vis[v] &amp;&amp; can_del(v)) &#123; Q.push(v); vis[v] = true; &#125; &#125; &#125; return (cnt &lt; n);&#125; char buf[maxn];int main() &#123; int m; scanf("%d%d", &amp;n, &amp;m); scanf("%s", buf + 1); for(int i = 1; i &lt;= n; i ++) typ[i] = buf[i] - 'A'; for(int i = 1; i &lt;= m; i ++) &#123; int u, v; scanf("%d%d", &amp;u, &amp;v); ins_edge(u, v); &#125; if(check()) &#123; puts("Yes"); &#125; else &#123; puts("No"); &#125; return 0;&#125;]]></content>
@@ -21,8 +34,8 @@
       </categories>
       <tags>
         <tag>BZOJ</tag>
-        <tag>DP</tag>
         <tag>位运算</tag>
+        <tag>DP</tag>
       </tags>
   </entry>
   <entry>
@@ -84,8 +97,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>线段树</tag>
         <tag>HDU</tag>
+        <tag>线段树</tag>
       </tags>
   </entry>
   <entry>
@@ -215,8 +228,8 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>CS Academy</tag>
         <tag>wqs二分</tag>
+        <tag>CS Academy</tag>
       </tags>
   </entry>
   <entry>
@@ -254,8 +267,8 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>LibreOJ</tag>
         <tag>树形DP</tag>
+        <tag>LibreOJ</tag>
         <tag>JLOI</tag>
       </tags>
   </entry>
@@ -369,12 +382,12 @@
       </categories>
       <tags>
         <tag>容斥原理</tag>
-        <tag>概率与期望</tag>
         <tag>多项式卷积</tag>
+        <tag>概率与期望</tag>
         <tag>生成函数</tag>
         <tag>LibreOJ</tag>
-        <tag>分治FFT</tag>
         <tag>PKUWC</tag>
+        <tag>分治FFT</tag>
       </tags>
   </entry>
   <entry>
@@ -426,8 +439,8 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>wqs二分</tag>
         <tag>Codeforces</tag>
+        <tag>wqs二分</tag>
         <tag>期望DP</tag>
       </tags>
   </entry>
@@ -515,8 +528,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>Min_25筛</tag>
         <tag>洲阁筛</tag>
+        <tag>Min_25筛</tag>
         <tag>LibreOJ</tag>
         <tag>山东省队集训</tag>
       </tags>
@@ -560,8 +573,8 @@
         <category>比赛</category>
       </categories>
       <tags>
-        <tag>原根</tag>
         <tag>位运算</tag>
+        <tag>原根</tag>
         <tag>贪心</tag>
         <tag>NowCoder</tag>
         <tag>子序列自动机</tag>
@@ -577,8 +590,8 @@
       </categories>
       <tags>
         <tag>SPOJ</tag>
-        <tag>LibreOJ</tag>
         <tag>ZJOI</tag>
+        <tag>LibreOJ</tag>
         <tag>TJOI</tag>
         <tag>后缀自动机</tag>
         <tag>后缀数组</tag>
@@ -637,10 +650,10 @@
       </categories>
       <tags>
         <tag>NOI</tag>
-        <tag>洲阁筛</tag>
         <tag>UOJ</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
+        <tag>洲阁筛</tag>
         <tag>杜教筛</tag>
       </tags>
   </entry>
@@ -680,8 +693,8 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>Min_25筛</tag>
         <tag>洲阁筛</tag>
+        <tag>Min_25筛</tag>
         <tag>SPOJ</tag>
       </tags>
   </entry>
