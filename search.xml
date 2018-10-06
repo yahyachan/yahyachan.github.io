@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[BZOJ 4300 绝世好题]]></title>
+    <url>%2F2018%2F10%2F06%2FBZOJ4300%2F</url>
+    <content type="text"><![CDATA[Description 给定一个长为\(n\)的自然数序列\(a_i\)，求一个最长的子序列使得其相邻两项的按位与都不为\(0\)。 \(1\leq n\leq 10^5,a_i\leq 2\times 10^9\)。 Solution 终于有我会做的题力，，， 按位与不为零，就要满足有至少一个共同位。这样的话，我们直接在状态里额外开一维记录这个共同位是啥不就行了…… Code 1234567891011121314151617181920212223242526#include &lt;cstdio&gt;#include &lt;cstdlib&gt;#include &lt;cstring&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;const int maxn = 100005;const int maxc = 31;int d[maxn][maxc], rec[maxc];int A[maxn];int main() &#123; int n; scanf("%d", &amp;n); for(int i = 1; i &lt;= n; i ++) scanf("%d", &amp;A[i]); for(int i = 1; i &lt;= n; i ++) &#123; for(int j = 0; j &lt; maxc; j ++) &#123; if(!((1 &lt;&lt; j) &amp; A[i])) continue; d[i][j] = rec[j] + 1; &#125; int th = *std::max_element(d[i], d[i] + maxc); for(int j = 0; j &lt; maxc; j ++) &#123; if((1 &lt;&lt; j) &amp; A[i]) rec[j] = std::max(rec[j], th); &#125; &#125; printf("%d\n", std::max(1, *std::max_element(rec, rec + maxc))); return 0;&#125;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>BZOJ</tag>
+        <tag>DP</tag>
+        <tag>位运算</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[BZOJ 3687 简单题]]></title>
     <url>%2F2018%2F10%2F05%2FBZOJ3687%2F</url>
     <content type="text"><![CDATA[Description 给定一个\(n\)个元素的可重集，求其中所有子集的元素算数和异或起来的结果。 \(n\leq 1000\)，保证集合中元素是正整数，且所有数的和不超过\(2\times 10^6\)。 Solution 被……安排上了 所有可能的自己算术和只有\(2\times 10^6\)种（不考虑\(0\)），每种会不会在答案中出现只取决于这一类和出现的子集是奇数个还是偶数个。因此我们要做一个求模\(2\)意义下方案数的0/1背包，注意到模\(2\)加法其实就是异或了，因此用bitset维护状态数组，每次读进来一个数左移再异或即可完成转移。 Code 1234567891011121314151617181920212223#include &lt;cstdio&gt;#include &lt;cstring&gt;#include &lt;cstdlib&gt;#include &lt;algorithm&gt;#include &lt;functional&gt;#include &lt;utility&gt;#include &lt;bitset&gt;const int maxs = 2000001;std::bitset&lt;maxs&gt; S;int main() &#123; S[0] = 1; int n; scanf("%d", &amp;n); for(int i = 1; i &lt;= n; i ++) &#123; int x; scanf("%d", &amp;x); S ^= (S &lt;&lt; x); &#125; int ans = 0; for(int i = 1; i &lt; maxs; i ++) &#123; if(S[i]) ans ^= i; &#125; printf("%d\n", ans); return 0;&#125;]]></content>
@@ -161,8 +174,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>单位根反演</tag>
         <tag>原根</tag>
+        <tag>单位根反演</tag>
         <tag>CS Academy</tag>
         <tag>行列式</tag>
       </tags>
@@ -176,8 +189,8 @@
       </categories>
       <tags>
         <tag>多项式卷积</tag>
-        <tag>LibreOJ</tag>
         <tag>生成函数</tag>
+        <tag>LibreOJ</tag>
         <tag>广义二项式定理</tag>
       </tags>
   </entry>
@@ -308,8 +321,8 @@
       <tags>
         <tag>斯特林数</tag>
         <tag>多项式卷积</tag>
-        <tag>LibreOJ</tag>
         <tag>生成函数</tag>
+        <tag>LibreOJ</tag>
         <tag>清华集训</tag>
         <tag>Prufer序列</tag>
         <tag>指数型生成函数</tag>
@@ -346,10 +359,10 @@
         <tag>容斥原理</tag>
         <tag>概率与期望</tag>
         <tag>多项式卷积</tag>
-        <tag>LibreOJ</tag>
         <tag>生成函数</tag>
-        <tag>分治FFT</tag>
+        <tag>LibreOJ</tag>
         <tag>PKUWC</tag>
+        <tag>分治FFT</tag>
       </tags>
   </entry>
   <entry>
@@ -478,8 +491,8 @@
       </categories>
       <tags>
         <tag>BZOJ</tag>
-        <tag>容斥原理</tag>
         <tag>线性基</tag>
+        <tag>容斥原理</tag>
       </tags>
   </entry>
   <entry>
@@ -490,8 +503,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>洲阁筛</tag>
         <tag>Min_25筛</tag>
+        <tag>洲阁筛</tag>
         <tag>LibreOJ</tag>
         <tag>山东省队集训</tag>
       </tags>
@@ -535,8 +548,8 @@
         <category>比赛</category>
       </categories>
       <tags>
-        <tag>位运算</tag>
         <tag>原根</tag>
+        <tag>位运算</tag>
         <tag>贪心</tag>
         <tag>NowCoder</tag>
         <tag>子序列自动机</tag>
@@ -553,8 +566,8 @@
       <tags>
         <tag>SPOJ</tag>
         <tag>LibreOJ</tag>
-        <tag>ZJOI</tag>
         <tag>TJOI</tag>
+        <tag>ZJOI</tag>
         <tag>后缀自动机</tag>
         <tag>后缀数组</tag>
         <tag>后缀树</tag>
@@ -612,10 +625,10 @@
       </categories>
       <tags>
         <tag>NOI</tag>
+        <tag>洲阁筛</tag>
         <tag>UOJ</tag>
         <tag>狄利克雷卷积</tag>
         <tag>莫比乌斯反演</tag>
-        <tag>洲阁筛</tag>
         <tag>杜教筛</tag>
       </tags>
   </entry>
@@ -655,8 +668,8 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>洲阁筛</tag>
         <tag>Min_25筛</tag>
+        <tag>洲阁筛</tag>
         <tag>SPOJ</tag>
       </tags>
   </entry>
